@@ -32,6 +32,17 @@ As a user, I want to be able to look at some kind of marker (upc, qr code, or po
 
 List technologies that will be used in your app, including any libraries to save time or provide more functionality. Be sure to research any potential limitations.
 
+- Typescript
+- SCSS
+- Node js
+- Express
+- either MongoDB or Postgresql
+
+
+QR code scanner:	https://www.npmjs.com/package/html5-qrcode 
+					https://scanapp.org/html5-qrcode-docs/docs/intro
+
+
 ### APIs
 
 List any external sources of data that will be used in your app.
@@ -40,6 +51,11 @@ list of floral UPCs: https://www.freshproduce.com/resources/floral/floral-univer
 
 free online qr code generator link:
 https://public-api.qr-code-generator.com/v1/create/free?image_format=SVG&image_width=500&foreground_color=%23000000&frame_color=%23000000&frame_name=no-frame&qr_code_logo=&qr_code_pattern=rounded-3&qr_code_text=<your-text-here>
+
+or if you want the proper way: 
+https://www.qr-code-generator.com/qr-code-api/?cks=28075_1715486675_c4da9d4322eb902475e29d032a9dce0e&cpid=72a03c17-313a-4b34-9153-3c11d56863e5&sv1=affiliate&sv_campaign_id=1169924&awc=28075_1715486675_c4da9d4322eb902475e29d032a9dce0e&gclid=Cj0KCQjwkN--BhDkARIsAD_mnIqe8gl3KUYyFuCZkvhT8mnpn8YX5f-n8Pun0N63uwyR-N9pakRhmUoaAsM9EALw_wcB&campaignid=20261693957&adgroupid=&cpid=39bf0834-c3de-4cf9-85b6-aaee355e93f8&gad_source=1&target=api-ad
+
+
 
 ### Sitemap
 
@@ -66,3 +82,6 @@ Scope your project as a sprint. Break down the tasks that will need to be comple
 ## Future Implementations
 
 Your project will be marked based on what you committed to in the above document. Here, you can list any additional features you may complete after the MVP of your application is built, or if you have extra time before the Capstone due date.
+
+photo-based plant identifying:
+https://my.plantnet.org/doc/openapi
