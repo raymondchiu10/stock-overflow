@@ -56,7 +56,7 @@ https://www.qr-code-generator.com/qr-code-api/?cks=28075_1715486675_c4da9d4322eb
 
 ### Sitemap/Mockups
 
-https://excalidraw.com/#json=jQ7-0TF6caLbvYNT45VfY,iWIObscpgy5l42Hkfq_4Jg
+https://excalidraw.com/#json=njKaQcoXxYZEnbHJMkbXV,t2OX5kfzaQf-Q5N97x-KKQ
 
 ### Data
 
@@ -75,6 +75,8 @@ Scope your project as a sprint. Break down the tasks that will need to be comple
 ## Future Implementations
 
 Your project will be marked based on what you committed to in the above document. Here, you can list any additional features you may complete after the MVP of your application is built, or if you have extra time before the Capstone due date.
+
+look into photo-based identification libraries
 
 photo-based plant identifying:
 https://my.plantnet.org/doc/openapi
