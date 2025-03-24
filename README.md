@@ -24,7 +24,7 @@ As an admin, I want to know when items go under a certain threshold so that I ca
 
 As a user, I want to me able to look up a specific item to see whether or not it is in stock and a description of that item so that I can am able to make an informed decision on whether or not it is the right item I am looking for.
 
-As a user, I want to be able to look at some kind of marker (upc, qr code, or potential image) so that I can compare one item to another to make sure I amcorrectly looking at the item that I want.
+As a user, I want to be able to look at some kind of marker (upc, qr code, or potential image) so that I can compare one item to another to make sure I am correctly looking at the item that I want.
 
 ## Implementation
 
@@ -36,7 +36,8 @@ List technologies that will be used in your app, including any libraries to save
 - SCSS
 - Node js
 - Express
-- either MongoDB or Postgresql (Supabase)
+- Postgresql (Supabase)
+- Vite (recommended) vs Nextjs
 
 QR code scanner: https://www.npmjs.com/package/html5-qrcode
 https://scanapp.org/html5-qrcode-docs/docs/intro
@@ -53,13 +54,9 @@ https://public-api.qr-code-generator.com/v1/create/free?image_format=SVG&image_w
 or if you want the proper way:
 https://www.qr-code-generator.com/qr-code-api/?cks=28075_1715486675_c4da9d4322eb902475e29d032a9dce0e&cpid=72a03c17-313a-4b34-9153-3c11d56863e5&sv1=affiliate&sv_campaign_id=1169924&awc=28075_1715486675_c4da9d4322eb902475e29d032a9dce0e&gclid=Cj0KCQjwkN--BhDkARIsAD_mnIqe8gl3KUYyFuCZkvhT8mnpn8YX5f-n8Pun0N63uwyR-N9pakRhmUoaAsM9EALw_wcB&campaignid=20261693957&adgroupid=&cpid=39bf0834-c3de-4cf9-85b6-aaee355e93f8&gad_source=1&target=api-ad
 
-### Sitemap
+### Sitemap/Mockups
 
-List the pages of your app with brief descriptions. You can show this visually, or write it out.
-
-### Mockups
-
-Provide visuals of your app's screens. You can use pictures of hand-drawn sketches, or wireframing tools like Figma.
+https://excalidraw.com/#json=jQ7-0TF6caLbvYNT45VfY,iWIObscpgy5l42Hkfq_4Jg
 
 ### Data
 
