@@ -60,7 +60,7 @@ List any external sources of data that will be used in your app.
 
 ### Data
 
-![Database UML chart](https://github.com/user-attachments/assets/621a9284-d017-4b11-8111-a0867a7fe38f)
+![Screenshot 2025-03-24 at 8 00 49 PM](https://github.com/user-attachments/assets/86cc0ac6-306c-486a-92e4-4590412d685b)
 
 ### Endpoints
 
