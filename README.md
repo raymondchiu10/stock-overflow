@@ -41,7 +41,7 @@ List technologies that will be used in your app, including any libraries to save
 
 QR code scanner:
 
-- [html5-qrcode](https://www.npmjs.com/package/html5-qrcode)
+- [html5-qrcode](https://www.npmjs.com/package/html5-qrcode) (deprecated; development migrated to scanapp)
 - [scanapp](https://scanapp.org/html5-qrcode-docs/docs/intro)
 
 ### APIs
@@ -60,7 +60,7 @@ List any external sources of data that will be used in your app.
 
 ### Data
 
-Describe your data and the relationships between the data points. You can show this visually using diagrams, or write it out.
+![Screenshot of a UML database breakdown.]()
 
 ### Endpoints
 
