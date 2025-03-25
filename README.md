@@ -37,26 +37,26 @@ List technologies that will be used in your app, including any libraries to save
 - Node js
 - Express
 - Postgresql (Supabase)
-- Vite (recommended) vs Nextjs
+- Reactjs (recommended) vs Nextjs
 
-QR code scanner: https://www.npmjs.com/package/html5-qrcode
-https://scanapp.org/html5-qrcode-docs/docs/intro
+QR code scanner:
+
+- [html5-qrcode](https://www.npmjs.com/package/html5-qrcode)
+- [scanapp](https://scanapp.org/html5-qrcode-docs/docs/intro)
 
 ### APIs
 
 List any external sources of data that will be used in your app.
 
-list of floral UPCs: https://www.freshproduce.com/resources/floral/floral-universal-product-codes/
+- [list of floral UPCs:](https://www.freshproduce.com/resources/floral/floral-universal-product-codes/)
 
-free online qr code generator link:
-https://public-api.qr-code-generator.com/v1/create/free?image_format=SVG&image_width=500&foreground_color=%23000000&frame_color=%23000000&frame_name=no-frame&qr_code_logo=&qr_code_pattern=rounded-3&qr_code_text=<your-text-here>
+- [free online qr code generator link:](https://public-api.qr-code-generator.com/v1/create/free?image_format=SVG&image_width=500&foreground_color=%23000000&frame_color=%23000000&frame_name=no-frame&qr_code_logo=&qr_code_pattern=rounded-3&qr_code_text=<your-text-here>)
 
-or if you want the proper way:
-https://www.qr-code-generator.com/qr-code-api/?cks=28075_1715486675_c4da9d4322eb902475e29d032a9dce0e&cpid=72a03c17-313a-4b34-9153-3c11d56863e5&sv1=affiliate&sv_campaign_id=1169924&awc=28075_1715486675_c4da9d4322eb902475e29d032a9dce0e&gclid=Cj0KCQjwkN--BhDkARIsAD_mnIqe8gl3KUYyFuCZkvhT8mnpn8YX5f-n8Pun0N63uwyR-N9pakRhmUoaAsM9EALw_wcB&campaignid=20261693957&adgroupid=&cpid=39bf0834-c3de-4cf9-85b6-aaee355e93f8&gad_source=1&target=api-ad
+- [or if you want the proper way:](https://www.qr-code-generator.com/qr-code-api/?cks=28075_1715486675_c4da9d4322eb902475e29d032a9dce0e&cpid=72a03c17-313a-4b34-9153-3c11d56863e5&sv1=affiliate&sv_campaign_id=1169924&awc=28075_1715486675_c4da9d4322eb902475e29d032a9dce0e&gclid=Cj0KCQjwkN--BhDkARIsAD_mnIqe8gl3KUYyFuCZkvhT8mnpn8YX5f-n8Pun0N63uwyR-N9pakRhmUoaAsM9EALw_wcB&campaignid=20261693957&adgroupid=&cpid=39bf0834-c3de-4cf9-85b6-aaee355e93f8&gad_source=1&target=api-ad)
 
 ### Sitemap/Mockups
 
-https://excalidraw.com/#json=njKaQcoXxYZEnbHJMkbXV,t2OX5kfzaQf-Q5N97x-KKQ
+- [excalidraw link](https://excalidraw.com/#json=njKaQcoXxYZEnbHJMkbXV,t2OX5kfzaQf-Q5N97x-KKQ)
 
 ### Data
 
