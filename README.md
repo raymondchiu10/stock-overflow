@@ -36,7 +36,7 @@ List technologies that will be used in your app, including any libraries to save
 - SCSS
 - Node js
 - Express
-- Postgresql (Supabase)
+- Postgresql (Render)
 - Nextjs
 
 QR code scanner:
@@ -129,7 +129,7 @@ List any external sources of data that will be used in your app.
 ##### Days 1-2: Project Setup & Authentication
 
 - Initialize NextJS project with TypeScript
-- Set up Supabase database connection
+- Set up Render database connection
 - Implement basic user registration
 - Create login/authentication system
 - Basic user role differentiation (admin vs. user)
