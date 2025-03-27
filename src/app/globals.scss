@@ -1,1 +1,15 @@
-@use "../styles/globals.scss" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/colors" as *;
+
+*,
+* ::before,
+* ::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: inherit;
+	font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+:root {
+}

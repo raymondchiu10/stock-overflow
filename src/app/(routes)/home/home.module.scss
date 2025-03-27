@@ -1,0 +1,8 @@
+@use "@/styles/container" as *;
+.home {
+	border: 1px solid red;
+	&__container {
+		@extend .container;
+		border: 1px solid blue;
+	}
+}
