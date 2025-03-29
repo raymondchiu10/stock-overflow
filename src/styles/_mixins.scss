@@ -1,0 +1,19 @@
+//smallest size to design for: 320px;
+$sm: 380px;
+$md: 768px;
+$lg: 1280px;
+$xl: 1563px;
+
+@mixin media-breakpoint-up($size) {
+	@media only screen and (min-width: $size) {
+		@content;
+	}
+}
+
+@mixin use-font($name, $size: inherit, $line-height: initial, $weight: 400, $style: normal) {
+	font-family: $name;
+	font-size: $size;
+	line-height: $line-height;
+	font-weight: $weight;
+	font-style: $style;
+}
