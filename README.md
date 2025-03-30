@@ -1,5 +1,7 @@
 # Stock Overflow
 
+## [Project Frontend README.md](/docs/README.md)
+
 ## Overview
 
 A web-based inventory management app that keeps your stock in check, your prices up to date, and product descriptions at your fingertips.

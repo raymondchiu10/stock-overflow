@@ -1,0 +1,10 @@
+@use "./mixins" as *;
+
+.container {
+	margin-right: auto;
+	margin-left: auto;
+
+	@include media-breakpoint-up($md) {
+		max-width: $lg;
+	}
+}

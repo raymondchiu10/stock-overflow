@@ -1,0 +1,11 @@
+$colors: (
+  // primary colors
+  // secondary colors
+  // error colors
+);
+
+:root {
+  @each $key-name, $value in $colors {
+    --#{$key-name}: #{$value};
+  }
+}
