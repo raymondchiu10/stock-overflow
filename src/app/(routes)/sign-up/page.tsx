@@ -87,7 +87,7 @@ const SignUp = () => {
 					/>
 					{errors.confirmPassword && <span style={{ color: "red" }}>{errors.confirmPassword.message}</span>}
 				</div>
-				<button type="submit">Log in</button>
+				<button type="submit">Sign Up</button>
 			</form>
 
 			<SOLogoutButton />
