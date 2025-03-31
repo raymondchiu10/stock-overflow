@@ -2,13 +2,18 @@
 import useAuth from "@/lib/useAuth";
 import axios from "axios";
 import React, { useEffect } from "react";
+import SOInventoryTable from "@/components/SOInventoryTable/SOInventoryTable";
 
 const Dashboard = () => {
-	const {} = useAuth();
+	const { isAuthenticated } = useAuth({ redirect: false });
+
 	useEffect(() => {
 		const test = async () => {
+			if (!isAuthenticated) {
+				return;
+			}
 			try {
-				const res = await axios.get("/users/profile");
+				const res = await axios.get("api/users/profile");
 				console.log(res);
 			} catch (err) {
 				console.error(err);
@@ -16,7 +21,12 @@ const Dashboard = () => {
 		};
 		test();
 	}, []);
-	return <div>Dashboard</div>;
+
+	return (
+		<section>
+			<SOInventoryTable />
+		</section>
+	);
 };
 
 export default Dashboard;
