@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 const fetchInventory = async (page: number, limit: number, sort: string, order: string) => {
-	const { data } = await axios.get(`/api/inventory/company/${process.env.NEXT_PUBLIC_COMPANY_UUID || ""}`, {
+	const { data } = await axios.get(`/api/company/${process.env.NEXT_PUBLIC_COMPANY_UUID || ""}/inventory`, {
 		params: { page, limit, sort, order },
 	});
 	return data;

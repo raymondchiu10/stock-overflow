@@ -1,0 +1,59 @@
+.so-inventory-admin-table {
+	&__header-container {
+		position: relative;
+		display: flex;
+		justify-content: space-between;
+	}
+
+	&__resizer {
+		position: absolute;
+		height: 100%;
+		width: 2px;
+		top: 0;
+		right: 0;
+
+		&:hover {
+			cursor: pointer;
+			background-color: lightgray;
+		}
+
+		&:active {
+			opacity: 1;
+			background-color: gray;
+		}
+	}
+
+	&__modify {
+		display: flex;
+		justify-content: center;
+		gap: 0.5rem;
+
+		&--edit {
+			cursor: pointer;
+
+			&:hover {
+				filter: brightness(0) saturate(100%) invert(25%) sepia(45%) saturate(13%) hue-rotate(347deg)
+					brightness(95%) contrast(87%);
+			}
+			&:active {
+				filter: blur(0.5px);
+			}
+		}
+
+		&--delete {
+			cursor: pointer;
+			filter: brightness(0) saturate(100%) invert(12%) sepia(71%) saturate(6443%) hue-rotate(2deg) brightness(82%)
+				contrast(116%);
+
+			&:hover {
+				filter: brightness(0) saturate(100%) invert(18%) sepia(97%) saturate(7380%) hue-rotate(359deg)
+					brightness(106%) contrast(108%);
+			}
+
+			&:active {
+				filter: brightness(0) saturate(100%) invert(12%) sepia(71%) saturate(6443%) hue-rotate(2deg)
+					brightness(82%) contrast(116%) blur(0.5px);
+			}
+		}
+	}
+}

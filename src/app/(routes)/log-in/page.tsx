@@ -46,7 +46,6 @@ const Login = () => {
 			<form
 				className={styles["log-in__form"]}
 				onSubmit={handleSubmit((data) => {
-					console.log(data);
 					handleLogin(data);
 				})}
 			>

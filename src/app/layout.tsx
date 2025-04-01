@@ -8,11 +8,7 @@ export const metadata: Metadata = {
 	description: "Inventory Management Solution",
 };
 
-export default function RootLayout({
-	children,
-}: Readonly<{
-	children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
 	return (
 		<ReactQueryClientProvider>
 			<>

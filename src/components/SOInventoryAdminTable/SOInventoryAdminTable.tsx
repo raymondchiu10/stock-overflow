@@ -1,9 +1,12 @@
 import { useInventory } from "@/lib/useInventory";
 import { useReactTable, getCoreRowModel, flexRender, ColumnDef, CellContext } from "@tanstack/react-table";
 import React, { useState } from "react";
+import Image from "next/image";
 
-import styles from "./so-inventory-table.module.scss";
+import styles from "./so-inventory-admin-table.module.scss";
 import LinkCell from "../LinkCell/LinkCell";
+import Delete from "@/assets/delete.svg?react";
+import Edit from "@/assets/edit.svg?react";
 
 export interface InventoryItem {
 	base_price: string;
@@ -53,9 +56,26 @@ const columns: ColumnDef<InventoryItem>[] = [
 			return <p>{props.getValue()}</p>;
 		},
 	},
+	{
+		accessorKey: "uuid",
+		header: "Edit/Remove",
+		size: 100,
+		cell: (props: CellContext<InventoryItem, number>) => {
+			return (
+				<div className={styles["so-inventory-admin-table__modify"]}>
+					<Edit className={styles["so-inventory-admin-table__modify--edit"]} alt="edit" draggable={false} />
+					<Delete
+						className={styles["so-inventory-admin-table__modify--delete"]}
+						alt="delete"
+						draggable={false}
+					/>
+				</div>
+			);
+		},
+	},
 ];
 
-const SOInventoryTable = () => {
+const SOInventoryAdminTable = () => {
 	const [page, setPage] = useState(1);
 	const [limit] = useState(10);
 	const [sort, setSort] = useState("id");
@@ -76,7 +96,7 @@ const SOInventoryTable = () => {
 
 	return (
 		<>
-			<h1>Client</h1>
+			<h1>Admin</h1>
 			<table className={styles["so-inventory-table"]} style={{ minWidth: `${table.getTotalSize()}px` }}>
 				<thead>
 					{table.getHeaderGroups().map((headerGroup) => (
@@ -116,4 +136,4 @@ const SOInventoryTable = () => {
 	);
 };
 
-export default SOInventoryTable;
+export default SOInventoryAdminTable;
