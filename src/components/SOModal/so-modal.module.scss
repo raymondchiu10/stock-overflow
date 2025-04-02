@@ -1,4 +1,4 @@
-@use "../../styles/partials/mixins" as *;
+@use "@/styles/mixins" as *;
 
 .so-modal {
 	position: fixed;
@@ -27,7 +27,7 @@
 		margin: auto;
 		z-index: 1;
 
-		@include tablet {
+		@include media-breakpoint-up($md) {
 			min-width: 50%;
 			max-width: 720px;
 			height: 50%;
@@ -39,7 +39,7 @@
 		height: 100vh;
 
 		background-color: white;
-		@include tablet {
+		@include media-breakpoint-up($md) {
 			height: initial;
 		}
 	}

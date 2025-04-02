@@ -1,12 +1,12 @@
 import { useInventory } from "@/lib/useInventory";
 import { useReactTable, getCoreRowModel, flexRender, ColumnDef, CellContext } from "@tanstack/react-table";
-import React, { useState } from "react";
-import Image from "next/image";
+import React, { useContext, useState } from "react";
 
 import styles from "./so-inventory-admin-table.module.scss";
-import LinkCell from "../LinkCell/LinkCell";
+// import LinkCell from "../LinkCell/LinkCell";
 import Delete from "@/assets/delete.svg?react";
 import Edit from "@/assets/edit.svg?react";
+import { ModalContext } from "../ModalContextProvider/ModalContextProvider";
 
 export interface InventoryItem {
 	base_price: string;
@@ -17,64 +17,6 @@ export interface InventoryItem {
 	uuid: string;
 }
 
-const columns: ColumnDef<InventoryItem>[] = [
-	{
-		accessorKey: "name",
-		header: "Name",
-		size: 150,
-		cell: (props: CellContext<InventoryItem, string>) => {
-			return (
-				<LinkCell
-					href={`/company/${process.env.NEXT_PUBLIC_COMPANY_UUID}/inventory/${props.row.original.uuid}`}
-				>
-					{props.getValue()}
-				</LinkCell>
-			);
-		},
-	},
-	{
-		accessorKey: "description",
-		header: "Description",
-		size: 250,
-		cell: (props: CellContext<InventoryItem, string>) => {
-			return <p>{props.getValue()}</p>;
-		},
-	},
-	{
-		accessorKey: "quantity",
-		header: "Quantity",
-		size: 75,
-		cell: (props: CellContext<InventoryItem, number>) => {
-			return <p>{props.getValue()}</p>;
-		},
-	},
-	{
-		accessorKey: "company_price",
-		header: "Price",
-		size: 100,
-		cell: (props: CellContext<InventoryItem, number>) => {
-			return <p>{props.getValue()}</p>;
-		},
-	},
-	{
-		accessorKey: "uuid",
-		header: "Edit/Remove",
-		size: 100,
-		cell: (props: CellContext<InventoryItem, number>) => {
-			return (
-				<div className={styles["so-inventory-admin-table__modify"]}>
-					<Edit className={styles["so-inventory-admin-table__modify--edit"]} alt="edit" draggable={false} />
-					<Delete
-						className={styles["so-inventory-admin-table__modify--delete"]}
-						alt="delete"
-						draggable={false}
-					/>
-				</div>
-			);
-		},
-	},
-];
-
 const SOInventoryAdminTable = () => {
 	const [page, setPage] = useState(1);
 	const [limit] = useState(10);
@@ -82,6 +24,74 @@ const SOInventoryAdminTable = () => {
 	const [order, setOrder] = useState("asc");
 
 	const { data: inventory, isLoading } = useInventory(page, limit, sort, order);
+	const { modalIsOpen, setModalIsOpen } = useContext(ModalContext);
+
+	const toggleInventoryModal = () => {
+		setModalIsOpen(!modalIsOpen);
+	};
+
+	const columns: ColumnDef<InventoryItem>[] = [
+		{
+			accessorKey: "name",
+			header: "Name",
+			size: 150,
+			cell: (props: CellContext<InventoryItem, string>) => {
+				return (
+					// <LinkCell
+					// 	href={`/company/${process.env.NEXT_PUBLIC_COMPANY_UUID}/inventory/${props.row.original.uuid}`}
+					// >
+					// 	{props.getValue()}
+					// </LinkCell>
+					<p onClick={toggleInventoryModal}>{props.getValue()}</p>
+				);
+			},
+		},
+		{
+			accessorKey: "description",
+			header: "Description",
+			size: 250,
+			cell: (props: CellContext<InventoryItem, string>) => {
+				return <p>{props.getValue()}</p>;
+			},
+		},
+		{
+			accessorKey: "quantity",
+			header: "Quantity",
+			size: 75,
+			cell: (props: CellContext<InventoryItem, number>) => {
+				return <p>{props.getValue()}</p>;
+			},
+		},
+		{
+			accessorKey: "company_price",
+			header: "Price",
+			size: 100,
+			cell: (props: CellContext<InventoryItem, number>) => {
+				return <p>{props.getValue()}</p>;
+			},
+		},
+		{
+			accessorKey: "uuid",
+			header: "Edit/Remove",
+			size: 100,
+			cell: (props: CellContext<InventoryItem, number>) => {
+				return (
+					<div className={styles["so-inventory-admin-table__modify"]}>
+						<Edit
+							className={styles["so-inventory-admin-table__modify--edit"]}
+							alt="edit"
+							draggable={false}
+						/>
+						<Delete
+							className={styles["so-inventory-admin-table__modify--delete"]}
+							alt="delete"
+							draggable={false}
+						/>
+					</div>
+				);
+			},
+		},
+	];
 
 	const table = useReactTable({
 		data: inventory?.data,
