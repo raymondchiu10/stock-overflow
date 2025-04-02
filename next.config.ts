@@ -1,3 +1,4 @@
+/** @type {import('next').NextConfig} */
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
@@ -9,6 +10,9 @@ const nextConfig: NextConfig = {
 			issuer: /\.[jt]sx?$/,
 		});
 		return config;
+	},
+	images: {
+		domains: ["res.cloudinary.com"],
 	},
 	async rewrites() {
 		return [

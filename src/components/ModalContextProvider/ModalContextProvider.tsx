@@ -1,12 +1,21 @@
 "use client";
-import { createContext, ReactNode, useState } from "react";
+import { createContext, Dispatch, ReactNode, SetStateAction, useState } from "react";
 
 interface ModalContextType {
 	modalIsOpen: boolean;
-	setModalIsOpen: (isOpen: boolean) => void;
+	setModalIsOpen: Dispatch<SetStateAction<boolean>>;
+	selectedInventoryItem: Record<string, string>;
+	setSelectedInventoryItem: Dispatch<SetStateAction<Record<string, string>>>;
 }
 
-export const ModalContext = createContext<ModalContextType | undefined>(undefined);
+const initialModalContext: ModalContextType = {
+	modalIsOpen: false,
+	setModalIsOpen: () => {},
+	selectedInventoryItem: {},
+	setSelectedInventoryItem: () => {},
+};
+
+export const ModalContext = createContext<ModalContextType>(initialModalContext);
 
 interface ModalContextProviderProps {
 	children?: ReactNode;
@@ -14,6 +23,11 @@ interface ModalContextProviderProps {
 
 export function ModalContextProvider({ children }: ModalContextProviderProps) {
 	const [modalIsOpen, setModalIsOpen] = useState(false);
+	const [selectedInventoryItem, setSelectedInventoryItem] = useState<Record<string, string>>({});
 
-	return <ModalContext.Provider value={{ modalIsOpen, setModalIsOpen }}>{children}</ModalContext.Provider>;
+	return (
+		<ModalContext.Provider value={{ modalIsOpen, setModalIsOpen, selectedInventoryItem, setSelectedInventoryItem }}>
+			{children}
+		</ModalContext.Provider>
+	);
 }

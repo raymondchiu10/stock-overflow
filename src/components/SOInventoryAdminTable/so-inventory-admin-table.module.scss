@@ -23,6 +23,10 @@
 		}
 	}
 
+	&__inventory-detail {
+		cursor: pointer;
+	}
+
 	&__modify {
 		display: flex;
 		justify-content: center;

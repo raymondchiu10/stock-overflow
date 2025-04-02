@@ -5,6 +5,7 @@ const fetchInventory = async (page: number, limit: number, sort: string, order: 
 	const { data } = await axios.get(`/api/company/${process.env.NEXT_PUBLIC_COMPANY_UUID || ""}/inventory`, {
 		params: { page, limit, sort, order },
 	});
+	console.log(data);
 	return data;
 };
 

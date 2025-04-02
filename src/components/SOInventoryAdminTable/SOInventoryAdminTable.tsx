@@ -24,9 +24,10 @@ const SOInventoryAdminTable = () => {
 	const [order, setOrder] = useState("asc");
 
 	const { data: inventory, isLoading } = useInventory(page, limit, sort, order);
-	const { modalIsOpen, setModalIsOpen } = useContext(ModalContext);
+	const { modalIsOpen, setModalIsOpen, setSelectedInventoryItem } = useContext(ModalContext);
 
-	const toggleInventoryModal = () => {
+	const toggleInventoryModal = (props) => {
+		setSelectedInventoryItem(props.row?.original);
 		setModalIsOpen(!modalIsOpen);
 	};
 
@@ -37,12 +38,12 @@ const SOInventoryAdminTable = () => {
 			size: 150,
 			cell: (props: CellContext<InventoryItem, string>) => {
 				return (
-					// <LinkCell
-					// 	href={`/company/${process.env.NEXT_PUBLIC_COMPANY_UUID}/inventory/${props.row.original.uuid}`}
-					// >
-					// 	{props.getValue()}
-					// </LinkCell>
-					<p onClick={toggleInventoryModal}>{props.getValue()}</p>
+					<p
+						className={styles["so-inventory-admin-table__inventory-detail"]}
+						onClick={() => toggleInventoryModal(props)}
+					>
+						{props.getValue()}
+					</p>
 				);
 			},
 		},
