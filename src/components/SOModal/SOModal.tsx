@@ -1,7 +1,7 @@
 import React, { Dispatch, ReactNode, SetStateAction } from "react";
 import clsx from "clsx";
 import styles from "./so-modal.module.scss";
-import Close from "@/assets/close.svg?react";
+import Close from "@/assets/close.svg";
 
 interface SOModalProps {
 	isOpen: boolean;

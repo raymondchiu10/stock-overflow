@@ -7,7 +7,7 @@ import { useInventoryImage } from "@/lib/useImages";
 
 const InventoryDetailsModal = () => {
 	const { modalIsOpen, setModalIsOpen, selectedInventoryItem } = useContext(ModalContext);
-	const { selectedInventoryImages } = useInventoryImage(selectedInventoryItem?.uuid);
+	const { selectedInventoryImages } = useInventoryImage(selectedInventoryItem?.uuid || "");
 
 	if (!selectedInventoryItem) {
 		return null;

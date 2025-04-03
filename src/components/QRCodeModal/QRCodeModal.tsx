@@ -10,19 +10,11 @@ const QrCodeScanner = dynamic(() => import("@/lib/QrCodeScanner"), {
 const QRCodeModal = () => {
 	const { qrCodeModalIsOpen, setQrCodeModalIsOpen } = useContext(ModalContext);
 	const [scanResult, setScanResult] = useState<string>("");
-	const [error, setError] = useState<string>("");
 
-	const handleScanSuccess = (decodedText: string, decodedResult: any) => {
+	const handleScanSuccess = (decodedText: string, decodedResult: unknown) => {
 		console.log(`Code scanned: ${decodedText}`, decodedResult);
 		setScanResult(decodedText);
 		// You can handle the scanned result here (e.g., navigate to the URL, display data)
-	};
-
-	const handleScanFailure = (error: string) => {
-		// Only set error for important failures
-		if (error.includes("permission") || error.includes("access")) {
-			setError(error);
-		}
 	};
 
 	return (
@@ -32,16 +24,7 @@ const QRCodeModal = () => {
 					<h2>Look up Item</h2>
 				</div>
 				<div>
-					{typeof window !== "undefined" && (
-						<QrCodeScanner
-							fps={10}
-							qrbox={250}
-							disableFlip={false}
-							onScanSuccess={handleScanSuccess}
-							onScanFailure={handleScanFailure}
-						/>
-					)}
-					{error && <div>Error: {error}</div>}
+					{typeof window !== "undefined" && <QrCodeScanner onScanSuccess={handleScanSuccess} />}
 
 					{scanResult && (
 						<div>

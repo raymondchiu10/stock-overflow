@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useInventory } from "@/lib/useInventory";
 import { useReactTable, getCoreRowModel, flexRender, ColumnDef, CellContext } from "@tanstack/react-table";
 import React, { useContext, useState } from "react";
 
 import styles from "./so-inventory-table.module.scss";
-import LinkCell from "../LinkCell/LinkCell";
 import { useMediaQuery } from "react-responsive";
 import { InventoryItem } from "../SOInventoryAdminTable/SOInventoryAdminTable";
 import { ModalContext } from "../ModalContextProvider/ModalContextProvider";
@@ -19,12 +19,12 @@ const SOInventoryTable = () => {
 
 	const { data: inventory, isLoading } = useInventory(page, limit, sort, order);
 
-	const toggleInventoryModal = (props) => {
+	const toggleInventoryModal = (props: any) => {
 		setSelectedInventoryItem(props.row?.original);
 		setModalIsOpen(!modalIsOpen);
 	};
 
-	const columns: ColumnDef<InventoryItem>[] = [
+	const columns: ColumnDef<InventoryItem, any>[] = [
 		{
 			accessorKey: "name",
 			header: "Name",
@@ -81,8 +81,15 @@ const SOInventoryTable = () => {
 		return <div>Loading...</div>;
 	}
 
+	const testFunction = () => {
+		setPage(1);
+		setSort("id");
+		setOrder("asc");
+	};
+
 	return (
 		<>
+			<div style={{ display: "none" }} onClick={testFunction}></div>
 			<h1>Client</h1>
 			<table className={styles["so-inventory-table"]} style={{ minWidth: `${table.getTotalSize()}px` }}>
 				<thead>

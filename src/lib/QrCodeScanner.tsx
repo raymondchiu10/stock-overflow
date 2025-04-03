@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from "react";
 import { Html5QrcodeScanner } from "html5-qrcode";
 
 type QrCodeScannerProps = {
-	onScanSuccess: (decodedText: string, decodedResult: any) => void;
+	onScanSuccess: (decodedText: string, decodedResult: unknown) => void;
 };
 
 const QrCodeScanner: React.FC<QrCodeScannerProps> = ({ onScanSuccess }) => {
@@ -17,7 +17,7 @@ const QrCodeScanner: React.FC<QrCodeScannerProps> = ({ onScanSuccess }) => {
 				scannerRef.current = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 }, /* verbose= */ false);
 
 				// Define callbacks
-				const successCallback = (decodedText: string, decodedResult: any) => {
+				const successCallback = (decodedText: string, decodedResult: unknown) => {
 					onScanSuccess(decodedText, decodedResult);
 					if (scannerRef.current) {
 						scannerRef.current.clear();
