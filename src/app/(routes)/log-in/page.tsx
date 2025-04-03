@@ -7,6 +7,8 @@ import axios from "axios";
 import SOLogoutButton from "@/components/SOLogoutButton/SOLogoutButton";
 import { useForm } from "react-hook-form";
 
+import { useRouter } from "next/navigation";
+
 interface LoginFormInputs {
 	email: string;
 	password: string;
@@ -20,6 +22,8 @@ const Login = () => {
 	} = useForm<LoginFormInputs>();
 	const [submitError, setSubmitError] = useState();
 
+	const router = useRouter();
+
 	useEffect(() => {
 		setTimeout(() => {
 			setSubmitError(undefined);
@@ -32,6 +36,7 @@ const Login = () => {
 
 			localStorage.setItem("authToken", res.data.token);
 			axios.defaults.headers.common["Authorization"] = `Bearer ${res.data.token}`;
+			router.push("/dashboard");
 		} catch (err: unknown) {
 			if (axios.isAxiosError(err)) {
 				setSubmitError(err?.response?.data?.error || "Log in failed");
@@ -46,7 +51,6 @@ const Login = () => {
 			<form
 				className={styles["log-in__form"]}
 				onSubmit={handleSubmit((data) => {
-					console.log(data);
 					handleLogin(data);
 				})}
 			>
@@ -82,3 +86,6 @@ const Login = () => {
 };
 
 export default Login;
+function useNavigate() {
+	throw new Error("Function not implemented.");
+}

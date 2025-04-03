@@ -10,9 +10,10 @@ interface UseAuthOptions {
 export default function useAuth({ redirect = true }: UseAuthOptions = {}) {
 	const router = useRouter();
 	const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null); // null = still checking
+	const [token, setToken] = useState<string | null>(null);
 
 	useEffect(() => {
-		const token = localStorage.getItem("authToken");
+		setToken(localStorage.getItem("authToken"));
 
 		if (!token) {
 			setIsAuthenticated(false);
@@ -25,5 +26,5 @@ export default function useAuth({ redirect = true }: UseAuthOptions = {}) {
 		}
 	}, [router, redirect]);
 
-	return { isAuthenticated };
+	return { isAuthenticated, token };
 }
