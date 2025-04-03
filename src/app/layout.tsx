@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.scss";
 import { ReactQueryClientProvider } from "@/components/ReactQueryClientProvider/ReactQueryClientProvider";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ModalContextProvider } from "@/components/ModalContextProvider/ModalContextProvider";
-import SOModal from "@/components/SOModal/SOModal";
 
 export const metadata: Metadata = {
 	title: "Stock Overflow",
@@ -20,7 +19,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 					</head>
 					<body>{children}</body>
 				</html>
-				<ReactQueryDevtools initialIsOpen />
+				{/* <ReactQueryDevtools initialIsOpen /> */}
 			</ModalContextProvider>
 		</ReactQueryClientProvider>
 	);

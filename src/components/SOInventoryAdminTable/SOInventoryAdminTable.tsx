@@ -1,9 +1,9 @@
 import { useInventory } from "@/lib/useInventory";
 import { useReactTable, getCoreRowModel, flexRender, ColumnDef, CellContext } from "@tanstack/react-table";
 import React, { useContext, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 
 import styles from "./so-inventory-admin-table.module.scss";
-// import LinkCell from "../LinkCell/LinkCell";
 import Delete from "@/assets/delete.svg?react";
 import Edit from "@/assets/edit.svg?react";
 import { ModalContext } from "../ModalContextProvider/ModalContextProvider";
@@ -18,6 +18,8 @@ export interface InventoryItem {
 }
 
 const SOInventoryAdminTable = () => {
+	const isMobile = useMediaQuery({ maxWidth: 767 });
+
 	const [page, setPage] = useState(1);
 	const [limit] = useState(10);
 	const [sort, setSort] = useState("id");
@@ -35,7 +37,7 @@ const SOInventoryAdminTable = () => {
 		{
 			accessorKey: "name",
 			header: "Name",
-			size: 150,
+			size: 100,
 			cell: (props: CellContext<InventoryItem, string>) => {
 				return (
 					<p
@@ -47,14 +49,18 @@ const SOInventoryAdminTable = () => {
 				);
 			},
 		},
-		{
-			accessorKey: "description",
-			header: "Description",
-			size: 250,
-			cell: (props: CellContext<InventoryItem, string>) => {
-				return <p>{props.getValue()}</p>;
-			},
-		},
+		...(!isMobile
+			? [
+					{
+						accessorKey: "description",
+						header: "Description",
+						size: 250,
+						cell: (props: CellContext<InventoryItem, string>) => {
+							return <p>{props.getValue()}</p>;
+						},
+					},
+			  ]
+			: []),
 		{
 			accessorKey: "quantity",
 			header: "Quantity",
@@ -66,7 +72,7 @@ const SOInventoryAdminTable = () => {
 		{
 			accessorKey: "company_price",
 			header: "Price",
-			size: 100,
+			size: 75,
 			cell: (props: CellContext<InventoryItem, number>) => {
 				return <p>{props.getValue()}</p>;
 			},

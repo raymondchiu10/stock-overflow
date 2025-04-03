@@ -1,67 +1,74 @@
 import { useInventory } from "@/lib/useInventory";
 import { useReactTable, getCoreRowModel, flexRender, ColumnDef, CellContext } from "@tanstack/react-table";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import styles from "./so-inventory-table.module.scss";
 import LinkCell from "../LinkCell/LinkCell";
-
-export interface InventoryItem {
-	base_price: string;
-	company_price: string;
-	description: string;
-	name: string;
-	quantity: number;
-	uuid: string;
-}
-
-const columns: ColumnDef<InventoryItem>[] = [
-	{
-		accessorKey: "name",
-		header: "Name",
-		size: 150,
-		cell: (props: CellContext<InventoryItem, string>) => {
-			return (
-				<LinkCell
-					href={`/company/${process.env.NEXT_PUBLIC_COMPANY_UUID}/inventory/${props.row.original.uuid}`}
-				>
-					{props.getValue()}
-				</LinkCell>
-			);
-		},
-	},
-	{
-		accessorKey: "description",
-		header: "Description",
-		size: 250,
-		cell: (props: CellContext<InventoryItem, string>) => {
-			return <p>{props.getValue()}</p>;
-		},
-	},
-	{
-		accessorKey: "quantity",
-		header: "Quantity",
-		size: 75,
-		cell: (props: CellContext<InventoryItem, number>) => {
-			return <p>{props.getValue()}</p>;
-		},
-	},
-	{
-		accessorKey: "company_price",
-		header: "Price",
-		size: 100,
-		cell: (props: CellContext<InventoryItem, number>) => {
-			return <p>{props.getValue()}</p>;
-		},
-	},
-];
+import { useMediaQuery } from "react-responsive";
+import { InventoryItem } from "../SOInventoryAdminTable/SOInventoryAdminTable";
+import { ModalContext } from "../ModalContextProvider/ModalContextProvider";
 
 const SOInventoryTable = () => {
+	const isMobile = useMediaQuery({ maxWidth: 767 });
+	const { modalIsOpen, setModalIsOpen, setSelectedInventoryItem } = useContext(ModalContext);
+
 	const [page, setPage] = useState(1);
 	const [limit] = useState(10);
 	const [sort, setSort] = useState("id");
 	const [order, setOrder] = useState("asc");
 
 	const { data: inventory, isLoading } = useInventory(page, limit, sort, order);
+
+	const toggleInventoryModal = (props) => {
+		setSelectedInventoryItem(props.row?.original);
+		setModalIsOpen(!modalIsOpen);
+	};
+
+	const columns: ColumnDef<InventoryItem>[] = [
+		{
+			accessorKey: "name",
+			header: "Name",
+			size: 150,
+			cell: (props: CellContext<InventoryItem, string>) => {
+				return (
+					<p
+						className={styles["so-inventory-admin-table__inventory-detail"]}
+						onClick={() => toggleInventoryModal(props)}
+					>
+						{props.getValue()}
+					</p>
+				);
+			},
+		},
+		...(!isMobile
+			? [
+					{
+						accessorKey: "description",
+						header: "Description",
+						size: 250,
+						cell: (props: CellContext<InventoryItem, string>) => {
+							return <p>{props.getValue()}</p>;
+						},
+					},
+			  ]
+			: []),
+		{
+			accessorKey: "quantity",
+			header: "Quantity",
+			size: 75,
+			cell: (props: CellContext<InventoryItem, number>) => {
+				return <p>{props.getValue()}</p>;
+			},
+		},
+		{
+			accessorKey: "company_price",
+			header: "Price",
+			size: 100,
+			cell: (props: CellContext<InventoryItem, number>) => {
+				return <p>{props.getValue()}</p>;
+			},
+		},
+	];
 
 	const table = useReactTable({
 		data: inventory?.data,

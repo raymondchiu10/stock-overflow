@@ -4,14 +4,14 @@ import { createContext, Dispatch, ReactNode, SetStateAction, useState } from "re
 interface ModalContextType {
 	modalIsOpen: boolean;
 	setModalIsOpen: Dispatch<SetStateAction<boolean>>;
-	selectedInventoryItem: Record<string, string>;
-	setSelectedInventoryItem: Dispatch<SetStateAction<Record<string, string>>>;
+	selectedInventoryItem: Record<string, string> | null;
+	setSelectedInventoryItem: Dispatch<SetStateAction<Record<string, string> | null>>;
 }
 
 const initialModalContext: ModalContextType = {
 	modalIsOpen: false,
 	setModalIsOpen: () => {},
-	selectedInventoryItem: {},
+	selectedInventoryItem: null,
 	setSelectedInventoryItem: () => {},
 };
 
@@ -23,7 +23,7 @@ interface ModalContextProviderProps {
 
 export function ModalContextProvider({ children }: ModalContextProviderProps) {
 	const [modalIsOpen, setModalIsOpen] = useState(false);
-	const [selectedInventoryItem, setSelectedInventoryItem] = useState<Record<string, string>>({});
+	const [selectedInventoryItem, setSelectedInventoryItem] = useState<Record<string, string> | null>(null);
 
 	return (
 		<ModalContext.Provider value={{ modalIsOpen, setModalIsOpen, selectedInventoryItem, setSelectedInventoryItem }}>

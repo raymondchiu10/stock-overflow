@@ -1,11 +1,11 @@
 import React, { useContext, useEffect } from "react";
 import SOModal from "@/components/SOModal/SOModal";
-import styles from "./inventory-details-modal.module.scss";
+import styles from "./inventory-admin-details-modal.module.scss";
 import { ModalContext } from "@/components/ModalContextProvider/ModalContextProvider";
 import Image from "next/image";
 import { useInventoryImage } from "@/lib/useImages";
 
-const InventoryDetailsModal = () => {
+const InventoryAdminDetailsModal = () => {
 	const { modalIsOpen, setModalIsOpen, selectedInventoryItem } = useContext(ModalContext);
 	const { selectedInventoryImages } = useInventoryImage(selectedInventoryItem?.uuid);
 
@@ -15,8 +15,8 @@ const InventoryDetailsModal = () => {
 
 	return (
 		<SOModal isOpen={modalIsOpen} setIsOpen={setModalIsOpen}>
-			<div className={styles["inventory-details-modal"]}>
-				<div className={styles["inventory-details-modal__header"]}>
+			<div className={styles["inventory-admin-details-modal"]}>
+				<div className={styles["inventory-admin-details-modal__header"]}>
 					<h2>Look up Item</h2>
 				</div>
 				<div>
@@ -54,7 +54,7 @@ const InventoryDetailsModal = () => {
 					</div>
 				</div>
 
-				<div className={styles["inventory-details-modal__cta"]}>
+				<div className={styles["inventory-admin-details-modal__cta"]}>
 					<button
 						onClick={() => {
 							setModalIsOpen(!modalIsOpen);
@@ -75,4 +75,4 @@ const InventoryDetailsModal = () => {
 	);
 };
 
-export default InventoryDetailsModal;
+export default InventoryAdminDetailsModal;
