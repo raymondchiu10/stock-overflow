@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import SOModal from "@/components/SOModal/SOModal";
 import styles from "./inventory-details-modal.module.scss";
 import { ModalContext } from "@/components/ModalContextProvider/ModalContextProvider";
