@@ -24,7 +24,7 @@ export default function useAuth({ redirect = true }: UseAuthOptions = {}) {
 		} else {
 			setIsAuthenticated(true);
 		}
-	}, [router, redirect]);
+	}, [router, redirect, token]);
 
 	return { isAuthenticated, token };
 }

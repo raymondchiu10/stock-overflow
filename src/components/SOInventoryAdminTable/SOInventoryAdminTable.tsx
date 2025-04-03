@@ -1,20 +1,21 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useInventory } from "@/lib/useInventory";
 import { useReactTable, getCoreRowModel, flexRender, ColumnDef, CellContext } from "@tanstack/react-table";
 import React, { useContext, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 
 import styles from "./so-inventory-admin-table.module.scss";
-import Delete from "@/assets/delete.svg?react";
-import Edit from "@/assets/edit.svg?react";
+import Delete from "@/assets/delete.svg";
+import Edit from "@/assets/edit.svg";
 import { ModalContext } from "../ModalContextProvider/ModalContextProvider";
 
 export interface InventoryItem {
-	base_price: string;
-	company_price: string;
-	description: string;
-	name: string;
-	quantity: number;
-	uuid: string;
+	base_price?: string;
+	company_price?: string;
+	description?: string;
+	name?: string;
+	quantity?: number;
+	uuid?: string;
 }
 
 const SOInventoryAdminTable = () => {
@@ -28,12 +29,18 @@ const SOInventoryAdminTable = () => {
 	const { data: inventory, isLoading } = useInventory(page, limit, sort, order);
 	const { modalIsOpen, setModalIsOpen, setSelectedInventoryItem } = useContext(ModalContext);
 
-	const toggleInventoryModal = (props) => {
+	const toggleInventoryModal = (props: CellContext<Record<string, string>, string>) => {
 		setSelectedInventoryItem(props.row?.original);
 		setModalIsOpen(!modalIsOpen);
 	};
 
-	const columns: ColumnDef<InventoryItem>[] = [
+	const testFunction = () => {
+		setPage(1);
+		setSort("id");
+		setOrder("asc");
+	};
+
+	const columns: ColumnDef<InventoryItem, any>[] = [
 		{
 			accessorKey: "name",
 			header: "Name",
@@ -42,9 +49,9 @@ const SOInventoryAdminTable = () => {
 				return (
 					<p
 						className={styles["so-inventory-admin-table__inventory-detail"]}
-						onClick={() => toggleInventoryModal(props)}
+						onClick={() => toggleInventoryModal(props as any)}
 					>
-						{props.getValue()}
+						{props.getValue() as string}
 					</p>
 				);
 			},
@@ -81,7 +88,7 @@ const SOInventoryAdminTable = () => {
 			accessorKey: "uuid",
 			header: "Edit/Remove",
 			size: 100,
-			cell: (props: CellContext<InventoryItem, number>) => {
+			cell: () => {
 				return (
 					<div className={styles["so-inventory-admin-table__modify"]}>
 						<Edit
@@ -113,6 +120,7 @@ const SOInventoryAdminTable = () => {
 
 	return (
 		<>
+			<div style={{ display: "none" }} onClick={testFunction}></div>
 			<h1>Admin</h1>
 			<table className={styles["so-inventory-table"]} style={{ minWidth: `${table.getTotalSize()}px` }}>
 				<thead>

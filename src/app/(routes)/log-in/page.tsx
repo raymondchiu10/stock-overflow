@@ -86,6 +86,3 @@ const Login = () => {
 };
 
 export default Login;
-function useNavigate() {
-	throw new Error("Function not implemented.");
-}
