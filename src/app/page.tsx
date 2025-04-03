@@ -1,12 +1,16 @@
-import Image from "next/image";
-import styles from "./page.module.scss";
+import Link from "next/link";
+import styles from "./home.module.scss";
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main>
-        <h1>HELLO</h1>
-      </main>
-    </div>
-  );
+	return (
+		<main>
+			<section className={styles["home"]}>
+				<div className={styles["home__container"]}>
+					<h1>Stock Overflow</h1>
+					<p>An inventory management wep app.</p>
+				</div>
+				<Link href={"/dashboard"}>Go to Inventory</Link>
+			</section>
+		</main>
+	);
 }

@@ -1,0 +1,24 @@
+.so-inventory-table {
+	&__header-container {
+		position: relative;
+		display: flex;
+		justify-content: space-between;
+	}
+	&__resizer {
+		position: absolute;
+		height: 100%;
+		width: 2px;
+		top: 0;
+		right: 0;
+
+		&:hover {
+			cursor: pointer;
+			background-color: lightgray;
+		}
+
+		&:active {
+			opacity: 1;
+			background-color: gray;
+		}
+	}
+}

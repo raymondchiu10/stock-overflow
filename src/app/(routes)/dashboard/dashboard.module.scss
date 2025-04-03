@@ -1,0 +1,36 @@
+@use "@/styles/container" as *;
+@use "@/styles/mixins" as *;
+
+.dashboard {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 1rem 0;
+
+	&__header {
+		position: sticky;
+		display: flex;
+		width: 100%;
+		justify-content: space-between;
+	}
+	&__header-qr-button {
+		display: initial;
+
+		@include media-breakpoint-up($md) {
+			display: none;
+		}
+	}
+
+	&__container {
+		@extend .container;
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		padding: 0 1rem;
+		gap: 1rem;
+	}
+
+	&__container-table {
+	}
+}
