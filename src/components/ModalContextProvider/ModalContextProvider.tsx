@@ -6,6 +6,8 @@ interface ModalContextType {
 	setModalIsOpen: Dispatch<SetStateAction<boolean>>;
 	qrCodeModalIsOpen: boolean;
 	setQrCodeModalIsOpen: Dispatch<SetStateAction<boolean>>;
+	addInventoryModalIsOpen: boolean;
+	setAddInventoryModalIsOpen: Dispatch<SetStateAction<boolean>>;
 	selectedInventoryItem: Record<string, string> | null;
 	setSelectedInventoryItem: Dispatch<SetStateAction<Record<string, string> | null>>;
 }
@@ -15,6 +17,8 @@ const initialModalContext: ModalContextType = {
 	setModalIsOpen: () => {},
 	qrCodeModalIsOpen: false,
 	setQrCodeModalIsOpen: () => {},
+	addInventoryModalIsOpen: false,
+	setAddInventoryModalIsOpen: () => {},
 	selectedInventoryItem: null,
 	setSelectedInventoryItem: () => {},
 };
@@ -28,6 +32,7 @@ interface ModalContextProviderProps {
 export function ModalContextProvider({ children }: ModalContextProviderProps) {
 	const [modalIsOpen, setModalIsOpen] = useState(false);
 	const [qrCodeModalIsOpen, setQrCodeModalIsOpen] = useState(false);
+	const [addInventoryModalIsOpen, setAddInventoryModalIsOpen] = useState(false);
 	const [selectedInventoryItem, setSelectedInventoryItem] = useState<Record<string, string> | null>(null);
 
 	return (
@@ -39,6 +44,8 @@ export function ModalContextProvider({ children }: ModalContextProviderProps) {
 				setSelectedInventoryItem,
 				qrCodeModalIsOpen,
 				setQrCodeModalIsOpen,
+				addInventoryModalIsOpen,
+				setAddInventoryModalIsOpen,
 			}}
 		>
 			{children}

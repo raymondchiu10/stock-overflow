@@ -1,6 +1,15 @@
 @use "@/styles/container" as *;
+
 .home {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
 	&__header {
+		@extend .container;
+
 		display: flex;
 		flex-direction: row;
 		width: 100%;
