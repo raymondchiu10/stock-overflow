@@ -3,18 +3,24 @@ import dynamic from "next/dynamic";
 import SOModal from "@/components/SOModal/SOModal";
 import styles from "./qr-code-modal.module.scss";
 import { ModalContext } from "@/components/ModalContextProvider/ModalContextProvider";
+import { useInventoryItem } from "@/lib/useInventory";
 
 const QrCodeScanner = dynamic(() => import("@/lib/QrCodeScanner"), {
 	ssr: false,
 });
 const QRCodeModal = () => {
-	const { qrCodeModalIsOpen, setQrCodeModalIsOpen } = useContext(ModalContext);
+	const { modalIsOpen, setModalIsOpen, setSelectedInventoryItem, qrCodeModalIsOpen, setQrCodeModalIsOpen } =
+		useContext(ModalContext);
 	const [scanResult, setScanResult] = useState<string>("");
+	const { data } = useInventoryItem(scanResult);
 
-	const handleScanSuccess = (decodedText: string, decodedResult: unknown) => {
+	const handleScanSuccess = async (decodedText: string, decodedResult: unknown) => {
 		console.log(`Code scanned: ${decodedText}`, decodedResult);
+
 		setScanResult(decodedText);
-		// You can handle the scanned result here (e.g., navigate to the URL, display data)
+		setQrCodeModalIsOpen(!qrCodeModalIsOpen);
+		setSelectedInventoryItem(data[0]);
+		setModalIsOpen(!modalIsOpen);
 	};
 
 	return (
@@ -24,7 +30,9 @@ const QRCodeModal = () => {
 					<h2>Look up Item</h2>
 				</div>
 				<div>
-					{typeof window !== "undefined" && <QrCodeScanner onScanSuccess={handleScanSuccess} />}
+					{qrCodeModalIsOpen && typeof window !== "undefined" && (
+						<QrCodeScanner onScanSuccess={handleScanSuccess} />
+					)}
 
 					{scanResult && (
 						<div>

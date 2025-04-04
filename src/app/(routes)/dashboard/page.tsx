@@ -25,7 +25,7 @@ const Dashboard = () => {
 					<div className={styles["dashboard__header"]}>
 						<h1>Stock Overflow Inventory</h1>
 						<button className={styles["dashboard__header-qr-button"]} onClick={toggleQrCodeModal}>
-							Mobile Button
+							Lookup
 						</button>
 					</div>
 

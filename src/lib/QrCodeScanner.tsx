@@ -1,56 +1,47 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useCallback } from "react";
 import { Html5QrcodeScanner } from "html5-qrcode";
 
 type QrCodeScannerProps = {
 	onScanSuccess: (decodedText: string, decodedResult: unknown) => void;
+	fps?: number;
+	qrbox?: number;
 };
 
-const QrCodeScanner: React.FC<QrCodeScannerProps> = ({ onScanSuccess }) => {
+const QrCodeScanner: React.FC<QrCodeScannerProps> = ({ onScanSuccess, fps = 10, qrbox = 250 }) => {
+	const scannerContainerRef = useRef<HTMLDivElement | null>(null);
 	const scannerRef = useRef<Html5QrcodeScanner | null>(null);
 
+	const successCallback = useCallback(
+		(decodedText: string, decodedResult: unknown) => {
+			onScanSuccess(decodedText, decodedResult);
+		},
+		[onScanSuccess]
+	);
+
+	const errorCallback = useCallback((err: string) => {
+		console.warn("QR Scan error:", err);
+	}, []);
+
 	useEffect(() => {
-		// Only execute this in the browser
-		if (typeof window !== "undefined") {
-			try {
-				// Create new scanner
-				scannerRef.current = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 }, /* verbose= */ false);
+		if (!scannerContainerRef.current || typeof window === "undefined") return;
 
-				// Define callbacks
-				const successCallback = (decodedText: string, decodedResult: unknown) => {
-					onScanSuccess(decodedText, decodedResult);
-					if (scannerRef.current) {
-						scannerRef.current.clear();
-					}
-				};
+		// Generate a unique ID for the scanner div
+		const containerId = `qr-scanner-${Date.now()}`;
+		scannerContainerRef.current.id = containerId;
 
-				const errorCallback = (err: string) => {
-					console.warn(err);
-				};
+		const scanner = new Html5QrcodeScanner(containerId, { fps, qrbox }, false);
+		scannerRef.current = scanner;
 
-				// Render the scanner
-				scannerRef.current.render(successCallback, errorCallback);
+		scanner.render(successCallback, errorCallback);
 
-				console.log("Scanner mounted successfully");
-			} catch (err) {
-				console.error("Error initializing scanner:", err);
-			}
-		}
-
-		// Cleanup function
 		return () => {
-			if (scannerRef.current) {
-				try {
-					scannerRef.current.clear();
-					console.log("Scanner unmounted successfully");
-				} catch (err) {
-					console.error("Error clearing scanner:", err);
-				}
-			}
+			scannerRef.current?.clear().catch((err) => console.error("Error clearing scanner:", err));
+			scannerRef.current = null;
 		};
-	}, [onScanSuccess]);
+	}, [fps, qrbox, successCallback, errorCallback]);
 
-	return <div id="reader" style={{ width: "100%" }}></div>;
+	return <div ref={scannerContainerRef} style={{ width: "100%" }} />;
 };
 
 export default QrCodeScanner;
