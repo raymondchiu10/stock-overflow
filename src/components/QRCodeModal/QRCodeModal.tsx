@@ -23,8 +23,6 @@ const QRCodeModal = () => {
 
 		setScanResult(decodedText);
 		setQrCodeModalIsOpen(!qrCodeModalIsOpen);
-		// setSelectedInventoryItem(data[0]);
-		// setModalIsOpen(!modalIsOpen);
 	};
 
 	return (
