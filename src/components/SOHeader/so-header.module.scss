@@ -1,0 +1,29 @@
+@use "@/styles/container" as *;
+@use "@/styles/mixins" as *;
+
+.so-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+
+	&__button-container {
+		display: flex;
+		gap: 1rem;
+
+		& > * {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			min-width: 4rem;
+		}
+	}
+
+	&__qr-button {
+		display: initial;
+
+		@include media-breakpoint-up($md) {
+			display: none;
+		}
+	}
+}
