@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import SOLogoutButton from "@/components/SOLogoutButton/SOLogoutButton";
 import { useForm } from "react-hook-form";
 
 interface SignupFormInputs {
