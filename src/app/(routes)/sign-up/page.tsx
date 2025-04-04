@@ -89,8 +89,6 @@ const SignUp = () => {
 				</div>
 				<button type="submit">Sign Up</button>
 			</form>
-
-			<SOLogoutButton />
 		</div>
 	);
 };
