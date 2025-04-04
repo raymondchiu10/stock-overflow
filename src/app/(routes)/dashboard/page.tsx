@@ -8,7 +8,6 @@ import SOInventoryAdminTable from "@/components/SOInventoryAdminTable/SOInventor
 import InventoryAdminDetailsModal from "@/components/InventoryAdminDetailsModal/InventoryAdminDetailsModal";
 import InventoryDetailsModal from "@/components/InventoryDetailsModal/InventoryDetailsModal";
 import QRCodeModal from "@/components/QRCodeModal/QRCodeModal";
-import Link from "next/link";
 import SOHeader from "@/components/SOHeader/SOHeader";
 
 const Dashboard = () => {
@@ -16,9 +15,9 @@ const Dashboard = () => {
 
 	return (
 		<main className={styles["dashboard"]}>
-			<header className={styles["dashboard__header"]}>
+			<div className={styles["dashboard__header"]}>
 				<SOHeader />
-			</header>
+			</div>
 
 			<section className={styles["dashboard__body"]}>
 				<div className={styles["dashboard__body-container"]}>
