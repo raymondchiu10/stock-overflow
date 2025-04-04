@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import SOButton from "../SOButton/SOButton";
 import { useRouter } from "next/navigation";
 import useAuth from "@/lib/useAuth";
+import Link from "next/link";
 
 interface SOLogoutButtonProps {
 	redirect?: string;
@@ -28,7 +29,7 @@ const SOLogoutButton = ({ redirect }: SOLogoutButtonProps) => {
 	};
 
 	if (!isLoggedIn) {
-		return null;
+		return <Link href="log-in">Log in</Link>;
 	}
 
 	return <SOButton onClick={handleLogout}>Log Out</SOButton>;
