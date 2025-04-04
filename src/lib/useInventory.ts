@@ -14,3 +14,16 @@ export const useInventory = (page: number, limit: number, sort: string, order: s
 		queryFn: () => fetchInventory(page, limit, sort, order),
 	});
 };
+
+const getInventoryItem = async (uuid: string) => {
+	const { data } = await axios.get(`/api/company/${process.env.NEXT_PUBLIC_COMPANY_UUID || ""}/inventory/${uuid}`);
+	return data;
+};
+
+export const useInventoryItem = (inventoryUuid: string) => {
+	return useQuery({
+		queryKey: ["inventory-item", inventoryUuid],
+		queryFn: () => getInventoryItem(inventoryUuid),
+		enabled: !!inventoryUuid && inventoryUuid.length > 0,
+	});
+};

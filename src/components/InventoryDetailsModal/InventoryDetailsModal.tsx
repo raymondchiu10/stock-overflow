@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import SOModal from "@/components/SOModal/SOModal";
 import styles from "./inventory-details-modal.module.scss";
 import { ModalContext } from "@/components/ModalContextProvider/ModalContextProvider";
@@ -7,11 +7,13 @@ import { useInventoryImage } from "@/lib/useImages";
 
 const InventoryDetailsModal = () => {
 	const { modalIsOpen, setModalIsOpen, selectedInventoryItem } = useContext(ModalContext);
-	const { selectedInventoryImages } = useInventoryImage(selectedInventoryItem?.uuid || "");
+	const { data, refetch } = useInventoryImage(selectedInventoryItem?.uuid || "");
 
-	if (!selectedInventoryItem) {
-		return null;
-	}
+	useEffect(() => {
+		if (selectedInventoryItem) {
+			refetch();
+		}
+	}, [selectedInventoryItem, refetch]);
 
 	return (
 		<SOModal isOpen={modalIsOpen} setIsOpen={setModalIsOpen}>
@@ -36,11 +38,11 @@ const InventoryDetailsModal = () => {
 					</div>
 
 					<div>
-						{selectedInventoryImages.data ? (
+						{data?.images?.length ? (
 							<div>
 								<Image
-									src={selectedInventoryImages.data?.images[0]?.url}
-									alt={selectedInventoryImages.data?.images[0]?.alt || "Product image"}
+									src={data?.images[0]?.url}
+									alt={data?.images[0]?.alt || "Product image"}
 									width={100}
 									height={100}
 								/>
@@ -49,7 +51,7 @@ const InventoryDetailsModal = () => {
 							<div>No image available</div>
 						)}
 						<div>
-							<p>{selectedInventoryItem.description}</p>
+							<p>{data?.description}</p>
 						</div>
 					</div>
 				</div>

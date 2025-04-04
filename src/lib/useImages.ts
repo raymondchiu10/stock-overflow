@@ -19,20 +19,16 @@ const fetchCompanyInventoryImage = async (inventoryUuid: string) => {
 };
 
 export const useInventory = (page: number, limit: number, sort: string, order: string) => {
-	const allInventoryImages = useQuery({
+	return useQuery({
 		queryKey: ["inventory", page, limit, sort, order],
 		queryFn: () => fetchAllCompanyInventoryImages(page, limit, sort, order),
 	});
-
-	return { allInventoryImages };
 };
 
 export const useInventoryImage = (inventoryUuid: string) => {
-	const selectedInventoryImages = useQuery({
+	return useQuery({
 		queryKey: ["inventory", inventoryUuid],
 		queryFn: () => fetchCompanyInventoryImage(inventoryUuid),
 		enabled: !!inventoryUuid,
 	});
-
-	return { selectedInventoryImages };
 };
