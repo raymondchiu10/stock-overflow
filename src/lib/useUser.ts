@@ -9,7 +9,8 @@ const fetchUser = async () => {
 	}
 
 	if (!token) {
-		throw new Error("No authentication token available");
+		return null;
+		// throw new Error("No authentication token available");
 	}
 
 	const { data } = await axiosAuth(token).get(`/api/users/profile`);

@@ -32,7 +32,7 @@ const SOInventoryTable = () => {
 			cell: (props: CellContext<InventoryItem, string>) => {
 				return (
 					<p
-						className={styles["so-inventory-admin-table__inventory-detail"]}
+						className={styles["so-inventory-table__inventory-detail"]}
 						onClick={() => toggleInventoryModal(props)}
 					>
 						{props.getValue()}
