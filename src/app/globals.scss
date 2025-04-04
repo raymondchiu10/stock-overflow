@@ -15,9 +15,10 @@
 }
 
 table {
-	border: 1px solid red;
+	border: 1px solid black;
 
 	th {
+		padding: 0.25rem;
 		border: 1px solid red;
 	}
 	td {
