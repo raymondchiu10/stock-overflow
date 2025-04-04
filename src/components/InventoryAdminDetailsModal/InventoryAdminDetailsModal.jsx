@@ -36,7 +36,7 @@ const InventoryAdminDetailsModal = () => {
 					</div>
 
 					<div>
-						{selectedInventoryImages.data ? (
+						{selectedInventoryImages?.data ? (
 							<div>
 								<Image
 									src={selectedInventoryImages.data?.images[0]?.url}
