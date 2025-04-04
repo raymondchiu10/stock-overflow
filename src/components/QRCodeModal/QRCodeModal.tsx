@@ -15,9 +15,12 @@ const QRCodeModal = () => {
 	const { data } = useInventoryItem(scanResult);
 
 	useEffect(() => {
-		setSelectedInventoryItem(data[0]);
-		setModalIsOpen(!modalIsOpen);
+		if (data) {
+			setSelectedInventoryItem(data[0]);
+			setModalIsOpen(!modalIsOpen);
+		}
 	}, [data]);
+
 	const handleScanSuccess = async (decodedText: string, decodedResult: unknown) => {
 		console.log(`Code scanned: ${decodedText}`, decodedResult);
 

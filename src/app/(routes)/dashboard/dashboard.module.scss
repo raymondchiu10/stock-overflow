@@ -13,26 +13,6 @@
 		padding: 0.5rem 1rem;
 	}
 
-	&__header-button-container {
-		display: flex;
-		gap: 1rem;
-
-		& > * {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			min-width: 4rem;
-		}
-	}
-
-	&__header-qr-button {
-		display: initial;
-
-		@include media-breakpoint-up($md) {
-			display: none;
-		}
-	}
-
 	&__body {
 		display: flex;
 		flex-direction: column;
