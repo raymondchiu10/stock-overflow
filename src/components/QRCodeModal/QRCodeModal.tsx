@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import dynamic from "next/dynamic";
 import SOModal from "@/components/SOModal/SOModal";
 import styles from "./qr-code-modal.module.scss";
@@ -14,13 +14,17 @@ const QRCodeModal = () => {
 	const [scanResult, setScanResult] = useState<string>("");
 	const { data } = useInventoryItem(scanResult);
 
+	useEffect(() => {
+		setSelectedInventoryItem(data[0]);
+		setModalIsOpen(!modalIsOpen);
+	}, [data]);
 	const handleScanSuccess = async (decodedText: string, decodedResult: unknown) => {
 		console.log(`Code scanned: ${decodedText}`, decodedResult);
 
 		setScanResult(decodedText);
 		setQrCodeModalIsOpen(!qrCodeModalIsOpen);
-		setSelectedInventoryItem(data[0]);
-		setModalIsOpen(!modalIsOpen);
+		// setSelectedInventoryItem(data[0]);
+		// setModalIsOpen(!modalIsOpen);
 	};
 
 	return (
