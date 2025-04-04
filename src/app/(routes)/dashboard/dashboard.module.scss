@@ -2,10 +2,15 @@
 @use "@/styles/mixins" as *;
 
 .dashboard {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 	width: 100%;
 	height: 100%;
 
 	&__header {
+		@extend .container;
 		position: sticky;
 		display: flex;
 		width: 100%;
