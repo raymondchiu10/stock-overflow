@@ -1,7 +1,9 @@
 import styles from "./edit-inventory-details.module.scss";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ModalContext } from "../ModalContextProvider/ModalContextProvider";
 import { useForm } from "react-hook-form";
+import ImageUploader from "../ImageUploader/ImageUploader";
+import { CldImage, CldOgImage, CloudinaryUploadWidgetResults } from "next-cloudinary";
 
 interface AddInventoryInputs {
 	name: string;
@@ -14,7 +16,7 @@ interface AddInventoryInputs {
 const EditInventoryDetails = () => {
 	const { addInventoryModalIsOpen: modalIsOpen, setAddInventoryModalIsOpen: setModalIsOpen } =
 		useContext(ModalContext);
-
+	const [image, setImage] = useState<CloudinaryUploadWidgetResults>();
 	const {
 		register,
 		handleSubmit,
@@ -71,6 +73,16 @@ const EditInventoryDetails = () => {
 				</div>
 
 				<div>
+					{image && (
+						<CldImage
+							src={image?.info?.public_id}
+							alt={image?.info?.original_filename}
+							width={100}
+							height={100}
+						/>
+					)}
+					<ImageUploader setImage={setImage} />
+
 					<div className={styles["edit-inventory-details__form-field"]}>
 						<label htmlFor="description">Description:</label>
 						<input
