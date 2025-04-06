@@ -5,7 +5,6 @@ import React, { useContext, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 
 import styles from "./so-inventory-admin-table.module.scss";
-import Delete from "@/assets/delete.svg";
 import Edit from "@/assets/edit.svg";
 import { ModalContext } from "../ModalContextProvider/ModalContextProvider";
 import SOInventoryDeleteButton from "../SOInventoryDeleteButton/SOInventoryDeleteButton";

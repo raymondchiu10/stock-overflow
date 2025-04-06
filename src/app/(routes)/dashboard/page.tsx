@@ -14,7 +14,7 @@ import { ModalContext } from "@/components/ModalContextProvider/ModalContextProv
 import InventoryDeleteModal from "@/components/InventoryDeleteModal/InventoryDeleteModal";
 
 const Dashboard = () => {
-	const { addInventoryModalIsOpen, setAddInventoryModalIsOpen, selectedInventoryItem } = useContext(ModalContext);
+	const { addInventoryModalIsOpen, setAddInventoryModalIsOpen } = useContext(ModalContext);
 	const { data: user } = useUser();
 
 	const toggleAddInventory = () => {
