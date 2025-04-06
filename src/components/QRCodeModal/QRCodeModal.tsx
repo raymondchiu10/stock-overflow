@@ -9,7 +9,7 @@ const QrCodeScanner = dynamic(() => import("@/lib/QrCodeScanner"), {
 	ssr: false,
 });
 const QRCodeModal = () => {
-	const { modalIsOpen, setModalIsOpen, setSelectedInventoryItem, qrCodeModalIsOpen, setQrCodeModalIsOpen } =
+	const { setModalIsOpen, setSelectedInventoryItem, qrCodeModalIsOpen, setQrCodeModalIsOpen } =
 		useContext(ModalContext);
 	const [scanResult, setScanResult] = useState<string>("");
 	const { data, refetch } = useInventoryItem(scanResult);
