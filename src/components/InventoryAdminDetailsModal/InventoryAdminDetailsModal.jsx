@@ -4,11 +4,7 @@ import { ModalContext } from "@/components/ModalContextProvider/ModalContextProv
 import InventoryDetails from "../InventoryDetails/InventoryDetails";
 
 const InventoryAdminDetailsModal = () => {
-	const { modalIsOpen, setModalIsOpen, selectedInventoryItem } = useContext(ModalContext);
-
-	if (!selectedInventoryItem) {
-		return null;
-	}
+	const { modalIsOpen, setModalIsOpen } = useContext(ModalContext);
 
 	return (
 		<SOModal isOpen={modalIsOpen} setIsOpen={setModalIsOpen}>

@@ -11,6 +11,7 @@ import QRCodeModal from "@/components/QRCodeModal/QRCodeModal";
 import SOHeader from "@/components/SOHeader/SOHeader";
 import AddInventoryModal from "@/components/AddInventoryModal/AddInventoryModal";
 import { ModalContext } from "@/components/ModalContextProvider/ModalContextProvider";
+import InventoryDeleteModal from "@/components/InventoryDeleteModal/InventoryDeleteModal";
 
 const Dashboard = () => {
 	const { addInventoryModalIsOpen, setAddInventoryModalIsOpen } = useContext(ModalContext);
@@ -19,6 +20,7 @@ const Dashboard = () => {
 	const toggleAddInventory = () => {
 		setAddInventoryModalIsOpen(!addInventoryModalIsOpen);
 	};
+
 	return (
 		<main className={styles["dashboard"]}>
 			<div className={styles["dashboard__header"]}>
@@ -37,9 +39,11 @@ const Dashboard = () => {
 				</div>
 			</section>
 
-			<QRCodeModal />
 			{user && user?.role === "admin" ? <InventoryAdminDetailsModal /> : <InventoryDetailsModal />}
+
+			<QRCodeModal />
 			<AddInventoryModal />
+			<InventoryDeleteModal />
 		</main>
 	);
 };

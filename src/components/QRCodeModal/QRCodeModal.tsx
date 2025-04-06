@@ -18,6 +18,7 @@ const QRCodeModal = () => {
 		if (data) {
 			setSelectedInventoryItem(data[0]);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data]);
 
 	const handleScanSuccess = async (decodedText: string, decodedResult: unknown) => {
