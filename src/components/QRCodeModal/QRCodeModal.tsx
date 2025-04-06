@@ -19,6 +19,7 @@ const QRCodeModal = () => {
 			setSelectedInventoryItem(data[0]);
 			setModalIsOpen(!modalIsOpen);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data]);
 
 	const handleScanSuccess = async (decodedText: string, decodedResult: unknown) => {
@@ -37,13 +38,6 @@ const QRCodeModal = () => {
 				<div>
 					{qrCodeModalIsOpen && typeof window !== "undefined" && (
 						<QrCodeScanner onScanSuccess={handleScanSuccess} />
-					)}
-
-					{scanResult && (
-						<div>
-							<h2>Scan Result:</h2>
-							<div>{scanResult}</div>
-						</div>
 					)}
 				</div>
 

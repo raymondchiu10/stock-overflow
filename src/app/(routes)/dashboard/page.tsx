@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import styles from "./dashboard.module.scss";
 
 import SOInventoryTable from "@/components/SOInventoryTable/SOInventoryTable";
