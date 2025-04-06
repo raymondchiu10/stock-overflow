@@ -8,7 +8,7 @@
 	&__resizer {
 		position: absolute;
 		height: 100%;
-		width: 2px;
+		width: 4px;
 		top: 0;
 		right: 0;
 
@@ -41,22 +41,6 @@
 			}
 			&:active {
 				filter: blur(0.5px);
-			}
-		}
-
-		&--delete {
-			cursor: pointer;
-			filter: brightness(0) saturate(100%) invert(12%) sepia(71%) saturate(6443%) hue-rotate(2deg) brightness(82%)
-				contrast(116%);
-
-			&:hover {
-				filter: brightness(0) saturate(100%) invert(18%) sepia(97%) saturate(7380%) hue-rotate(359deg)
-					brightness(106%) contrast(108%);
-			}
-
-			&:active {
-				filter: brightness(0) saturate(100%) invert(12%) sepia(71%) saturate(6443%) hue-rotate(2deg)
-					brightness(82%) contrast(116%) blur(0.5px);
 			}
 		}
 	}

@@ -10,7 +10,7 @@ const InventoryDetails = () => {
 	const { data: selectedInventoryImages, refetch: refetchImages } = useInventoryImage(
 		selectedInventoryItem?.uuid as string
 	);
-	const { data: qrcode, refetch } = useQrCode(selectedInventoryItem!.uuid);
+	const { data: qrcode, refetch } = useQrCode(selectedInventoryItem?.uuid as string);
 	const [image, setImage] = useState<string>();
 	const [qrCodeImage, setQrCodeImage] = useState<string>();
 
@@ -40,8 +40,6 @@ const InventoryDetails = () => {
 			setSelectedInventoryItem(null);
 		}
 	}, [modalIsOpen, refetch, refetchImages, setSelectedInventoryItem]);
-
-	console.log("modalIsOpen", modalIsOpen);
 
 	return (
 		<div className={styles["inventory-details"]}>

@@ -4,6 +4,8 @@ import { createContext, Dispatch, ReactNode, SetStateAction, useState } from "re
 interface ModalContextType {
 	modalIsOpen: boolean;
 	setModalIsOpen: Dispatch<SetStateAction<boolean>>;
+	deleteInventoryModalIsOpen: boolean;
+	setDeleteInventoryModalIsOpen: Dispatch<SetStateAction<boolean>>;
 	qrCodeModalIsOpen: boolean;
 	setQrCodeModalIsOpen: Dispatch<SetStateAction<boolean>>;
 	addInventoryModalIsOpen: boolean;
@@ -15,6 +17,9 @@ interface ModalContextType {
 const initialModalContext: ModalContextType = {
 	modalIsOpen: false,
 	setModalIsOpen: () => {},
+
+	deleteInventoryModalIsOpen: false,
+	setDeleteInventoryModalIsOpen: () => {},
 	qrCodeModalIsOpen: false,
 	setQrCodeModalIsOpen: () => {},
 	addInventoryModalIsOpen: false,
@@ -33,6 +38,7 @@ export function ModalContextProvider({ children }: ModalContextProviderProps) {
 	const [modalIsOpen, setModalIsOpen] = useState(false);
 	const [qrCodeModalIsOpen, setQrCodeModalIsOpen] = useState(false);
 	const [addInventoryModalIsOpen, setAddInventoryModalIsOpen] = useState(false);
+	const [deleteInventoryModalIsOpen, setDeleteInventoryModalIsOpen] = useState(false);
 	const [selectedInventoryItem, setSelectedInventoryItem] = useState<Record<string, string> | null>(null);
 
 	return (
@@ -46,6 +52,8 @@ export function ModalContextProvider({ children }: ModalContextProviderProps) {
 				setQrCodeModalIsOpen,
 				addInventoryModalIsOpen,
 				setAddInventoryModalIsOpen,
+				deleteInventoryModalIsOpen,
+				setDeleteInventoryModalIsOpen,
 			}}
 		>
 			{children}
