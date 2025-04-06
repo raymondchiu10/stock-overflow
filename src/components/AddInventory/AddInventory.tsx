@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import styles from "./add-inventory.module.scss";
 import React, { useContext, useEffect, useState } from "react";
 import { ModalContext } from "../ModalContextProvider/ModalContextProvider";
@@ -54,6 +55,7 @@ const AddInventory = () => {
 					{
 						inventoryUuid,
 						payload: {
+							// @ts-ignore
 							url: image?.info?.secure_url,
 							name: data.name,
 							alt: data.description,
@@ -134,6 +136,7 @@ const AddInventory = () => {
 						<div className={styles["add-inventory__image-uploader"]}>
 							{image && (
 								<CldImage
+									// @ts-ignore
 									src={image?.info?.public_id}
 									alt={`temporary image to be uploaded`}
 									width={150}

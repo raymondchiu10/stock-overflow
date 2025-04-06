@@ -16,8 +16,7 @@ const fetchAllCompanyInventoryImages = async (page?: number, limit?: number, sor
 };
 
 const fetchCompanyInventoryImage = async (inventoryUuid: string) => {
-	const token = localStorage.getItem("authToken") as string;
-	const { data } = await axiosAuth(token).get(
+	const { data } = await axios.get(
 		`/api/images/company/${process.env.NEXT_PUBLIC_COMPANY_UUID || ""}/inventory/${inventoryUuid}`,
 		{
 			params: { inventoryUuid },
