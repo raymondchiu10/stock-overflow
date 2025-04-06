@@ -37,6 +37,24 @@
 
 		gap: 1rem;
 	}
+	&__body-qr-code-container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	&__body-qr-code {
+		aspect-ratio: 1;
+		width: 100%;
+		max-width: 200px;
+
+		& > * {
+			width: 100%;
+			height: 100%;
+			object-fit: contain;
+		}
+	}
+
 	&__cta {
 		display: flex;
 		justify-content: flex-end;
