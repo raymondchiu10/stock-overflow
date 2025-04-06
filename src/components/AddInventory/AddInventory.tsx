@@ -128,7 +128,6 @@ const AddInventory = () => {
 								placeholder="Company Price"
 								{...register("company_price")}
 							/>
-							{errors.base_price && <span style={{ color: "red" }}>{errors.base_price.message}</span>}
 						</div>
 					</div>
 
