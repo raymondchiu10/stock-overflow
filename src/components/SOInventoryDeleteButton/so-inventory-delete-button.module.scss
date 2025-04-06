@@ -1,0 +1,15 @@
+.so-inventory-delete-button {
+	cursor: pointer;
+	filter: brightness(0) saturate(100%) invert(12%) sepia(71%) saturate(6443%) hue-rotate(2deg) brightness(82%)
+		contrast(116%);
+
+	&:hover {
+		filter: brightness(0) saturate(100%) invert(18%) sepia(97%) saturate(7380%) hue-rotate(359deg) brightness(106%)
+			contrast(108%);
+	}
+
+	&:active {
+		filter: brightness(0) saturate(100%) invert(12%) sepia(71%) saturate(6443%) hue-rotate(2deg) brightness(82%)
+			contrast(116%) blur(0.5px);
+	}
+}

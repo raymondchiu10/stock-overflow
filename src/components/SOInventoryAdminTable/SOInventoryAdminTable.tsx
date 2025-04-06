@@ -8,6 +8,7 @@ import styles from "./so-inventory-admin-table.module.scss";
 import Delete from "@/assets/delete.svg";
 import Edit from "@/assets/edit.svg";
 import { ModalContext } from "../ModalContextProvider/ModalContextProvider";
+import SOInventoryDeleteButton from "../SOInventoryDeleteButton/SOInventoryDeleteButton";
 
 export interface InventoryItem {
 	base_price?: string;
@@ -88,7 +89,7 @@ const SOInventoryAdminTable = () => {
 			accessorKey: "uuid",
 			header: "Edit/Remove",
 			size: 100,
-			cell: () => {
+			cell: (props: CellContext<InventoryItem, string>) => {
 				return (
 					<div className={styles["so-inventory-admin-table__modify"]}>
 						<Edit
@@ -96,11 +97,7 @@ const SOInventoryAdminTable = () => {
 							alt="edit"
 							draggable={false}
 						/>
-						<Delete
-							className={styles["so-inventory-admin-table__modify--delete"]}
-							alt="delete"
-							draggable={false}
-						/>
+						<SOInventoryDeleteButton props={props} />
 					</div>
 				);
 			},
