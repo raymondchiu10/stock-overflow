@@ -130,11 +130,19 @@ List any external sources of data that will be used in your app.
 
 ##### Days 1-2: Project Setup & Authentication
 
+<<<<<<< HEAD
+
 -   Initialize NextJS project with TypeScript
 -   Set up Supabase database connection
 -   Implement basic user registration
 -   Create login/authentication system
+-   # Basic user role differentiation (admin vs. user)
+-   Initialize NextJS project with TypeScript
+-   Set up Render database connection
+-   Implement basic user registration
+-   Create login/authentication system
 -   Basic user role differentiation (admin vs. user)
+    > > > > > > > main
 
 ##### Days 3-4: Inventory Core Features
 
