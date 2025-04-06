@@ -12,14 +12,12 @@ const QRCodeModal = () => {
 	const { modalIsOpen, setModalIsOpen, setSelectedInventoryItem, qrCodeModalIsOpen, setQrCodeModalIsOpen } =
 		useContext(ModalContext);
 	const [scanResult, setScanResult] = useState<string>("");
-	const { data } = useInventoryItem(scanResult);
+	const { data, refetch } = useInventoryItem(scanResult);
 
 	useEffect(() => {
 		if (data) {
 			setSelectedInventoryItem(data[0]);
-			setModalIsOpen(!modalIsOpen);
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data]);
 
 	const handleScanSuccess = async (decodedText: string, decodedResult: unknown) => {
@@ -27,6 +25,8 @@ const QRCodeModal = () => {
 
 		setScanResult(decodedText);
 		setQrCodeModalIsOpen(!qrCodeModalIsOpen);
+		refetch();
+		setModalIsOpen(true);
 	};
 
 	return (

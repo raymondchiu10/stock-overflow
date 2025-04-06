@@ -34,35 +34,35 @@ As a user, I want to be able to look at some kind of marker (upc, qr code, or po
 
 List technologies that will be used in your app, including any libraries to save time or provide more functionality. Be sure to research any potential limitations.
 
-- Typescript
-- SCSS
-- Node js
-- Express
-- Postgresql (Supabase)
-- Nextjs
+-   Typescript
+-   SCSS
+-   Node js
+-   Express
+-   Postgresql (Supabase)
+-   Nextjs
 
 QR code scanner:
 
-- [html5-qrcode](https://www.npmjs.com/package/html5-qrcode) (deprecated; development migrated to scanapp)
-- [scanapp](https://scanapp.org/html5-qrcode-docs/docs/intro)
+-   [html5-qrcode](https://www.npmjs.com/package/html5-qrcode) (deprecated; development migrated to scanapp)
+-   [scanapp](https://scanapp.org/html5-qrcode-docs/docs/intro)
 
 ### APIs
 
 List any external sources of data that will be used in your app.
 
-- [list of floral UPCs:](https://www.freshproduce.com/resources/floral/floral-universal-product-codes/)
+-   [list of floral UPCs:](https://www.freshproduce.com/resources/floral/floral-universal-product-codes/)
 
-- [free online qr code generator link:](https://public-api.qr-code-generator.com/v1/create/free?image_format=SVG&image_width=500&foreground_color=%23000000&frame_color=%23000000&frame_name=no-frame&qr_code_logo=&qr_code_pattern=rounded-3&qr_code_text=<your-text-here>)
+-   [free online qr code generator link:](https://public-api.qr-code-generator.com/v1/create/free?image_format=SVG&image_width=500&foreground_color=%23000000&frame_color=%23000000&frame_name=no-frame&qr_code_logo=&qr_code_pattern=rounded-3&qr_code_text=<your-text-here>)
 
-- [or if you want the proper way:](https://www.qr-code-generator.com/qr-code-api/?cks=28075_1715486675_c4da9d4322eb902475e29d032a9dce0e&cpid=72a03c17-313a-4b34-9153-3c11d56863e5&sv1=affiliate&sv_campaign_id=1169924&awc=28075_1715486675_c4da9d4322eb902475e29d032a9dce0e&gclid=Cj0KCQjwkN--BhDkARIsAD_mnIqe8gl3KUYyFuCZkvhT8mnpn8YX5f-n8Pun0N63uwyR-N9pakRhmUoaAsM9EALw_wcB&campaignid=20261693957&adgroupid=&cpid=39bf0834-c3de-4cf9-85b6-aaee355e93f8&gad_source=1&target=api-ad)
+-   [or if you want the proper way:](https://www.qr-code-generator.com/qr-code-api)
 
 ### Sitemap/Mockups
 
-- [excalidraw link](https://excalidraw.com/#json=njKaQcoXxYZEnbHJMkbXV,t2OX5kfzaQf-Q5N97x-KKQ)
+-   [excalidraw link](https://excalidraw.com/#json=njKaQcoXxYZEnbHJMkbXV,t2OX5kfzaQf-Q5N97x-KKQ)
 
 ### Data
 
-- ![Screenshot 2025-03-24 at 8 00 49 PM](https://github.com/user-attachments/assets/86cc0ac6-306c-486a-92e4-4590412d685b)
+-   ![Screenshot 2025-03-24 at 8 00 49 PM](https://github.com/user-attachments/assets/86cc0ac6-306c-486a-92e4-4590412d685b)
 
 ### Endpoints
 
@@ -108,10 +108,10 @@ List any external sources of data that will be used in your app.
 
 ```json
 {
-  "name": "John Doe",
-  "email": "johndoe@example.com",
-  "password": "securepassword",
-  "isAdmin": true
+	"name": "John Doe",
+	"email": "johndoe@example.com",
+	"password": "securepassword",
+	"isAdmin": true
 }
 ```
 
@@ -121,61 +121,61 @@ List any external sources of data that will be used in your app.
 
 #### Core Objectives
 
-- Basic inventory management system
-- User authentication
-- Simple, functional interface
-- Fundamental CRUD operations
+-   Basic inventory management system
+-   User authentication
+-   Simple, functional interface
+-   Fundamental CRUD operations
 
 #### Week 1: Foundation and Core Functionality
 
 ##### Days 1-2: Project Setup & Authentication
 
-- Initialize NextJS project with TypeScript
-- Set up Supabase database connection
-- Implement basic user registration
-- Create login/authentication system
-- Basic user role differentiation (admin vs. user)
+-   Initialize NextJS project with TypeScript
+-   Set up Supabase database connection
+-   Implement basic user registration
+-   Create login/authentication system
+-   Basic user role differentiation (admin vs. user)
 
 ##### Days 3-4: Inventory Core Features
 
-- Design initial database schema
-- Create inventory item model
-- Implement basic CRUD endpoints
-- Develop create and list inventory items functionality
-- Basic search and filter for inventory items
+-   Design initial database schema
+-   Create inventory item model
+-   Implement basic CRUD endpoints
+-   Develop create and list inventory items functionality
+-   Basic search and filter for inventory items
 
 ##### Days 5-7: Frontend Development
 
-- Create responsive layout
-- Develop inventory listing page
-- Implement basic item creation form
-- Basic user dashboard
-- Initial error handling and validation
+-   Create responsive layout
+-   Develop inventory listing page
+-   Implement basic item creation form
+-   Basic user dashboard
+-   Initial error handling and validation
 
 #### Week 2: Refinement and Additional Features
 
 ##### Days 8-9: Advanced Inventory Features
 
-- Implement item update functionality
-- Basic price modification
-- Simple low stock indicator
-- Preliminary item detail view
+-   Implement item update functionality
+-   Basic price modification
+-   Simple low stock indicator
+-   Preliminary item detail view
 
 ##### Days 10-11: User Experience and Polish
 
-- Improve form validations
-- Add basic routing
-- Implement responsive design
-- Basic error handling
-- Initial performance optimization
+-   Improve form validations
+-   Add basic routing
+-   Implement responsive design
+-   Basic error handling
+-   Initial performance optimization
 
 ##### Days 12-14: Testing and Deployment
 
-- Write basic unit tests
-- Implement basic integration tests
-- Deploy to initial staging environment
-- Create README and basic documentation
-- Final bug fixes and performance tweaks
+-   Write basic unit tests
+-   Implement basic integration tests
+-   Deploy to initial staging environment
+-   Create README and basic documentation
+-   Final bug fixes and performance tweaks
 
 ---
 
@@ -193,4 +193,4 @@ look into photo-based identification libraries like:
 
 [photo-based plant identifying:](https://my.plantnet.org/doc/openapi)
 
-- note free options will rate limit anywhere from 1000 - 5000 per month
+-   note free options will rate limit anywhere from 1000 - 5000 per month
