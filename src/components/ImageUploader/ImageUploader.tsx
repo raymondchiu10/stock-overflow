@@ -21,11 +21,17 @@ const ImageUploader = ({ setImage }: ImageUploaderProps) => {
 		<CldUploadWidget
 			uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
 			signatureEndpoint={`/api/cloudinary/signature`}
-			onUploadAdded={(file) => console.log("Upload started:", file)}
 			onSuccess={successHelper}
+			onQueuesEnd={(result, { widget }) => {
+				widget.close();
+			}}
 		>
 			{({ open }) => {
-				return <button onClick={() => open()}>Upload an Image</button>;
+				const handleOnClick = () => {
+					setImage(undefined);
+					open();
+				};
+				return <button onClick={handleOnClick}>Upload an Image</button>;
 			}}
 		</CldUploadWidget>
 	);
