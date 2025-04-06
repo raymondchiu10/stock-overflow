@@ -18,11 +18,11 @@ const InventoryDetails = () => {
 	return (
 		<div className={styles["inventory-details"]}>
 			<div className={styles["inventory-details__header"]}>
-				<h2>Look up Item</h2>
+				<h2>Look up Item: {selectedInventoryItem?.name}</h2>
 			</div>
 
 			<div className={styles["inventory-details__body"]}>
-				<div>
+				<div className={styles["inventory-details__body-details"]}>
 					<div>
 						<h3>Product Name:</h3>
 						<p>{selectedInventoryItem?.name}</p>
@@ -37,7 +37,7 @@ const InventoryDetails = () => {
 					</div>
 				</div>
 
-				<div>
+				<div className={styles["inventory-details__body-image"]}>
 					{image ? (
 						<div>
 							<Image

@@ -22,8 +22,21 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: flex-start;
+		gap: 3rem;
 	}
 
+	&__body-details {
+		flex: 1;
+	}
+
+	&__body-image {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		flex: 1;
+
+		gap: 1rem;
+	}
 	&__cta {
 		display: flex;
 		justify-content: flex-end;
