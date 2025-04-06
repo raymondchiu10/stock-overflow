@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import ImageUploader from "../ImageUploader/ImageUploader";
 import { CldImage, CloudinaryUploadWidgetResults } from "next-cloudinary";
 import { useAddInventoryMutation } from "@/lib/useInventory";
-import { useAddInventoryImageMutation } from "@/lib/useImages";
+import { useAddInventoryImageMutation, useInventory } from "@/lib/useImages";
 
 export interface AddInventoryInputs {
 	name: string;
@@ -25,6 +25,7 @@ const AddInventory = () => {
 
 	const addInventoryMutation = useAddInventoryMutation();
 	const addInventoryImageMutation = useAddInventoryImageMutation();
+	const { refetch } = useInventory();
 
 	const {
 		register,
@@ -67,6 +68,7 @@ const AddInventory = () => {
 							reset();
 							setImage(undefined);
 							setModalIsOpen(!modalIsOpen);
+							refetch();
 						},
 					}
 				);
