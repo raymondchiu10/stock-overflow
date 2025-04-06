@@ -3,8 +3,10 @@ import styles from "./so-header.module.scss";
 import SOLogoutButton from "../SOLogoutButton/SOLogoutButton";
 import Link from "next/link";
 import { ModalContext } from "../ModalContextProvider/ModalContextProvider";
+import useAuth from "@/lib/useAuth";
 
 const SOHeader = () => {
+	const { isAuthenticated } = useAuth({ redirect: false });
 	const { qrCodeModalIsOpen, setQrCodeModalIsOpen } = useContext(ModalContext);
 
 	const toggleQrCodeModal = () => {
@@ -18,9 +20,11 @@ const SOHeader = () => {
 			</h1>
 
 			<div className={styles["so-header__button-container"]}>
-				<button className={styles["so-header__qr-button"]} onClick={toggleQrCodeModal}>
-					Lookup
-				</button>
+				{isAuthenticated && (
+					<button className={styles["so-header__qr-button"]} onClick={toggleQrCodeModal}>
+						Lookup
+					</button>
+				)}
 				<SOLogoutButton redirect="/" />
 			</div>
 		</header>
