@@ -52,7 +52,7 @@ const AddInventory = () => {
 			const inventoryUuid = data.uuid;
 
 			if (image && inventoryUuid) {
-				addInventoryImageMutation.mutate(
+				addInventoryImageMutation.mutateAsync(
 					{
 						inventoryUuid,
 						payload: {
@@ -65,14 +65,16 @@ const AddInventory = () => {
 					},
 					{
 						onSuccess: () => {
-							reset();
 							setImage(undefined);
 							setModalIsOpen(!modalIsOpen);
-							refetch();
 						},
 					}
 				);
 			}
+			reset();
+			setImage(undefined);
+			setModalIsOpen(!modalIsOpen);
+			refetch();
 		} catch (err) {
 			console.error(err);
 		}
