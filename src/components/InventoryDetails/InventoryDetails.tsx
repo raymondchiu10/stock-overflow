@@ -3,17 +3,45 @@ import { useInventoryImage } from "@/lib/useImages";
 import Image from "next/image";
 import React, { useContext, useEffect, useState } from "react";
 import { ModalContext } from "../ModalContextProvider/ModalContextProvider";
+import { useQrCode } from "@/lib/useQrCode";
 
 const InventoryDetails = () => {
-	const { modalIsOpen, setModalIsOpen, selectedInventoryItem } = useContext(ModalContext);
-	const { data: selectedInventoryImages } = useInventoryImage(selectedInventoryItem?.uuid as string);
+	const { modalIsOpen, setModalIsOpen, selectedInventoryItem, setSelectedInventoryItem } = useContext(ModalContext);
+	const { data: selectedInventoryImages, refetch: refetchImages } = useInventoryImage(
+		selectedInventoryItem?.uuid as string
+	);
+	const { data: qrcode, refetch } = useQrCode(selectedInventoryItem!.uuid);
 	const [image, setImage] = useState<string>();
+	const [qrCodeImage, setQrCodeImage] = useState<string>();
 
 	useEffect(() => {
 		if (selectedInventoryImages) {
 			setImage(selectedInventoryImages?.images[0]?.url);
 		}
+		return () => {
+			setImage(undefined);
+		};
 	}, [selectedInventoryImages]);
+
+	useEffect(() => {
+		if (qrcode) {
+			setQrCodeImage(qrcode);
+		}
+		return () => {
+			setQrCodeImage(undefined);
+		};
+	}, [qrcode]);
+
+	useEffect(() => {
+		refetch();
+		refetchImages();
+
+		if (!modalIsOpen) {
+			setSelectedInventoryItem(null);
+		}
+	}, [modalIsOpen, refetch, refetchImages, setSelectedInventoryItem]);
+
+	console.log("modalIsOpen", modalIsOpen);
 
 	return (
 		<div className={styles["inventory-details"]}>
@@ -56,6 +84,15 @@ const InventoryDetails = () => {
 				</div>
 			</div>
 
+			<div className={styles["inventory-details__body-qr-code-container"]}>
+				{qrcode && qrCodeImage && (
+					<div className={styles["inventory-details__body-qr-code"]}>
+						{/*  eslint-disable-next-line @next/next/no-img-element */}
+						<img src={qrCodeImage as string} alt={`${selectedInventoryItem?.name || ""} qr code`} />
+					</div>
+				)}
+			</div>
+
 			<div className={styles["inventory-details__cta"]}>
 				<button
 					onClick={() => {
@@ -63,13 +100,6 @@ const InventoryDetails = () => {
 					}}
 				>
 					CLOSE
-				</button>
-				<button
-					onClick={() => {
-						setModalIsOpen(!modalIsOpen);
-					}}
-				>
-					OKAY
 				</button>
 			</div>
 		</div>
