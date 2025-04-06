@@ -9,7 +9,6 @@ const SOHeader = () => {
 	const pathname = usePathname();
 	const { qrCodeModalIsOpen, setQrCodeModalIsOpen } = useContext(ModalContext);
 
-	console.log("pathname", pathname);
 	const toggleQrCodeModal = () => {
 		setQrCodeModalIsOpen(!qrCodeModalIsOpen);
 	};
