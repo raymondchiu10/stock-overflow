@@ -42,7 +42,7 @@ export const useAddInventoryMutation = () => {
 		},
 
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["inventory"] });
+			queryClient.invalidateQueries({ queryKey: ["inventory"], exact: false });
 		},
 
 		onError: (error) => {
