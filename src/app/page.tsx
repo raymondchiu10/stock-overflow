@@ -12,7 +12,7 @@ export default function Home() {
 
 			<section className={styles["home__body"]}>
 				<div className={styles["home__body-container"]}>
-					<p>An inventory management wep app.</p>
+					<h2>An inventory management wep app.</h2>
 					<button onClick={() => router.push("/dashboard")}>Go to Inventory</button>
 				</div>
 			</section>
