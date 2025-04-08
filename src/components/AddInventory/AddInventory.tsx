@@ -172,7 +172,7 @@ const AddInventory = () => {
 					>
 						CLOSE
 					</button>
-					<button type="submit">UPDATE</button>
+					<button type="submit">ADD ITEM</button>
 				</div>
 			</form>
 		</>

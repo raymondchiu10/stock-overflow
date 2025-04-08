@@ -15,6 +15,10 @@ interface ModalContextType {
 	setEditInventoryModalIsOpen: Dispatch<SetStateAction<boolean>>;
 	selectedInventoryItem: Record<string, any> | null;
 	setSelectedInventoryItem: Dispatch<SetStateAction<Record<string, any> | null>>;
+	isAuthenticated: boolean;
+	setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
+	token: string | null;
+	setToken: Dispatch<SetStateAction<string | null>>;
 }
 
 const initialModalContext: ModalContextType = {
@@ -31,6 +35,10 @@ const initialModalContext: ModalContextType = {
 	setEditInventoryModalIsOpen: () => {},
 	selectedInventoryItem: null,
 	setSelectedInventoryItem: () => {},
+	isAuthenticated: false,
+	setIsAuthenticated: () => {},
+	token: null,
+	setToken: () => {},
 };
 
 export const ModalContext = createContext<ModalContextType>(initialModalContext);
@@ -40,12 +48,14 @@ interface ModalContextProviderProps {
 }
 
 export function ModalContextProvider({ children }: ModalContextProviderProps) {
-	const [modalIsOpen, setModalIsOpen] = useState(false);
-	const [qrCodeModalIsOpen, setQrCodeModalIsOpen] = useState(false);
-	const [addInventoryModalIsOpen, setAddInventoryModalIsOpen] = useState(false);
-	const [editInventoryModalIsOpen, setEditInventoryModalIsOpen] = useState(false);
-	const [deleteInventoryModalIsOpen, setDeleteInventoryModalIsOpen] = useState(false);
+	const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+	const [qrCodeModalIsOpen, setQrCodeModalIsOpen] = useState<boolean>(false);
+	const [addInventoryModalIsOpen, setAddInventoryModalIsOpen] = useState<boolean>(false);
+	const [editInventoryModalIsOpen, setEditInventoryModalIsOpen] = useState<boolean>(false);
+	const [deleteInventoryModalIsOpen, setDeleteInventoryModalIsOpen] = useState<boolean>(false);
 	const [selectedInventoryItem, setSelectedInventoryItem] = useState<Record<string, string> | null>(null);
+	const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+	const [token, setToken] = useState<string | null>(null);
 
 	return (
 		<ModalContext.Provider
@@ -62,6 +72,10 @@ export function ModalContextProvider({ children }: ModalContextProviderProps) {
 				setEditInventoryModalIsOpen,
 				deleteInventoryModalIsOpen,
 				setDeleteInventoryModalIsOpen,
+				isAuthenticated,
+				setIsAuthenticated,
+				token,
+				setToken,
 			}}
 		>
 			{children}

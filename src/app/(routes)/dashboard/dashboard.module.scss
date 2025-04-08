@@ -9,17 +9,6 @@
 	width: 100%;
 	height: 100%;
 
-	&__header {
-		@extend .container;
-		position: sticky;
-		display: flex;
-		flex-direction: column;
-		width: 100%;
-		justify-content: space-between;
-		padding: 0.5rem 1rem;
-		gap: 0.5rem;
-	}
-
 	&__header-add-inventory {
 		width: 100%;
 		display: flex;
