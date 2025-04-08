@@ -6,9 +6,8 @@ import SOHeader from "@/components/SOHeader/SOHeader";
 export default function Home() {
 	return (
 		<main className={styles["home"]}>
-			<div className={styles["home__header"]}>
-				<SOHeader />
-			</div>
+			<SOHeader />
+
 			<section className={styles["home__body"]}>
 				<div className={styles["home__body-container"]}>
 					<p>An inventory management wep app.</p>

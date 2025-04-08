@@ -7,23 +7,13 @@
 	justify-content: center;
 	align-items: center;
 
-	&__header {
-		@extend .container;
-
-		display: flex;
-		flex-direction: row;
-		width: 100%;
-		justify-content: space-between;
-		padding: 0.5rem 1rem;
-	}
-
 	&__body {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		min-height: 100vh;
-		min-width: 100vw;
+		min-height: 75vh;
+		min-width: 75vw;
 
 		gap: 1rem;
 		&___body-container {
