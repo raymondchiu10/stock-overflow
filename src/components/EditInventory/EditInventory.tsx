@@ -1,12 +1,9 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-import styles from "./add-inventory.module.scss";
+import styles from "./edit-inventory.module.scss";
 import React, { useContext, useEffect, useState } from "react";
 import { ModalContext } from "../ModalContextProvider/ModalContextProvider";
 import { useForm } from "react-hook-form";
-import ImageUploader from "../ImageUploader/ImageUploader";
-import { CldImage, CloudinaryUploadWidgetResults } from "next-cloudinary";
-import { useAddInventoryMutation } from "@/lib/useInventory";
-import { useAddInventoryImageMutation, useInventory } from "@/lib/useImages";
+import { useEditInventoryMutation } from "@/lib/useInventory";
+import { useInventory } from "@/lib/useImages";
 
 export interface AddInventoryInputs {
 	name: string;
@@ -17,24 +14,36 @@ export interface AddInventoryInputs {
 	company_uuid?: string;
 }
 
-const AddInventory = () => {
-	const { addInventoryModalIsOpen: modalIsOpen, setAddInventoryModalIsOpen: setModalIsOpen } =
-		useContext(ModalContext);
+const EditInventory = () => {
+	const {
+		editInventoryModalIsOpen: modalIsOpen,
+		setEditInventoryModalIsOpen: setModalIsOpen,
+		selectedInventoryItem,
+		setSelectedInventoryItem,
+	} = useContext(ModalContext);
 
-	const [image, setImage] = useState<CloudinaryUploadWidgetResults>();
-
-	const addInventoryMutation = useAddInventoryMutation();
-	const addInventoryImageMutation = useAddInventoryImageMutation();
+	const editInventoryMutation = useEditInventoryMutation();
 	const { refetch } = useInventory();
 
 	const {
 		register,
 		handleSubmit,
+		setValue,
 		formState: { errors },
 		reset,
 	} = useForm<AddInventoryInputs>();
 
 	const [submitError, setSubmitError] = useState();
+
+	useEffect(() => {
+		if (selectedInventoryItem) {
+			setValue("name", selectedInventoryItem.name);
+			setValue("quantity", Number(selectedInventoryItem.quantity));
+			setValue("base_price", selectedInventoryItem.base_price);
+			setValue("company_price", Number(selectedInventoryItem.company_price));
+			setValue("description", selectedInventoryItem.description || "");
+		}
+	}, [selectedInventoryItem]);
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -43,37 +52,23 @@ const AddInventory = () => {
 	}, [submitError]);
 
 	const handleAddInventory = async (formData: AddInventoryInputs) => {
+		if (!selectedInventoryItem) {
+			return;
+		}
+
 		try {
-			const { data } = await addInventoryMutation.mutateAsync({
-				...formData,
-				company_uuid: process.env.NEXT_PUBLIC_COMPANY_UUID, // TODO: figure out distinct companies next sprint
+			await editInventoryMutation.mutateAsync({
+				payload: {
+					...formData,
+					company_uuid: process.env.NEXT_PUBLIC_COMPANY_UUID || undefined, // TODO: figure out distinct companies next sprint
+				},
+				inventoryUuid: selectedInventoryItem?.uuid as string,
 			});
 
-			const inventoryUuid = data.uuid;
+			// TODO: figure out cloudinary widget
 
-			if (image && inventoryUuid) {
-				addInventoryImageMutation.mutateAsync(
-					{
-						inventoryUuid,
-						payload: {
-							// @ts-ignore
-							url: image?.info?.secure_url,
-							name: data.name,
-							alt: data.description,
-							cloudinary: JSON.stringify(image?.info),
-						},
-					},
-					{
-						onSuccess: () => {
-							setImage(undefined);
-							setModalIsOpen(!modalIsOpen);
-						},
-					}
-				);
-			}
 			reset();
-			setImage(undefined);
-			setModalIsOpen(false);
+			setModalIsOpen(!modalIsOpen);
 			refetch();
 		} catch (err) {
 			console.error(err);
@@ -84,14 +79,14 @@ const AddInventory = () => {
 		<>
 			<span style={{ color: "red" }}>{submitError}</span>
 
-			<form className={styles["add-inventory"]} onSubmit={handleSubmit((data) => handleAddInventory(data))}>
-				<div className={styles["add-inventory__header"]}>
-					<h2>Add Inventory Item</h2>
+			<form className={styles["edit-inventory"]} onSubmit={handleSubmit((data) => handleAddInventory(data))}>
+				<div className={styles["edit-inventory__header"]}>
+					<h2>Edit Inventory Item</h2>
 				</div>
 
-				<div className={styles["add-inventory__body"]}>
-					<div className={styles["add-inventory__field-container"]}>
-						<div className={styles["add-inventory__form-field"]}>
+				<div className={styles["edit-inventory__body"]}>
+					<div className={styles["edit-inventory__field-container"]}>
+						<div className={styles["edit-inventory__form-field"]}>
 							<label htmlFor="name">Product Name:</label>
 							<input
 								id="name"
@@ -102,7 +97,7 @@ const AddInventory = () => {
 							{errors.name && <span style={{ color: "red" }}>{errors.name.message}</span>}
 						</div>
 
-						<div className={styles["add-inventory__form-field"]}>
+						<div className={styles["edit-inventory__form-field"]}>
 							<label htmlFor="quantity">Quantity:</label>
 							<input
 								id="quantity"
@@ -113,7 +108,7 @@ const AddInventory = () => {
 							{errors.quantity && <span style={{ color: "red" }}>{errors.quantity.message}</span>}
 						</div>
 
-						<div className={styles["add-inventory__form-field"]}>
+						<div className={styles["edit-inventory__form-field"]}>
 							<label htmlFor="base_price">Suggested Retail Price:</label>
 							<input
 								id="base_price"
@@ -124,7 +119,7 @@ const AddInventory = () => {
 							{errors.base_price && <span style={{ color: "red" }}>{errors.base_price.message}</span>}
 						</div>
 
-						<div className={styles["add-inventory__form-field"]}>
+						<div className={styles["edit-inventory__form-field"]}>
 							<label htmlFor="company_price">Company Price:</label>
 							<input
 								id="company_price"
@@ -135,9 +130,9 @@ const AddInventory = () => {
 						</div>
 					</div>
 
-					<div className={styles["add-inventory__image-container"]}>
-						<div className={styles["add-inventory__image-uploader"]}>
-							{image && (
+					<div className={styles["edit-inventory__image-container"]}>
+						<div className={styles["edit-inventory__image-uploader"]}>
+							{/* {image && (
 								<CldImage
 									// @ts-ignore
 									src={image?.info?.public_id}
@@ -146,10 +141,10 @@ const AddInventory = () => {
 									height={150}
 								/>
 							)}
-							<ImageUploader setImage={setImage} />
+							<ImageUploader setImage={setImage} /> */}
 						</div>
 
-						<div className={styles["add-inventory__form-field"]}>
+						<div className={styles["edit-inventory__form-field"]}>
 							<label htmlFor="description">Description:</label>
 							<textarea
 								id="description"
@@ -162,16 +157,16 @@ const AddInventory = () => {
 					</div>
 				</div>
 
-				<div className={styles["add-inventory__cta"]}>
+				<div className={styles["edit-inventory__cta"]}>
 					<button
 						onClick={() => {
 							setModalIsOpen(false);
-							setImage(undefined);
-							reset();
+							setSelectedInventoryItem(null);
 						}}
 					>
 						CLOSE
 					</button>
+
 					<button type="submit">UPDATE</button>
 				</div>
 			</form>
@@ -179,4 +174,4 @@ const AddInventory = () => {
 	);
 };
 
-export default AddInventory;
+export default EditInventory;
