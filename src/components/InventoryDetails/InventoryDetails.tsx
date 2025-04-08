@@ -8,20 +8,11 @@ import { useQrCode } from "@/lib/useQrCode";
 const InventoryDetails = () => {
 	const { modalIsOpen, setModalIsOpen, selectedInventoryItem, setSelectedInventoryItem } = useContext(ModalContext);
 	const { data: selectedInventoryImages, refetch: refetchImages } = useInventoryImage(
-		selectedInventoryItem?.uuid as string
+		(selectedInventoryItem?.uuid as string) ?? ""
 	);
 	const { data: qrcode, refetch } = useQrCode(selectedInventoryItem?.uuid as string);
-	const [image, setImage] = useState<string>();
+	const image = selectedInventoryImages?.images?.[0]?.url;
 	const [qrCodeImage, setQrCodeImage] = useState<string>();
-
-	useEffect(() => {
-		if (selectedInventoryImages) {
-			setImage(selectedInventoryImages?.images[0]?.url);
-		}
-		return () => {
-			setImage(undefined);
-		};
-	}, [selectedInventoryImages]);
 
 	useEffect(() => {
 		if (qrcode) {
