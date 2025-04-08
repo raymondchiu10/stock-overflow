@@ -56,6 +56,14 @@ label {
 
 a {
 	text-decoration: none;
+	color: black;
+
+	&:hover {
+		filter: contrast(0.7);
+	}
+	&:active {
+		filter: contrast(1.1);
+	}
 }
 
 h1,
