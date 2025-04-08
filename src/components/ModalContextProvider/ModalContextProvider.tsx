@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { createContext, Dispatch, ReactNode, SetStateAction, useState } from "react";
 
@@ -12,8 +13,8 @@ interface ModalContextType {
 	setAddInventoryModalIsOpen: Dispatch<SetStateAction<boolean>>;
 	editInventoryModalIsOpen: boolean;
 	setEditInventoryModalIsOpen: Dispatch<SetStateAction<boolean>>;
-	selectedInventoryItem: Record<string, string> | null;
-	setSelectedInventoryItem: Dispatch<SetStateAction<Record<string, string | number> | null>>;
+	selectedInventoryItem: Record<string, any> | null;
+	setSelectedInventoryItem: Dispatch<SetStateAction<Record<string, any> | null>>;
 }
 
 const initialModalContext: ModalContextType = {
