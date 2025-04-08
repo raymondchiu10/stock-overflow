@@ -4,6 +4,7 @@ import { ModalContext } from "../ModalContextProvider/ModalContextProvider";
 import { useForm } from "react-hook-form";
 import { useEditInventoryMutation } from "@/lib/useInventory";
 import { useInventory } from "@/lib/useImages";
+import { useQueryClient } from "@tanstack/react-query";
 
 export interface AddInventoryInputs {
 	name: string;
@@ -23,6 +24,7 @@ const EditInventory = () => {
 	} = useContext(ModalContext);
 
 	const editInventoryMutation = useEditInventoryMutation();
+	const queryClient = useQueryClient();
 	const { refetch } = useInventory();
 
 	const {
@@ -57,13 +59,20 @@ const EditInventory = () => {
 			return;
 		}
 		try {
-			await editInventoryMutation.mutateAsync({
-				payload: {
-					...formData,
-					company_uuid: process.env.NEXT_PUBLIC_COMPANY_UUID || undefined, // TODO: figure out distinct companies next sprint
+			await editInventoryMutation.mutateAsync(
+				{
+					payload: {
+						...formData,
+						company_uuid: process.env.NEXT_PUBLIC_COMPANY_UUID || undefined, // TODO: figure out distinct companies next sprint
+					},
+					inventoryUuid: selectedInventoryItem?.uuid as string,
 				},
-				inventoryUuid: selectedInventoryItem?.uuid as string,
-			});
+				{
+					onSuccess: () => {
+						queryClient.invalidateQueries({ queryKey: ["inventory"], exact: false });
+					},
+				}
+			);
 
 			// TODO: figure out cloudinary widget
 
