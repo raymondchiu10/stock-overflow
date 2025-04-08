@@ -12,6 +12,7 @@ import SOHeader from "@/components/SOHeader/SOHeader";
 import AddInventoryModal from "@/components/AddInventoryModal/AddInventoryModal";
 import { ModalContext } from "@/components/ModalContextProvider/ModalContextProvider";
 import InventoryDeleteModal from "@/components/InventoryDeleteModal/InventoryDeleteModal";
+import EditInventoryModal from "@/components/EditInventoryModal/EditInventoryModal";
 
 const Dashboard = () => {
 	const { addInventoryModalIsOpen, setAddInventoryModalIsOpen } = useContext(ModalContext);
@@ -43,6 +44,7 @@ const Dashboard = () => {
 
 			<QRCodeModal />
 			<AddInventoryModal />
+			<EditInventoryModal />
 			<InventoryDeleteModal />
 		</main>
 	);

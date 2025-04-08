@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { createContext, Dispatch, ReactNode, SetStateAction, useState } from "react";
 
@@ -10,8 +11,10 @@ interface ModalContextType {
 	setQrCodeModalIsOpen: Dispatch<SetStateAction<boolean>>;
 	addInventoryModalIsOpen: boolean;
 	setAddInventoryModalIsOpen: Dispatch<SetStateAction<boolean>>;
-	selectedInventoryItem: Record<string, string> | null;
-	setSelectedInventoryItem: Dispatch<SetStateAction<Record<string, string> | null>>;
+	editInventoryModalIsOpen: boolean;
+	setEditInventoryModalIsOpen: Dispatch<SetStateAction<boolean>>;
+	selectedInventoryItem: Record<string, any> | null;
+	setSelectedInventoryItem: Dispatch<SetStateAction<Record<string, any> | null>>;
 }
 
 const initialModalContext: ModalContextType = {
@@ -24,6 +27,8 @@ const initialModalContext: ModalContextType = {
 	setQrCodeModalIsOpen: () => {},
 	addInventoryModalIsOpen: false,
 	setAddInventoryModalIsOpen: () => {},
+	editInventoryModalIsOpen: false,
+	setEditInventoryModalIsOpen: () => {},
 	selectedInventoryItem: null,
 	setSelectedInventoryItem: () => {},
 };
@@ -38,6 +43,7 @@ export function ModalContextProvider({ children }: ModalContextProviderProps) {
 	const [modalIsOpen, setModalIsOpen] = useState(false);
 	const [qrCodeModalIsOpen, setQrCodeModalIsOpen] = useState(false);
 	const [addInventoryModalIsOpen, setAddInventoryModalIsOpen] = useState(false);
+	const [editInventoryModalIsOpen, setEditInventoryModalIsOpen] = useState(false);
 	const [deleteInventoryModalIsOpen, setDeleteInventoryModalIsOpen] = useState(false);
 	const [selectedInventoryItem, setSelectedInventoryItem] = useState<Record<string, string> | null>(null);
 
@@ -52,6 +58,8 @@ export function ModalContextProvider({ children }: ModalContextProviderProps) {
 				setQrCodeModalIsOpen,
 				addInventoryModalIsOpen,
 				setAddInventoryModalIsOpen,
+				editInventoryModalIsOpen,
+				setEditInventoryModalIsOpen,
 				deleteInventoryModalIsOpen,
 				setDeleteInventoryModalIsOpen,
 			}}

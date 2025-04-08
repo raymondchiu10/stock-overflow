@@ -1,0 +1,11 @@
+.so-inventory-edit-button {
+	cursor: pointer;
+
+	&:hover {
+		filter: brightness(0) saturate(100%) invert(25%) sepia(45%) saturate(13%) hue-rotate(347deg) brightness(95%)
+			contrast(87%);
+	}
+	&:active {
+		filter: blur(0.5px);
+	}
+}

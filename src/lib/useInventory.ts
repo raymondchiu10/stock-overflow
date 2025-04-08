@@ -50,3 +50,28 @@ export const useAddInventoryMutation = () => {
 		},
 	});
 };
+
+interface EditInventoryPayload {
+	payload: AddInventoryInputs;
+	inventoryUuid: string;
+}
+
+export const useEditInventoryMutation = () => {
+	const { token } = useAuth({ redirect: false });
+	const queryClient = useQueryClient();
+
+	return useMutation({
+		mutationFn: async ({ payload, inventoryUuid }: EditInventoryPayload) => {
+			const { data } = await axiosAuth(token as string).patch(`/api/inventory/${inventoryUuid}`, payload);
+			return data;
+		},
+
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["inventory"], exact: false });
+		},
+
+		onError: (error) => {
+			console.error("Update failed", error);
+		},
+	});
+};
