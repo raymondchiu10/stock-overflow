@@ -90,7 +90,7 @@ const SOInventoryTable = () => {
 	return (
 		<>
 			<div style={{ display: "none" }} onClick={testFunction}></div>
-			<h1>Client</h1>
+			<h2>{`The Company's Inventory`}</h2>
 			<table className={styles["so-inventory-table"]} style={{ minWidth: `${table.getTotalSize()}px` }}>
 				<thead>
 					{table.getHeaderGroups().map((headerGroup) => (

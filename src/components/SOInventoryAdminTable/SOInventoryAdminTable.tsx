@@ -114,7 +114,7 @@ const SOInventoryAdminTable = () => {
 		<>
 			{/* TODO: implement pagination */}
 			<div style={{ display: "none" }} onClick={testFunction}></div>
-			<h1>Admin</h1>
+			<h1>{`The Company's Inventory - Admin`}</h1>
 			<table className={styles["so-inventory-table"]} style={{ minWidth: `${table.getTotalSize()}px` }}>
 				<thead>
 					{table.getHeaderGroups().map((headerGroup) => (

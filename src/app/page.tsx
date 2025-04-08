@@ -1,19 +1,20 @@
 "use client";
-import Link from "next/link";
 import styles from "./home.module.scss";
 import SOHeader from "@/components/SOHeader/SOHeader";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+	const router = useRouter();
+
 	return (
 		<main className={styles["home"]}>
-			<div className={styles["home__header"]}>
-				<SOHeader />
-			</div>
+			<SOHeader />
+
 			<section className={styles["home__body"]}>
 				<div className={styles["home__body-container"]}>
-					<p>An inventory management wep app.</p>
+					<h2>An inventory management wep app.</h2>
+					<button onClick={() => router.push("/dashboard")}>Go to Inventory</button>
 				</div>
-				<Link href={"/dashboard"}>Go to Inventory</Link>
 			</section>
 		</main>
 	);

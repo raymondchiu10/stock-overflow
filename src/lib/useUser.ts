@@ -22,6 +22,8 @@ export const useUser = () => {
 	return useQuery({
 		queryKey: ["user"],
 		queryFn: () => fetchUser(),
-		enabled: typeof window !== "undefined" && Boolean(localStorage.getItem("authToken")),
+		staleTime: 0,
+		refetchOnWindowFocus: true,
+		refetchOnMount: true,
 	});
 };

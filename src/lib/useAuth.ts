@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { ModalContext } from "@/components/ModalContextProvider/ModalContextProvider";
 
 interface UseAuthOptions {
 	redirect?: boolean;
@@ -9,12 +10,14 @@ interface UseAuthOptions {
 
 export default function useAuth({ redirect = true }: UseAuthOptions = {}) {
 	const router = useRouter();
-	const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null); // null = still checking
-	const [token, setToken] = useState<string | null>(null);
+	const { isAuthenticated, setIsAuthenticated, token, setToken } = useContext(ModalContext);
 
 	useEffect(() => {
-		setToken(localStorage.getItem("authToken"));
+		const storedToken = localStorage.getItem("authToken");
+		setToken(storedToken);
+	}, [setToken]);
 
+	useEffect(() => {
 		if (!token) {
 			setIsAuthenticated(false);
 
@@ -24,7 +27,7 @@ export default function useAuth({ redirect = true }: UseAuthOptions = {}) {
 		} else {
 			setIsAuthenticated(true);
 		}
-	}, [router, redirect, token]);
+	}, [token, redirect, router, setIsAuthenticated, isAuthenticated]);
 
-	return { isAuthenticated, token };
+	return { isAuthenticated, token, setIsAuthenticated, setToken };
 }

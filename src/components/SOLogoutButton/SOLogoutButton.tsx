@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import SOButton from "../SOButton/SOButton";
 import { useRouter } from "next/navigation";
 import useAuth from "@/lib/useAuth";
-import Link from "next/link";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface SOLogoutButtonProps {
 	redirect?: string;
@@ -10,26 +10,24 @@ interface SOLogoutButtonProps {
 
 const SOLogoutButton = ({ redirect }: SOLogoutButtonProps) => {
 	const router = useRouter();
-	const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
-	const { isAuthenticated } = useAuth({ redirect: false });
-
-	useEffect(() => {
-		if (isAuthenticated) {
-			setIsLoggedIn(true);
-		}
-	}, [isAuthenticated]);
+	const { isAuthenticated, setIsAuthenticated, setToken } = useAuth({ redirect: false });
+	const queryClient = useQueryClient();
 
 	const handleLogout = () => {
 		localStorage.removeItem("authToken");
-		setIsLoggedIn(false);
+		queryClient.setQueryData(["user"], null);
+		queryClient.invalidateQueries({ queryKey: ["user"] });
+
+		setIsAuthenticated(false);
+		setToken(null);
 
 		if (redirect) {
 			router.push(redirect);
 		}
 	};
 
-	if (!isLoggedIn) {
-		return <Link href="log-in">Log in</Link>;
+	if (!isAuthenticated) {
+		return <button onClick={() => router.push("/log-in")}>Log in</button>;
 	}
 
 	return <SOButton onClick={handleLogout}>Log Out</SOButton>;
