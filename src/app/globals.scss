@@ -1,6 +1,9 @@
 @use "@/styles/mixins" as *;
 @use "@/styles/colors" as *;
 
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rokkitt:ital,wght@0,100..900;1,100..900&display=swap");
+
 *,
 * ::before,
 * ::after {
@@ -8,24 +11,61 @@
 	margin: 0;
 	padding: 0;
 	font-family: inherit;
-	font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
 
 :root {
+	font-family: "Roboto", "Arial Narrow", Arial, sans-serif;
 }
 
 table {
 	border: 1px solid black;
+	border-radius: 0 0 0.5rem 0.5rem;
 
 	th {
 		padding: 0.25rem;
-		border: 1px solid red;
+		background-color: gainsboro;
 	}
+
 	td {
 		padding: 0.25rem;
 	}
 }
+input,
+textarea {
+	border: 1px solid black;
+	padding: 0.5rem;
+	border-radius: 0.5rem;
+}
 
 textarea {
 	resize: none;
+}
+
+label {
+	padding: 0.5rem 0;
+}
+
+a {
+	text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+	font-family: "Rokkitt";
+}
+
+button {
+	padding: 0.5rem 1rem;
+	border-radius: 0.5rem;
+	cursor: pointer;
+
+	&:hover {
+		filter: brightness(1.1);
+	}
+
+	&:active {
+		filter: brightness(0.9);
+	}
 }

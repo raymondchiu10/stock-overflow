@@ -5,8 +5,8 @@ import styles from "./log-in.module.scss";
 
 import axios from "axios";
 import { useForm } from "react-hook-form";
-
 import { useRouter } from "next/navigation";
+import { useUser } from "@/lib/useUser";
 
 interface LoginFormInputs {
 	email: string;
@@ -22,6 +22,7 @@ const Login = () => {
 	const [submitError, setSubmitError] = useState();
 
 	const router = useRouter();
+	const { refetch } = useUser();
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -35,6 +36,7 @@ const Login = () => {
 
 			localStorage.setItem("authToken", res.data.token);
 			axios.defaults.headers.common["Authorization"] = `Bearer ${res.data.token}`;
+			refetch();
 			router.push("/dashboard");
 		} catch (err: unknown) {
 			if (axios.isAxiosError(err)) {
