@@ -5,9 +5,9 @@ import React, { useContext, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 
 import styles from "./so-inventory-admin-table.module.scss";
-import Edit from "@/assets/edit.svg";
 import { ModalContext } from "../ModalContextProvider/ModalContextProvider";
 import SOInventoryDeleteButton from "../SOInventoryDeleteButton/SOInventoryDeleteButton";
+import SOInventoryEditButton from "../SOInventoryEditButton/SOInventoryEditButton";
 
 export interface InventoryItem {
 	base_price?: string;
@@ -91,11 +91,7 @@ const SOInventoryAdminTable = () => {
 			cell: (props: CellContext<InventoryItem, string>) => {
 				return (
 					<div className={styles["so-inventory-admin-table__modify"]}>
-						<Edit
-							className={styles["so-inventory-admin-table__modify--edit"]}
-							alt="edit"
-							draggable={false}
-						/>
+						<SOInventoryEditButton props={props} />
 						<SOInventoryDeleteButton props={props} />
 					</div>
 				);
@@ -116,6 +112,7 @@ const SOInventoryAdminTable = () => {
 
 	return (
 		<>
+			{/* TODO: implement pagination */}
 			<div style={{ display: "none" }} onClick={testFunction}></div>
 			<h1>Admin</h1>
 			<table className={styles["so-inventory-table"]} style={{ minWidth: `${table.getTotalSize()}px` }}>
