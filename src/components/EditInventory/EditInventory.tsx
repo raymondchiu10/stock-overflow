@@ -43,6 +43,7 @@ const EditInventory = () => {
 			setValue("company_price", Number(selectedInventoryItem.company_price));
 			setValue("description", selectedInventoryItem.description || "");
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedInventoryItem]);
 
 	useEffect(() => {
@@ -55,7 +56,6 @@ const EditInventory = () => {
 		if (!selectedInventoryItem) {
 			return;
 		}
-
 		try {
 			await editInventoryMutation.mutateAsync({
 				payload: {
