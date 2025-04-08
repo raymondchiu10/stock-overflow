@@ -17,6 +17,15 @@
 	font-family: "Roboto", "Arial Narrow", Arial, sans-serif;
 }
 
+body {
+	position: relative;
+	display: flex;
+	height: 100%;
+	min-height: 100dvh;
+	width: 100%;
+	max-width: 100dvw;
+}
+
 table {
 	border: 1px solid black;
 	border-radius: 0 0 0.5rem 0.5rem;
@@ -54,6 +63,10 @@ h2,
 h3,
 h4 {
 	font-family: "Rokkitt";
+}
+
+h1 {
+	font-size: 2rem;
 }
 
 button {
