@@ -20,10 +20,6 @@ As an admin, I want to be able to have a database that I can add, edit, and remo
 
 As an admin, I want to be able to look at items in my inventory database, and change prices of stock so that users can see updated prices on the go.
 
-As an admin, I want to be able to add and remove users and admins that are allowed to interact with my database and app so that authorized users and admins are the only ones allowed to update the inventory.
-
-As an admin, I want to know when items go under a certain threshold so that I can be notified on whether or not I need to order more of the item that is low in stock.
-
 As a user, I want to me able to look up a specific item to see whether or not it is in stock and a description of that item so that I can am able to make an informed decision on whether or not it is the right item I am looking for.
 
 As a user, I want to be able to look at some kind of marker (upc, qr code, or potential image) so that I can compare one item to another to make sure I am correctly looking at the item that I want.
@@ -38,7 +34,7 @@ List technologies that will be used in your app, including any libraries to save
 -   SCSS
 -   Node js
 -   Express
--   Postgresql (Supabase)
+-   Postgresql
 -   Nextjs
 
 QR code scanner:
@@ -50,11 +46,7 @@ QR code scanner:
 
 List any external sources of data that will be used in your app.
 
--   [list of floral UPCs:](https://www.freshproduce.com/resources/floral/floral-universal-product-codes/)
-
--   [free online qr code generator link:](https://public-api.qr-code-generator.com/v1/create/free?image_format=SVG&image_width=500&foreground_color=%23000000&frame_color=%23000000&frame_name=no-frame&qr_code_logo=&qr_code_pattern=rounded-3&qr_code_text=<your-text-here>)
-
--   [or if you want the proper way:](https://www.qr-code-generator.com/qr-code-api)
+-   [html5-qrcode:](https://github.com/mebjas/html5-qrcode)
 
 ### Sitemap/Mockups
 
@@ -190,6 +182,12 @@ List any external sources of data that will be used in your app.
 ## Future Implementations
 
 Your project will be marked based on what you committed to in the above document. Here, you can list any additional features you may complete after the MVP of your application is built, or if you have extra time before the Capstone due date.
+
+-   As an admin, I want to know when items go under a certain threshold so that I can be notified on whether or not I need to order more of the item that is low in stock.
+
+-   As an admin, I want to be able to add and remove users and admins that are allowed to interact with my database and app so that authorized users and admins are the only ones allowed to update the inventory.
+
+-   [list of floral UPCs:](https://www.freshproduce.com/resources/floral/floral-universal-product-codes/)
 
 look into photo-based identification libraries like:
 
