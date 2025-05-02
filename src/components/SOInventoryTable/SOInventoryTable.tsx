@@ -1,16 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useInventory } from "@/lib/useInventory";
 import { useReactTable, getCoreRowModel, flexRender, ColumnDef, CellContext } from "@tanstack/react-table";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 
 import styles from "./so-inventory-table.module.scss";
 import { useMediaQuery } from "react-responsive";
 import { InventoryItem } from "../SOInventoryAdminTable/SOInventoryAdminTable";
-import { ModalContext } from "../ModalContextProvider/ModalContextProvider";
 
 const SOInventoryTable = () => {
 	const isMobile = useMediaQuery({ maxWidth: 767 });
-	const { modalIsOpen, setModalIsOpen, setSelectedInventoryItem } = useContext(ModalContext);
 
 	const [page, setPage] = useState(1);
 	const [limit] = useState(10);
@@ -20,8 +18,7 @@ const SOInventoryTable = () => {
 	const { data: inventory, isLoading } = useInventory(page, limit, sort, order);
 
 	const toggleInventoryModal = (props: any) => {
-		setSelectedInventoryItem(props.row?.original);
-		setModalIsOpen(!modalIsOpen);
+		console.log(props.row?.original);
 	};
 
 	const columns: ColumnDef<InventoryItem, any>[] = [

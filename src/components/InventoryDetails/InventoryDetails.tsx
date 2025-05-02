@@ -1,95 +1,42 @@
 import styles from "./inventory-details.module.scss";
-import { useInventoryImage } from "@/lib/useImages";
-import Image from "next/image";
-import React, { useContext, useEffect, useState } from "react";
-import { ModalContext } from "../ModalContextProvider/ModalContextProvider";
-import { useQrCode } from "@/lib/useQrCode";
+import React from "react";
 
 const InventoryDetails = () => {
-	const { modalIsOpen, setModalIsOpen, selectedInventoryItem, setSelectedInventoryItem } = useContext(ModalContext);
-	const { data: selectedInventoryImages, refetch: refetchImages } = useInventoryImage(
-		(selectedInventoryItem?.uuid as string) ?? ""
-	);
-	const { data: qrcode, refetch } = useQrCode(selectedInventoryItem?.uuid as string);
-	const image = selectedInventoryImages?.images?.[0]?.url;
-	const [qrCodeImage, setQrCodeImage] = useState<string>();
-
-	useEffect(() => {
-		if (qrcode) {
-			setQrCodeImage(qrcode);
-		}
-		return () => {
-			setQrCodeImage(undefined);
-		};
-	}, [qrcode]);
-
-	useEffect(() => {
-		refetch();
-		refetchImages();
-
-		if (!modalIsOpen) {
-			setSelectedInventoryItem(null);
-		}
-	}, [modalIsOpen, refetch, refetchImages, setSelectedInventoryItem]);
-
 	return (
 		<div className={styles["inventory-details"]}>
 			<div className={styles["inventory-details__header"]}>
-				<h2>Look up Item: {selectedInventoryItem?.name}</h2>
+				<h2>Look up Item: {"placheolder name"}</h2>
 			</div>
 
 			<div className={styles["inventory-details__body"]}>
 				<div className={styles["inventory-details__body-details"]}>
 					<div>
 						<h3>Product Name:</h3>
-						<p>{selectedInventoryItem?.name}</p>
+						<p>{"placheolder name"}</p>
 					</div>
 					<div>
 						<h3>Quantity:</h3>
-						<p>{selectedInventoryItem?.quantity}</p>
+						<p>{"placheolder quantity"}</p>
 					</div>
 					<div>
 						<h3>Retail Price:</h3>
-						<p>{selectedInventoryItem?.company_price || selectedInventoryItem?.base_price}</p>
+						<p>{"placheolder company_price or placheolder base_price"}</p>
 					</div>
 				</div>
 
 				<div className={styles["inventory-details__body-image"]}>
-					{image ? (
-						<div>
-							<Image
-								src={image}
-								alt={selectedInventoryImages?.images[0]?.alt || "Product image"}
-								width={100}
-								height={100}
-							/>
-						</div>
-					) : (
-						<div>No image available</div>
-					)}
+					<div>No image available</div>
+
 					<div>
-						<p>{selectedInventoryItem?.description}</p>
+						<p>{"placheolder description"}</p>
 					</div>
 				</div>
 			</div>
 
-			<div className={styles["inventory-details__body-qr-code-container"]}>
-				{qrcode && qrCodeImage && (
-					<div className={styles["inventory-details__body-qr-code"]}>
-						{/*  eslint-disable-next-line @next/next/no-img-element */}
-						<img src={qrCodeImage as string} alt={`${selectedInventoryItem?.name || ""} qr code`} />
-					</div>
-				)}
-			</div>
+			<div className={styles["inventory-details__body-qr-code-container"]}>{"QR CODE"}</div>
 
 			<div className={styles["inventory-details__cta"]}>
-				<button
-					onClick={() => {
-						setModalIsOpen(!modalIsOpen);
-					}}
-				>
-					CLOSE
-				</button>
+				<button>CLOSE</button>
 			</div>
 		</div>
 	);

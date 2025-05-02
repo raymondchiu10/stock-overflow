@@ -1,23 +1,18 @@
-import React, { useContext } from "react";
+import React from "react";
 import styles from "./so-header.module.scss";
 import SOLogoutButton from "../SOLogoutButton/SOLogoutButton";
 import Link from "next/link";
-import { ModalContext } from "../ModalContextProvider/ModalContextProvider";
 import { usePathname } from "next/navigation";
 import { useUser } from "@/lib/useUser";
+import { useRouter } from "next/navigation";
 
 const SOHeader = () => {
 	const pathname = usePathname();
-	const { qrCodeModalIsOpen, setQrCodeModalIsOpen, addInventoryModalIsOpen, setAddInventoryModalIsOpen } =
-		useContext(ModalContext);
 	const { data: user } = useUser();
-
-	const toggleQrCodeModal = () => {
-		setQrCodeModalIsOpen(!qrCodeModalIsOpen);
-	};
+	const router = useRouter();
 
 	const toggleAddInventory = () => {
-		setAddInventoryModalIsOpen(!addInventoryModalIsOpen);
+		router.push("/dashboard/add-inventory");
 	};
 
 	return (
@@ -30,7 +25,12 @@ const SOHeader = () => {
 				<div className={styles["so-header__button-container"]}>
 					<div className={styles["so-header__log-out"]}>
 						{pathname !== "/" && (
-							<button className={styles["so-header__qr-button"]} onClick={toggleQrCodeModal}>
+							<button
+								className={styles["so-header__qr-button"]}
+								onClick={() => {
+									router.push("/dashboard/qr-code");
+								}}
+							>
 								Lookup
 							</button>
 						)}

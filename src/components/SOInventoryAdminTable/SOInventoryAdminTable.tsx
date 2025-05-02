@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useInventory } from "@/lib/useInventory";
 import { useReactTable, getCoreRowModel, flexRender, ColumnDef, CellContext } from "@tanstack/react-table";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 
 import styles from "./so-inventory-admin-table.module.scss";
-import { ModalContext } from "../ModalContextProvider/ModalContextProvider";
 import SOInventoryDeleteButton from "../SOInventoryDeleteButton/SOInventoryDeleteButton";
 import SOInventoryEditButton from "../SOInventoryEditButton/SOInventoryEditButton";
 
@@ -27,11 +26,9 @@ const SOInventoryAdminTable = () => {
 	const [order, setOrder] = useState("asc");
 
 	const { data: inventory, isLoading } = useInventory(page, limit, sort, order);
-	const { modalIsOpen, setModalIsOpen, setSelectedInventoryItem } = useContext(ModalContext);
 
 	const toggleInventoryModal = (props: CellContext<Record<string, string>, string>) => {
-		setSelectedInventoryItem(props.row?.original);
-		setModalIsOpen(!modalIsOpen);
+		console.log(props);
 	};
 
 	const testFunction = () => {
