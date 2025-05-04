@@ -1,7 +1,17 @@
+"use client";
+import { useRouter } from "next/navigation";
 import styles from "./inventory-details.module.scss";
-import React from "react";
+import React, { useCallback } from "react";
 
-const InventoryDetails = () => {
+interface Props {
+	id: string;
+}
+
+const InventoryDetails = ({ id }: Props) => {
+	console.log(id);
+	const router = useRouter();
+
+	const onClose = useCallback(() => router.back(), [router]);
 	return (
 		<div className={styles["inventory-details"]}>
 			<div className={styles["inventory-details__header"]}>
@@ -36,7 +46,7 @@ const InventoryDetails = () => {
 			<div className={styles["inventory-details__body-qr-code-container"]}>{"QR CODE"}</div>
 
 			<div className={styles["inventory-details__cta"]}>
-				<button>CLOSE</button>
+				<button onClick={onClose}>CLOSE</button>
 			</div>
 		</div>
 	);

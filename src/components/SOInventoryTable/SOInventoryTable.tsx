@@ -6,9 +6,11 @@ import React, { useState } from "react";
 import styles from "./so-inventory-table.module.scss";
 import { useMediaQuery } from "react-responsive";
 import { InventoryItem } from "../SOInventoryAdminTable/SOInventoryAdminTable";
+import { useRouter } from "next/navigation";
 
 const SOInventoryTable = () => {
 	const isMobile = useMediaQuery({ maxWidth: 767 });
+	const router = useRouter();
 
 	const [page, setPage] = useState(1);
 	const [limit] = useState(10);
@@ -18,7 +20,8 @@ const SOInventoryTable = () => {
 	const { data: inventory, isLoading } = useInventory(page, limit, sort, order);
 
 	const toggleInventoryModal = (props: any) => {
-		console.log(props.row?.original);
+		const { uuid } = props.row.original;
+		router.push(`/dashboard/inventory/${uuid}`, { scroll: false });
 	};
 
 	const columns: ColumnDef<InventoryItem, any>[] = [

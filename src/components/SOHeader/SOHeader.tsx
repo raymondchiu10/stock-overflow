@@ -12,7 +12,7 @@ const SOHeader = () => {
 	const router = useRouter();
 
 	const toggleAddInventory = () => {
-		router.push("/dashboard/add-inventory");
+		router.push("/dashboard/add-inventory", { scroll: false });
 	};
 
 	return (

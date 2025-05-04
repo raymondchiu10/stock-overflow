@@ -27,7 +27,7 @@ const SOLogoutButton = ({ redirect }: SOLogoutButtonProps) => {
 	};
 
 	if (!isAuthenticated) {
-		return <button onClick={() => router.push("/log-in")}>Log in</button>;
+		return <button onClick={() => router.push("/log-in", { scroll: false })}>Log in</button>;
 	}
 
 	return <SOButton onClick={handleLogout}>Log Out</SOButton>;

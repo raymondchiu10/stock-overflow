@@ -7,6 +7,7 @@ import { useMediaQuery } from "react-responsive";
 import styles from "./so-inventory-admin-table.module.scss";
 import SOInventoryDeleteButton from "../SOInventoryDeleteButton/SOInventoryDeleteButton";
 import SOInventoryEditButton from "../SOInventoryEditButton/SOInventoryEditButton";
+import { useRouter } from "next/navigation";
 
 export interface InventoryItem {
 	base_price?: string;
@@ -27,8 +28,11 @@ const SOInventoryAdminTable = () => {
 
 	const { data: inventory, isLoading } = useInventory(page, limit, sort, order);
 
+	const router = useRouter();
+
 	const toggleInventoryModal = (props: CellContext<Record<string, string>, string>) => {
-		console.log(props);
+		const { uuid } = props.row.original;
+		router.push(`/dashboard/inventory/${uuid}`, { scroll: false });
 	};
 
 	const testFunction = () => {
