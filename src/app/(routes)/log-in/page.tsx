@@ -20,10 +20,16 @@ const Login = () => {
 		handleSubmit,
 		formState: { errors },
 	} = useForm<LoginFormInputs>();
-	const [submitError, setSubmitError] = useState();
+	const [submitError, setSubmitError] = useState<string | undefined>();
 
 	const router = useRouter();
 	const { refetch } = useUser();
+
+	useEffect(() => {
+		if (localStorage.getItem("authToken")) {
+			router.push("/dashboard");
+		}
+	}, []);
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -33,17 +39,24 @@ const Login = () => {
 
 	const handleLogin = async (data: LoginFormInputs) => {
 		try {
-			const res = await axios.post(`/api/log-in`, data);
+			const res = await fetch("/api/log-in", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(data),
+			});
 
-			localStorage.setItem("authToken", res.data.token);
-			axios.defaults.headers.common["Authorization"] = `Bearer ${res.data.token}`;
+			const resData = await res.json();
+
+			if (!res.ok) throw new Error(resData.error || "Log in failed");
+
+			localStorage.setItem("authToken", resData.token);
 			refetch();
 			router.push("/dashboard");
-		} catch (err: unknown) {
-			if (axios.isAxiosError(err)) {
-				setSubmitError(err?.response?.data?.error || "Log in failed");
-				console.error(err?.response?.data?.error || "Log in failed");
-			}
+		} catch (err) {
+			setSubmitError(err instanceof Error ? err.message : "Log in failed");
+			console.error(err);
 		}
 	};
 

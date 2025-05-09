@@ -1,77 +1,30 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
-import { AddInventoryInputs } from "@/components/AddInventory/AddInventory";
-import useAuth from "./useAuth";
-import { axiosAuth } from "./axiosAuth";
+import { useQuery } from "@tanstack/react-query";
 
-const fetchInventory = async (page?: number, limit?: number, sort?: string, order?: string) => {
-	const { data } = await axios.get(`/api/company/${process.env.NEXT_PUBLIC_COMPANY_UUID || ""}/inventory`, {
-		params: { page, limit, sort, order },
+const fetchInventory = async () => {
+	const token = typeof window !== "undefined" ? localStorage.getItem("authToken") : null;
+
+	const res = await fetch("/api/inventory", {
+		method: "GET",
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+		cache: "no-store",
 	});
-	return data;
+
+	if (!res.ok) {
+		const errorData = await res.json();
+		throw new Error(errorData.error || "Failed to fetch inventory");
+	}
+
+	return res.json();
 };
 
-export const useInventory = (page?: number, limit?: number, sort?: string, order?: string) => {
+export const useInventory = () => {
 	return useQuery({
-		queryKey: ["inventory", page, limit, sort, order],
-		queryFn: () => fetchInventory(page, limit, sort, order),
-	});
-};
-
-const getInventoryItem = async (uuid: string) => {
-	const { data } = await axios.get(`/api/company/${process.env.NEXT_PUBLIC_COMPANY_UUID || ""}/inventory/${uuid}`);
-	return data;
-};
-
-export const useInventoryItem = (inventoryUuid: string) => {
-	return useQuery({
-		queryKey: ["inventory-item", inventoryUuid],
-		queryFn: () => getInventoryItem(inventoryUuid),
-		enabled: !!inventoryUuid && inventoryUuid.length > 0,
-	});
-};
-
-export const useAddInventoryMutation = () => {
-	const { token } = useAuth({ redirect: false });
-	const queryClient = useQueryClient();
-
-	return useMutation({
-		mutationFn: async (payload: AddInventoryInputs) => {
-			const { data } = await axiosAuth(token as string).post("/api/inventory", payload);
-			return data;
-		},
-
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["inventory"], exact: false });
-		},
-
-		onError: (error) => {
-			console.error("Update failed", error);
-		},
-	});
-};
-
-interface EditInventoryPayload {
-	payload: AddInventoryInputs;
-	inventoryUuid: string;
-}
-
-export const useEditInventoryMutation = () => {
-	const { token } = useAuth({ redirect: false });
-	const queryClient = useQueryClient();
-
-	return useMutation({
-		mutationFn: async ({ payload, inventoryUuid }: EditInventoryPayload) => {
-			const { data } = await axiosAuth(token as string).patch(`/api/inventory/${inventoryUuid}`, payload);
-			return data;
-		},
-
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["inventory"], exact: false });
-		},
-
-		onError: (error) => {
-			console.error("Update failed", error);
-		},
+		queryKey: ["inventory"],
+		queryFn: fetchInventory,
+		staleTime: 0,
+		refetchOnWindowFocus: true,
+		refetchOnMount: true,
 	});
 };

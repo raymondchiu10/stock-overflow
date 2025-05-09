@@ -1,27 +1,30 @@
 import { useQuery } from "@tanstack/react-query";
-import { axiosAuth } from "./axiosAuth";
 
 const fetchUser = async () => {
-	let token;
+	const token = typeof window !== "undefined" ? localStorage.getItem("authToken") : null;
 
-	if (typeof window !== "undefined" && window.localStorage) {
-		token = localStorage.getItem("authToken");
+	if (!token) throw new Error("No authentication token");
+
+	const res = await fetch("/api/users/profile", {
+		method: "GET",
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+		cache: "no-store",
+	});
+
+	if (!res.ok) {
+		const errorData = await res.json();
+		throw new Error(errorData.message || "Failed to fetch user");
 	}
 
-	if (!token) {
-		return null;
-		// throw new Error("No authentication token available");
-	}
-
-	const { data } = await axiosAuth(token).get(`/api/users/profile`);
-
-	return data;
+	return res.json();
 };
 
 export const useUser = () => {
 	return useQuery({
 		queryKey: ["user"],
-		queryFn: () => fetchUser(),
+		queryFn: fetchUser,
 		staleTime: 0,
 		refetchOnWindowFocus: true,
 		refetchOnMount: true,

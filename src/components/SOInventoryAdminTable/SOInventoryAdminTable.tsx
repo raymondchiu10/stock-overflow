@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useInventory } from "@/lib/useInventory";
 import { useReactTable, getCoreRowModel, flexRender, ColumnDef, CellContext } from "@tanstack/react-table";
-import React, { useState } from "react";
+import React from "react";
 import { useMediaQuery } from "react-responsive";
 
 import styles from "./so-inventory-admin-table.module.scss";
@@ -21,24 +21,13 @@ export interface InventoryItem {
 const SOInventoryAdminTable = () => {
 	const isMobile = useMediaQuery({ maxWidth: 767 });
 
-	const [page, setPage] = useState(1);
-	const [limit] = useState(10);
-	const [sort, setSort] = useState("id");
-	const [order, setOrder] = useState("asc");
-
-	const { data: inventory, isLoading } = useInventory(page, limit, sort, order);
+	const { data, isLoading } = useInventory();
 
 	const router = useRouter();
 
 	const toggleInventoryModal = (props: CellContext<Record<string, string>, string>) => {
 		const { uuid } = props.row.original;
 		router.push(`/dashboard/inventory/${uuid}`, { scroll: false });
-	};
-
-	const testFunction = () => {
-		setPage(1);
-		setSort("id");
-		setOrder("asc");
 	};
 
 	const columns: ColumnDef<InventoryItem, any>[] = [
@@ -101,7 +90,7 @@ const SOInventoryAdminTable = () => {
 	];
 
 	const table = useReactTable({
-		data: inventory?.data,
+		data: data?.inventory || [],
 		columns,
 		getCoreRowModel: getCoreRowModel(),
 		columnResizeMode: "onChange",
@@ -113,8 +102,6 @@ const SOInventoryAdminTable = () => {
 
 	return (
 		<>
-			{/* TODO: implement pagination */}
-			<div style={{ display: "none" }} onClick={testFunction}></div>
 			<h1>{`The Company's Inventory - Admin`}</h1>
 			<table className={styles["so-inventory-table"]} style={{ minWidth: `${table.getTotalSize()}px` }}>
 				<thead>

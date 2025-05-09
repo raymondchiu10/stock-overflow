@@ -1,4 +1,4 @@
-import pool from "../config/database.ts";
+import pool from "@/lib/config/database";
 
 interface Table {
 	name: string;
@@ -30,12 +30,14 @@ const tables: Table[] = [
       uuid UUID PRIMARY KEY DEFAULT gen_random_uuid(),
       name VARCHAR(100) UNIQUE NOT NULL,
       description VARCHAR(255),
-      base_price DECIMAL(10, 2) NOT NULL
+      quantity INT NOT NULL,
+      base_price DECIMAL(10, 2) NOT NULL,
+      suggested_price DECIMAL(10, 2) NOT NULL
     );`,
 		seed: `
-    INSERT INTO inventory (uuid, name, description, base_price) VALUES
-      ('550e8400-e29b-41d4-a716-446655440004', 'Cactus', 'It is spikey and drought resistant', 12.99),
-      ('550e8400-e29b-41d4-a716-446655440005', 'Pants', 'They are to keep the lower half of your body warm', 49.99)
+    INSERT INTO inventory (uuid, name, description, quantity, base_price, suggested_price) VALUES
+      ('550e8400-e29b-41d4-a716-446655440004', 'Cactus', 'It is spikey and drought resistant', 12, 9.99, 12.99),
+      ('550e8400-e29b-41d4-a716-446655440005', 'Pants', 'They are to keep the lower half of your body warm', 8, 29.99, 49.99)
     ON CONFLICT (uuid) DO NOTHING;`,
 	},
 	{
