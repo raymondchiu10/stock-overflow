@@ -9,13 +9,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
 	return (
-		<ReactQueryClientProvider>
-			<html lang="en">
-				<head>
-					<meta name="apple-mobile-web-app-title" content="Stock Overflow" />
-				</head>
-				<body>{children}</body>
-			</html>
-		</ReactQueryClientProvider>
+		<html lang="en">
+			<head>
+				<meta name="apple-mobile-web-app-title" content="Stock Overflow" />
+			</head>
+			<body>
+				<ReactQueryClientProvider>
+					<main>{children}</main>
+				</ReactQueryClientProvider>
+			</body>
+		</html>
 	);
 }

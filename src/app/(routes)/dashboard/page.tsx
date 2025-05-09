@@ -12,7 +12,7 @@ const Dashboard = () => {
 	const { data: user } = useUser();
 
 	return (
-		<main className={styles["dashboard"]}>
+		<div className={styles["dashboard"]}>
 			<SOHeader />
 
 			<section className={styles["dashboard__body"]}>
@@ -22,7 +22,7 @@ const Dashboard = () => {
 			</section>
 
 			{/* {user && user?.role === "admin" ? <InventoryAdminDetailsModal /> : <InventoryDetailsModal />} */}
-		</main>
+		</div>
 	);
 };
 
