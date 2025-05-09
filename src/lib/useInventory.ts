@@ -19,25 +19,6 @@ const fetchInventory = async () => {
 	return res.json();
 };
 
-const fetchInventoryItem = async (uuid: string) => {
-	const token = typeof window !== "undefined" ? localStorage.getItem("authToken") : null;
-
-	const res = await fetch(`/api/inventory/${uuid}`, {
-		method: "GET",
-		headers: {
-			Authorization: `Bearer ${token}`,
-		},
-		cache: "no-store",
-	});
-
-	if (!res.ok) {
-		const errorData = await res.json();
-		throw new Error(errorData.error || "Failed to fetch inventory item");
-	}
-
-	return res.json();
-};
-
 export const useInventory = () => {
 	return useQuery({
 		queryKey: ["inventory"],
@@ -48,11 +29,30 @@ export const useInventory = () => {
 	});
 };
 
+const fetchInventoryItem = async (uuid: string) => {
+	const res = await fetch(`/api/inventory/${uuid}`, {
+		method: "GET",
+		cache: "no-store",
+	});
+
+	if (!res.ok) {
+		let errorMessage = "Failed to fetch inventory item";
+
+		try {
+			const errorData = await res.json();
+			errorMessage = errorData?.error || errorMessage;
+		} catch {}
+		throw new Error(errorMessage);
+	}
+
+	return res.json();
+};
+
 export const useInventoryItem = (uuid: string, enabled: boolean = true) => {
 	return useQuery({
 		queryKey: ["inventory", uuid],
 		queryFn: () => fetchInventoryItem(uuid),
-		enabled: !!uuid && enabled, // Prevent running the query without a valid uuid
+		enabled: !!uuid && enabled,
 		staleTime: 0,
 		refetchOnWindowFocus: true,
 		refetchOnMount: true,

@@ -16,10 +16,12 @@ export interface InventoryItem {
 	quantity?: number;
 	base_price?: string;
 	suggested_price?: string;
+	created_at?: string;
+	updated_at?: string;
 }
 
 const SOInventoryAdminTable = () => {
-	const isMobile = useMediaQuery({ maxWidth: 767 });
+	// const isMobile = useMediaQuery({ maxWidth: 767 });
 
 	const { data, isLoading } = useInventory();
 
@@ -46,18 +48,18 @@ const SOInventoryAdminTable = () => {
 				);
 			},
 		},
-		...(!isMobile
-			? [
-					{
-						accessorKey: "description",
-						header: "Description",
-						size: 250,
-						cell: (props: CellContext<InventoryItem, string>) => {
-							return <p>{props.getValue()}</p>;
-						},
-					},
-			  ]
-			: []),
+		// ...(!isMobile
+		// 	? [
+		// 			{
+		// 				accessorKey: "description",
+		// 				header: "Description",
+		// 				size: 250,
+		// 				cell: (props: CellContext<InventoryItem, string>) => {
+		// 					return <p>{props.getValue()}</p>;
+		// 				},
+		// 			},
+		// 	  ]
+		// 	: []),
 		{
 			accessorKey: "quantity",
 			header: "Quantity",
@@ -67,16 +69,44 @@ const SOInventoryAdminTable = () => {
 			},
 		},
 		{
-			accessorKey: "company_price",
-			header: "Price",
+			accessorKey: "base_price",
+			header: "Base Price",
 			size: 75,
 			cell: (props: CellContext<InventoryItem, number>) => {
 				return <p>{props.getValue()}</p>;
 			},
 		},
 		{
+			accessorKey: "suggested_price",
+			header: "Retail Price",
+			size: 75,
+			cell: (props: CellContext<InventoryItem, number>) => {
+				return <p>{props.getValue()}</p>;
+			},
+		},
+		{
+			accessorKey: "created_at",
+			header: "Created",
+			size: 75,
+			cell: (props: CellContext<InventoryItem, number>) => {
+				const date = new Date(props.getValue());
+				const formattedDate = new Intl.DateTimeFormat("en-US").format(date);
+				return <p>{formattedDate}</p>;
+			},
+		},
+		{
+			accessorKey: "updated_at",
+			header: "Updated",
+			size: 75,
+			cell: (props: CellContext<InventoryItem, number>) => {
+				const date = new Date(props.getValue());
+				const formattedDate = new Intl.DateTimeFormat("en-US").format(date);
+				return <p>{formattedDate}</p>;
+			},
+		},
+		{
 			accessorKey: "uuid",
-			header: "Edit/Remove",
+			header: "Edit/Delete",
 			size: 100,
 			cell: (props: CellContext<InventoryItem, string>) => {
 				return (
