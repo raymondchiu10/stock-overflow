@@ -1,4 +1,3 @@
-"use client";
 import { useRouter } from "next/navigation";
 import styles from "./inventory-details.module.scss";
 import React, { useCallback } from "react";
@@ -12,6 +11,7 @@ const InventoryDetails = ({ data }: Props) => {
 	const router = useRouter();
 
 	const onClose = useCallback(() => router.back(), [router]);
+
 	return (
 		<div className={styles["inventory-details"]}>
 			<div className={styles["inventory-details__header"]}>
