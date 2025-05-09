@@ -10,12 +10,12 @@ import SOInventoryEditButton from "../SOInventoryEditButton/SOInventoryEditButto
 import { useRouter } from "next/navigation";
 
 export interface InventoryItem {
-	base_price?: string;
-	company_price?: string;
-	description?: string;
-	name?: string;
-	quantity?: number;
 	uuid?: string;
+	name?: string;
+	description?: string;
+	quantity?: number;
+	base_price?: string;
+	suggested_price?: string;
 }
 
 const SOInventoryAdminTable = () => {

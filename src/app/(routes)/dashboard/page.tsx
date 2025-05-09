@@ -10,7 +10,6 @@ import SOHeader from "@/components/SOHeader/SOHeader";
 
 const Dashboard = () => {
 	const { data: user } = useUser();
-	console.log(user);
 
 	return (
 		<main className={styles["dashboard"]}>

@@ -32,7 +32,9 @@ const tables: Table[] = [
       description VARCHAR(255),
       quantity INT NOT NULL,
       base_price DECIMAL(10, 2) NOT NULL,
-      suggested_price DECIMAL(10, 2) NOT NULL
+      suggested_price DECIMAL(10, 2) NOT NULL,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     );`,
 		seed: `
     INSERT INTO inventory (uuid, name, description, quantity, base_price, suggested_price) VALUES

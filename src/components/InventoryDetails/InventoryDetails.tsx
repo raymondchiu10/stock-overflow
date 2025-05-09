@@ -2,35 +2,35 @@
 import { useRouter } from "next/navigation";
 import styles from "./inventory-details.module.scss";
 import React, { useCallback } from "react";
+import { InventoryItem } from "../SOInventoryAdminTable/SOInventoryAdminTable";
 
 interface Props {
-	id: string;
+	data: InventoryItem;
 }
 
-const InventoryDetails = ({ id }: Props) => {
-	console.log(id);
+const InventoryDetails = ({ data }: Props) => {
 	const router = useRouter();
 
 	const onClose = useCallback(() => router.back(), [router]);
 	return (
 		<div className={styles["inventory-details"]}>
 			<div className={styles["inventory-details__header"]}>
-				<h2>Look up Item: {"placheolder name"}</h2>
+				<h2>Look up Item: {data.name}</h2>
 			</div>
 
 			<div className={styles["inventory-details__body"]}>
 				<div className={styles["inventory-details__body-details"]}>
 					<div>
 						<h3>Product Name:</h3>
-						<p>{"placheolder name"}</p>
+						<p>{data.name}</p>
 					</div>
 					<div>
 						<h3>Quantity:</h3>
-						<p>{"placheolder quantity"}</p>
+						<p>{data.quantity}</p>
 					</div>
 					<div>
 						<h3>Retail Price:</h3>
-						<p>{"placheolder company_price or placheolder base_price"}</p>
+						<p>{data.suggested_price || data.base_price}</p>
 					</div>
 				</div>
 
@@ -38,7 +38,7 @@ const InventoryDetails = ({ id }: Props) => {
 					<div>No image available</div>
 
 					<div>
-						<p>{"placheolder description"}</p>
+						<p>{data.description}</p>
 					</div>
 				</div>
 			</div>
