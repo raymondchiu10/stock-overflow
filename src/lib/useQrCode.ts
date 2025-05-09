@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 const fetchQrCode = async (inventoryUuid: string) => {
-	const { data } = await axios.get(`/api/qrcode/${inventoryUuid}`);
+	const { data } = await axios.get(`/api/qr-code/${inventoryUuid}`);
 
 	return data;
 };

@@ -1,7 +1,8 @@
 import { useRouter } from "next/navigation";
 import styles from "./inventory-details.module.scss";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { InventoryItem } from "../SOInventoryAdminTable/SOInventoryAdminTable";
+import { useQrCode } from "@/lib/useQrCode";
 
 interface Props {
 	data: InventoryItem;
@@ -9,8 +10,19 @@ interface Props {
 
 const InventoryDetails = ({ data }: Props) => {
 	const router = useRouter();
+	const { data: qrcode } = useQrCode(data?.uuid || "");
+	const [qrCodeImage, setQrCodeImage] = useState<string>();
 
 	const onClose = useCallback(() => router.back(), [router]);
+
+	useEffect(() => {
+		if (qrcode) {
+			setQrCodeImage(qrcode);
+		}
+		return () => {
+			setQrCodeImage(undefined);
+		};
+	}, [qrcode]);
 
 	return (
 		<div className={styles["inventory-details"]}>
@@ -43,7 +55,14 @@ const InventoryDetails = ({ data }: Props) => {
 				</div>
 			</div>
 
-			<div className={styles["inventory-details__body-qr-code-container"]}>{"QR CODE"}</div>
+			<div className={styles["inventory-details__body-qr-code-container"]}>
+				{qrcode && qrCodeImage && (
+					<div className={styles["inventory-details__body-qr-code"]}>
+						{/*  eslint-disable-next-line @next/next/no-img-element */}
+						<img src={qrCodeImage as string} alt={`${data?.name || ""} qr code`} />
+					</div>
+				)}
+			</div>
 
 			<div className={styles["inventory-details__cta"]}>
 				<button onClick={onClose}>CLOSE</button>

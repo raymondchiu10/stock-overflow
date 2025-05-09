@@ -12,11 +12,10 @@ const QrCodeScanner = dynamic(() => import("@/lib/QrCodeScanner"), {
 
 const QRCode = () => {
 	const router = useRouter();
-	const [scanResult, setScanResult] = useState<string>("");
 
 	const handleScanSuccess = async (decodedText: string, decodedResult: Html5QrcodeResult) => {
 		console.log(`Code scanned: ${decodedText}`, decodedResult);
-		setScanResult(decodedText);
+		router.replace(`/dashboard/inventory/${decodedText}`);
 	};
 
 	return (

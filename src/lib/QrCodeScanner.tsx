@@ -11,7 +11,6 @@ type QrCodeScannerProps = {
 const QrCodeScanner: React.FC<QrCodeScannerProps> = ({ onScanSuccess, fps = 10, qrbox = 250 }) => {
 	const scannerContainerRef = useRef<HTMLDivElement | null>(null);
 	const scannerRef = useRef<Html5QrcodeScanner | null>(null);
-	const containerIdRef = useRef(`qr-scanner-${Math.random().toString(36).substr(2, 9)}`);
 
 	const successCallback = useCallback(
 		(decodedText: string, decodedResult: Html5QrcodeResult) => {
@@ -27,7 +26,8 @@ const QrCodeScanner: React.FC<QrCodeScannerProps> = ({ onScanSuccess, fps = 10, 
 	useEffect(() => {
 		if (!scannerContainerRef.current || typeof window === "undefined") return;
 
-		const containerId = `${containerIdRef}`;
+		// Generate a unique ID for the scanner div
+		const containerId = `qr-scanner-${Date.now()}`;
 		scannerContainerRef.current.id = containerId;
 
 		const scanner = new Html5QrcodeScanner(containerId, { fps, qrbox }, false);

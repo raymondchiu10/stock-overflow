@@ -1,0 +1,14 @@
+import QRCode from "qrcode";
+import { NextResponse } from "next/server";
+
+export async function GET(_req: Request, { params }: { params: { uuid: string } }) {
+	const { uuid } = await params;
+
+	try {
+		const qrCodeImage = await QRCode.toDataURL(uuid);
+		return NextResponse.json(qrCodeImage);
+	} catch (err) {
+		console.error("Error generating QR code:", err);
+		return NextResponse.json("Failed to generate QR code", { status: 500 });
+	}
+}
