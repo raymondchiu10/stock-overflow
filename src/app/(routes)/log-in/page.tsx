@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./log-in.module.scss";
 
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/lib/useUser";
@@ -20,10 +19,15 @@ const Login = () => {
 		handleSubmit,
 		formState: { errors },
 	} = useForm<LoginFormInputs>();
-	const [submitError, setSubmitError] = useState();
+
+	const [submitError, setSubmitError] = useState<string | undefined>();
 
 	const router = useRouter();
 	const { refetch } = useUser();
+
+	if (localStorage.getItem("authToken")) {
+		router.push("/dashboard");
+	}
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -33,17 +37,24 @@ const Login = () => {
 
 	const handleLogin = async (data: LoginFormInputs) => {
 		try {
-			const res = await axios.post(`/api/log-in`, data);
+			const res = await fetch("/api/log-in", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(data),
+			});
 
-			localStorage.setItem("authToken", res.data.token);
-			axios.defaults.headers.common["Authorization"] = `Bearer ${res.data.token}`;
+			const resData = await res.json();
+
+			if (!res.ok) throw new Error(resData.error || "Log in failed");
+
+			localStorage.setItem("authToken", resData.token);
 			refetch();
 			router.push("/dashboard");
-		} catch (err: unknown) {
-			if (axios.isAxiosError(err)) {
-				setSubmitError(err?.response?.data?.error || "Log in failed");
-				console.error(err?.response?.data?.error || "Log in failed");
-			}
+		} catch (err) {
+			setSubmitError(err instanceof Error ? err.message : "Log in failed");
+			console.error(err);
 		}
 	};
 
@@ -54,12 +65,7 @@ const Login = () => {
 			<div className={styles["log-in__spacing"]}>
 				<div className={styles["log-in__container"]}>
 					<h2>Log In</h2>
-					<form
-						className={styles["log-in__form"]}
-						onSubmit={handleSubmit((data) => {
-							handleLogin(data);
-						})}
-					>
+					<form className={styles["log-in__form"]} onSubmit={handleSubmit(handleLogin)}>
 						<span style={{ color: "red" }}>{submitError}</span>
 						<div className={styles["log-in__form-field"]}>
 							<label htmlFor="email">Email</label>

@@ -1,8 +1,7 @@
 @use "./mixins" as *;
 
 .container {
-	// margin-right: auto;
-	// margin-left: auto;
+	width: 100vw;
 	margin: 0.5rem;
 
 	@include media-breakpoint-up($md) {

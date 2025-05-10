@@ -1,27 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useInventory } from "@/lib/useInventory";
 import { useReactTable, getCoreRowModel, flexRender, ColumnDef, CellContext } from "@tanstack/react-table";
-import React, { useContext, useState } from "react";
+import React from "react";
 
 import styles from "./so-inventory-table.module.scss";
 import { useMediaQuery } from "react-responsive";
 import { InventoryItem } from "../SOInventoryAdminTable/SOInventoryAdminTable";
-import { ModalContext } from "../ModalContextProvider/ModalContextProvider";
+import { useRouter } from "next/navigation";
+import { useInventory } from "@/lib/useInventory";
 
 const SOInventoryTable = () => {
 	const isMobile = useMediaQuery({ maxWidth: 767 });
-	const { modalIsOpen, setModalIsOpen, setSelectedInventoryItem } = useContext(ModalContext);
-
-	const [page, setPage] = useState(1);
-	const [limit] = useState(10);
-	const [sort, setSort] = useState("id");
-	const [order, setOrder] = useState("asc");
-
-	const { data: inventory, isLoading } = useInventory(page, limit, sort, order);
+	const { data, isLoading } = useInventory();
+	const router = useRouter();
 
 	const toggleInventoryModal = (props: any) => {
-		setSelectedInventoryItem(props.row?.original);
-		setModalIsOpen(!modalIsOpen);
+		const { uuid } = props.row.original;
+		router.push(`/dashboard/inventory/${uuid}`, { scroll: false });
 	};
 
 	const columns: ColumnDef<InventoryItem, any>[] = [
@@ -61,7 +55,7 @@ const SOInventoryTable = () => {
 			},
 		},
 		{
-			accessorKey: "company_price",
+			accessorKey: "suggested_price",
 			header: "Price",
 			size: 100,
 			cell: (props: CellContext<InventoryItem, number>) => {
@@ -71,25 +65,16 @@ const SOInventoryTable = () => {
 	];
 
 	const table = useReactTable({
-		data: inventory?.data,
+		data: data?.inventory || [],
 		columns,
 		getCoreRowModel: getCoreRowModel(),
 		columnResizeMode: "onChange",
 	});
 
-	if (isLoading) {
-		return <div>Loading...</div>;
-	}
-
-	const testFunction = () => {
-		setPage(1);
-		setSort("id");
-		setOrder("asc");
-	};
+	if (isLoading) return <p>Loading...</p>;
 
 	return (
 		<>
-			<div style={{ display: "none" }} onClick={testFunction}></div>
 			<h2>{`The Company's Inventory`}</h2>
 			<table className={styles["so-inventory-table"]} style={{ minWidth: `${table.getTotalSize()}px` }}>
 				<thead>
