@@ -25,7 +25,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ uu
 		const { uuid } = await params;
 		const { name, quantity, base_price, suggested_price, description } = await req.json();
 
-		const fields: Record<string, string | number> = {
+		const fields: AddInventoryFormData = {
 			name,
 			quantity,
 			base_price,
