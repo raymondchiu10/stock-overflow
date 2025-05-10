@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import styles from "./add-inventory.module.scss";
 import { useCallback } from "react";
 import { useForm } from "react-hook-form";
+import useAuth from "@/lib/useAuth";
 export interface AddInventoryFormData {
 	name: string;
 	description: string;
@@ -12,6 +13,8 @@ export interface AddInventoryFormData {
 }
 
 const AddInventory = () => {
+	const { token } = useAuth({ redirect: false });
+
 	const {
 		register,
 		handleSubmit,
@@ -19,11 +22,32 @@ const AddInventory = () => {
 	} = useForm<AddInventoryFormData>();
 	const router = useRouter();
 
+	const submitInventoryItem = async (data: AddInventoryFormData) => {
+		try {
+			const response = await fetch("/api/inventory", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token ?? ""}`,
+				},
+				body: JSON.stringify(data),
+			});
+
+			if (!response.ok) {
+				throw new Error("Failed to add inventory item");
+			}
+
+			router.replace("/dashboard");
+		} catch (error) {
+			console.error("Error submitting form:", error);
+		}
+	};
+
 	const onClose = useCallback(() => router.back(), [router]);
 
 	return (
 		<>
-			<form className={styles["add-inventory"]} onSubmit={handleSubmit((data) => {})}>
+			<form className={styles["add-inventory"]} onSubmit={handleSubmit(submitInventoryItem)}>
 				<div className={styles["add-inventory__header"]}>
 					<h2>Add Inventory Item</h2>
 				</div>

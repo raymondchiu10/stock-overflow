@@ -3,6 +3,7 @@ import React, { useCallback } from "react";
 import styles from "./delete-inventory.module.scss";
 import { useRouter } from "next/navigation";
 import { InventoryItem } from "../SOInventoryAdminTable/SOInventoryAdminTable";
+import useAuth from "@/lib/useAuth";
 
 interface Props {
 	data: InventoryItem;
@@ -10,12 +11,10 @@ interface Props {
 
 const DeleteInventory = ({ data }: Props) => {
 	const router = useRouter();
+	const { token } = useAuth({ redirect: false });
 
 	const handleDelete = async () => {
-		const token = localStorage.getItem("authToken");
-
 		try {
-			console.log(data?.uuid);
 			const res = await fetch(`/api/inventory/${data?.uuid}`, {
 				method: "DELETE",
 				headers: {

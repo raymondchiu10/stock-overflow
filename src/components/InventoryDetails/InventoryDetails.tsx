@@ -11,18 +11,8 @@ interface Props {
 const InventoryDetails = ({ data }: Props) => {
 	const router = useRouter();
 	const { data: qrcode } = useQrCode(data?.uuid || "");
-	const [qrCodeImage, setQrCodeImage] = useState<string>();
 
 	const onClose = useCallback(() => router.back(), [router]);
-
-	useEffect(() => {
-		if (qrcode) {
-			setQrCodeImage(qrcode);
-		}
-		return () => {
-			setQrCodeImage(undefined);
-		};
-	}, [qrcode]);
 
 	return (
 		<div className={styles["inventory-details"]}>
@@ -56,10 +46,9 @@ const InventoryDetails = ({ data }: Props) => {
 			</div>
 
 			<div className={styles["inventory-details__body-qr-code-container"]}>
-				{qrcode && qrCodeImage && (
+				{qrcode && (
 					<div className={styles["inventory-details__body-qr-code"]}>
-						{/*  eslint-disable-next-line @next/next/no-img-element */}
-						<img src={qrCodeImage as string} alt={`${data?.name || ""} qr code`} />
+						<img src={qrcode} alt={`${data?.name || ""} qr code`} />
 					</div>
 				)}
 			</div>

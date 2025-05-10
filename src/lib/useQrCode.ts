@@ -1,16 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-const fetchQrCode = async (inventoryUuid: string) => {
-	const { data } = await axios.get(`/api/qr-code/${inventoryUuid}`);
+const fetchQrCode = async (uuid: string) => {
+	const { data } = await axios.get(`/api/qr-code/${uuid}`);
 
 	return data;
 };
 
-export const useQrCode = (inventoryUuid: string) => {
+export const useQrCode = (uuid: string) => {
 	return useQuery({
-		queryKey: ["qrcode"],
-		queryFn: () => fetchQrCode(inventoryUuid),
-		enabled: !!inventoryUuid,
+		queryKey: ["qrcode", uuid],
+		queryFn: () => fetchQrCode(uuid),
+		enabled: !!uuid,
 	});
 };

@@ -4,7 +4,11 @@ import styles from "./edit-inventory.module.scss";
 import { useCallback } from "react";
 import { submitHelper } from "./actions";
 
-const EditInventory = () => {
+interface Props {
+	uuid: string;
+}
+
+const EditInventory = ({ uuid }: Props) => {
 	const router = useRouter();
 
 	const onClose = useCallback(() => router.back(), [router]);
@@ -34,8 +38,13 @@ const EditInventory = () => {
 						</div>
 
 						<div className={styles["edit-inventory__form-field"]}>
-							<label htmlFor="company_price">Company Price:</label>
-							<input name="company_price" id="company_price" type="text" placeholder="Company Price" />
+							<label htmlFor="suggested_price">Company Price:</label>
+							<input
+								name="suggested_price"
+								id="suggested_price"
+								type="text"
+								placeholder="Company Price"
+							/>
 						</div>
 					</div>
 

@@ -24,11 +24,9 @@ const Login = () => {
 	const router = useRouter();
 	const { refetch } = useUser();
 
-	useEffect(() => {
-		if (localStorage.getItem("authToken")) {
-			router.push("/dashboard");
-		}
-	}, []);
+	if (localStorage.getItem("authToken")) {
+		router.push("/dashboard");
+	}
 
 	useEffect(() => {
 		setTimeout(() => {

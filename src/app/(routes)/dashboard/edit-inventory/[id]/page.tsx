@@ -1,12 +1,12 @@
 import EditInventory from "@/components/EditInventory/EditInventory";
 import SOModalLayout from "@/components/SOModalLayout/SOModalLayout";
 
-export default async function AddInventoryPage({ params }: { params: Promise<{ id: string }> }) {
-	const { id } = await params;
+export default async function AddInventoryPage({ params }: { params: Promise<{ uuid: string }> }) {
+	const { uuid } = await params;
 
 	return (
 		<SOModalLayout>
-			<EditInventory id={id} />
+			<EditInventory uuid={uuid} />
 		</SOModalLayout>
 	);
 }

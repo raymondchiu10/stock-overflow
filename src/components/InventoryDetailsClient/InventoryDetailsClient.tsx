@@ -2,6 +2,7 @@
 
 import { useInventoryItem } from "@/lib/useInventory";
 import InventoryDetails from "../InventoryDetails/InventoryDetails";
+import { useEffect } from "react";
 
 type Props = {
 	uuid: string;
