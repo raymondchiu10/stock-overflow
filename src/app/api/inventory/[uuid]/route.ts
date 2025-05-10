@@ -3,7 +3,7 @@ import pool from "@/lib/config/database";
 import { authenticateRequest } from "@/lib/auth/auth";
 import { AddInventoryFormData } from "@/components/EditInventory/actions";
 
-export async function GET(_req: Request, { params }: { params: { uuid: string } }) {
+export async function GET(_req: Request, { params }: { params: Promise<{ uuid: string }> }) {
 	const { uuid } = await params;
 
 	try {
@@ -72,8 +72,8 @@ export async function PATCH(req: Request, { params }: { params: AddInventoryForm
 	}
 }
 
-export async function DELETE(req: Request, { params }: { params: { uuid: string } }) {
-	const { uuid } = params;
+export async function DELETE(req: Request, { params }: { params: Promise<{ uuid: string }> }) {
+	const { uuid } = await params;
 
 	const user = await authenticateRequest(req);
 
