@@ -1,52 +1,37 @@
-import styles from "./edit-inventory.module.scss";
-import React, { useContext, useEffect, useState } from "react";
-import { ModalContext } from "../ModalContextProvider/ModalContextProvider";
-import { useForm } from "react-hook-form";
-import { useEditInventoryMutation } from "@/lib/useInventory";
-import { useInventory } from "@/lib/useImages";
-import { useQueryClient } from "@tanstack/react-query";
+"use client";
 
-export interface AddInventoryInputs {
-	name: string;
-	description: string;
-	base_price: string;
-	quantity: number;
-	company_price: number;
-	company_uuid?: string;
+import { useRouter } from "next/navigation";
+import styles from "./edit-inventory.module.scss";
+import { useCallback, useEffect, useState } from "react";
+import { AddInventoryFormData } from "./actions";
+import { useInventoryItem } from "@/lib/useInventory";
+import { useForm } from "react-hook-form";
+import useAuth from "@/lib/useAuth";
+
+interface Props {
+	uuid: string;
 }
 
-const EditInventory = () => {
-	const {
-		editInventoryModalIsOpen: modalIsOpen,
-		setEditInventoryModalIsOpen: setModalIsOpen,
-		selectedInventoryItem,
-		setSelectedInventoryItem,
-	} = useContext(ModalContext);
-
-	const editInventoryMutation = useEditInventoryMutation();
-	const queryClient = useQueryClient();
-	const { refetch } = useInventory();
+const EditInventory = ({ uuid }: Props) => {
+	const { data, isLoading } = useInventoryItem(uuid);
+	const { token, loading } = useAuth({});
 
 	const {
 		register,
 		handleSubmit,
-		setValue,
 		formState: { errors },
 		reset,
-	} = useForm<AddInventoryInputs>();
+	} = useForm<AddInventoryFormData>();
 
-	const [submitError, setSubmitError] = useState();
+	const [submitError, setSubmitError] = useState<string | undefined>();
+
+	const router = useRouter();
 
 	useEffect(() => {
-		if (selectedInventoryItem) {
-			setValue("name", selectedInventoryItem.name);
-			setValue("quantity", Number(selectedInventoryItem.quantity));
-			setValue("base_price", selectedInventoryItem.base_price);
-			setValue("company_price", Number(selectedInventoryItem.company_price));
-			setValue("description", selectedInventoryItem.description || "");
+		if (data) {
+			reset(data[0]);
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [selectedInventoryItem]);
+	}, [data, reset]);
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -54,44 +39,42 @@ const EditInventory = () => {
 		}, 4000);
 	}, [submitError]);
 
-	const handleAddInventory = async (formData: AddInventoryInputs) => {
-		if (!selectedInventoryItem) {
-			return;
-		}
+	const handleEditInventoryItem = async (data: AddInventoryFormData) => {
 		try {
-			await editInventoryMutation.mutateAsync(
-				{
-					payload: {
-						...formData,
-						company_uuid: process.env.NEXT_PUBLIC_COMPANY_UUID || undefined, // TODO: figure out distinct companies next sprint
-					},
-					inventoryUuid: selectedInventoryItem?.uuid as string,
+			const res = await fetch(`/api/inventory/${uuid}`, {
+				method: "PATCH",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
 				},
-				{
-					onSuccess: () => {
-						queryClient.invalidateQueries({ queryKey: ["inventory"], exact: false });
-					},
-				}
-			);
+				body: JSON.stringify(data),
+			});
 
-			// TODO: figure out cloudinary widget
+			const resData = await res.json();
 
-			reset();
-			setModalIsOpen(!modalIsOpen);
-			refetch();
+			if (!res.ok) throw new Error(resData.error || "Inventory Edit failed");
+
+			router.push("/dashboard");
 		} catch (err) {
+			setSubmitError(err instanceof Error ? err.message : "Inventory Edit failed");
 			console.error(err);
 		}
 	};
 
+	const onClose = useCallback(() => router.back(), [router]);
+
+	if (isLoading || loading) {
+		return <p>Loading...</p>;
+	}
+
 	return (
 		<>
-			<span style={{ color: "red" }}>{submitError}</span>
-
-			<form className={styles["edit-inventory"]} onSubmit={handleSubmit((data) => handleAddInventory(data))}>
+			<form className={styles["edit-inventory"]} onSubmit={handleSubmit(handleEditInventoryItem)}>
 				<div className={styles["edit-inventory__header"]}>
-					<h2>Edit Inventory Item</h2>
+					<h2>Edit Inventory Item: {data[0]?.name}</h2>
 				</div>
+
+				<span style={{ color: "red" }}>{submitError}</span>
 
 				<div className={styles["edit-inventory__body"]}>
 					<div className={styles["edit-inventory__field-container"]}>
@@ -101,7 +84,7 @@ const EditInventory = () => {
 								id="name"
 								type="text"
 								placeholder="Product name"
-								{...register("name", { required: "Product name is required." })}
+								{...register("name", { required: "Name is required." })}
 							/>
 							{errors.name && <span style={{ color: "red" }}>{errors.name.message}</span>}
 						</div>
@@ -112,54 +95,46 @@ const EditInventory = () => {
 								id="quantity"
 								type="text"
 								placeholder="Quantity"
-								{...register("quantity", { required: "Product quantity is required." })}
+								{...register("quantity", { required: "Quantity is required." })}
 							/>
 							{errors.quantity && <span style={{ color: "red" }}>{errors.quantity.message}</span>}
 						</div>
 
 						<div className={styles["edit-inventory__form-field"]}>
-							<label htmlFor="base_price">Suggested Retail Price:</label>
+							<label htmlFor="base_price">Base Price:</label>
 							<input
 								id="base_price"
 								type="text"
-								placeholder="Suggested retail price"
-								{...register("base_price", { required: "Product suggested retail price is required." })}
+								placeholder="Base price"
+								{...register("base_price", { required: "Base Price is required." })}
 							/>
 							{errors.base_price && <span style={{ color: "red" }}>{errors.base_price.message}</span>}
 						</div>
 
 						<div className={styles["edit-inventory__form-field"]}>
-							<label htmlFor="company_price">Company Price:</label>
+							<label htmlFor="suggested_price">Suggested Price:</label>
 							<input
-								id="company_price"
+								id="suggested_price"
 								type="text"
-								placeholder="Company Price"
-								{...register("company_price")}
+								placeholder="Suggested Price"
+								{...register("suggested_price", { required: "Suggested Price is required." })}
 							/>
+							{errors.suggested_price && (
+								<span style={{ color: "red" }}>{errors.suggested_price.message}</span>
+							)}
 						</div>
 					</div>
 
 					<div className={styles["edit-inventory__image-container"]}>
-						<div className={styles["edit-inventory__image-uploader"]}>
-							{/* {image && (
-								<CldImage
-									// @ts-ignore
-									src={image?.info?.public_id}
-									alt={`temporary image to be uploaded`}
-									width={150}
-									height={150}
-								/>
-							)}
-							<ImageUploader setImage={setImage} /> */}
-						</div>
-
 						<div className={styles["edit-inventory__form-field"]}>
 							<label htmlFor="description">Description:</label>
 							<textarea
 								id="description"
 								placeholder="Description"
 								rows={4}
-								{...register("description", { required: "Product description is required." })}
+								{...register("description", {
+									required: false,
+								})}
 							/>
 							{errors.description && <span style={{ color: "red" }}>{errors.description.message}</span>}
 						</div>
@@ -167,16 +142,10 @@ const EditInventory = () => {
 				</div>
 
 				<div className={styles["edit-inventory__cta"]}>
-					<button
-						onClick={() => {
-							setModalIsOpen(false);
-							setSelectedInventoryItem(null);
-						}}
-					>
+					<button type="button" onClick={onClose}>
 						CLOSE
 					</button>
-
-					<button type="submit">UPDATE</button>
+					<button type="submit">UPDATE ITEM</button>
 				</div>
 			</form>
 		</>

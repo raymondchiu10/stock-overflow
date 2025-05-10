@@ -1,20 +1,19 @@
-import React, { useContext } from "react";
+import React from "react";
 import styles from "./so-inventory-delete-button.module.scss";
 import Delete from "@/assets/delete.svg";
 import { CellContext } from "@tanstack/react-table";
 import { InventoryItem } from "../SOInventoryAdminTable/SOInventoryAdminTable";
-import { ModalContext } from "../ModalContextProvider/ModalContextProvider";
+import { useRouter } from "next/navigation";
 
 interface SOInventoryDeleteButtonProps {
 	props: CellContext<InventoryItem, string>;
 }
 
 const SOInventoryDeleteButton = ({ props }: SOInventoryDeleteButtonProps) => {
-	const { setDeleteInventoryModalIsOpen: setModalIsOpen, setSelectedInventoryItem } = useContext(ModalContext);
+	const router = useRouter();
 
 	const deleteHelper = () => {
-		setModalIsOpen(true);
-		setSelectedInventoryItem({ inventoryUuid: props.getValue() });
+		router.push(`/dashboard/delete-inventory/${props.getValue()}`, { scroll: false });
 	};
 
 	return (

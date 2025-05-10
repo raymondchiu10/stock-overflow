@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useRef, useCallback } from "react";
-import { Html5QrcodeScanner } from "html5-qrcode";
+import { Html5QrcodeResult, Html5QrcodeScanner } from "html5-qrcode";
 
 type QrCodeScannerProps = {
-	onScanSuccess: (decodedText: string, decodedResult: unknown) => void;
+	onScanSuccess: (decodedText: string, decodedResult: Html5QrcodeResult) => void;
 	fps?: number;
 	qrbox?: number;
 };
@@ -13,7 +13,7 @@ const QrCodeScanner: React.FC<QrCodeScannerProps> = ({ onScanSuccess, fps = 10, 
 	const scannerRef = useRef<Html5QrcodeScanner | null>(null);
 
 	const successCallback = useCallback(
-		(decodedText: string, decodedResult: unknown) => {
+		(decodedText: string, decodedResult: Html5QrcodeResult) => {
 			onScanSuccess(decodedText, decodedResult);
 		},
 		[onScanSuccess]

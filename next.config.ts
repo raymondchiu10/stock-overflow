@@ -14,14 +14,14 @@ const nextConfig: NextConfig = {
 	images: {
 		domains: ["res.cloudinary.com"],
 	},
-	async rewrites() {
-		return [
-			{
-				source: "/api/:path*", // Proxy all requests from /api/* to your backend
-				destination: `${process.env.NEXT_PUBLIC_BACKEND_URL}/:path*`, // Change this to your backend URL
-			},
-		];
-	},
+	// async rewrites() {
+	// 	return [
+	// 		{
+	// 			source: "/api/:path*", // Proxy all requests from /api/* to your backend
+	// 			destination: `${process.env.NEXT_PUBLIC_BACKEND_URL}/:path*`, // Change this to your backend URL
+	// 		},
+	// 	];
+	// },
 };
 
 export default nextConfig;

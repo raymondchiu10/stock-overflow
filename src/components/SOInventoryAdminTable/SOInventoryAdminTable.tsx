@@ -1,43 +1,35 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useInventory } from "@/lib/useInventory";
 import { useReactTable, getCoreRowModel, flexRender, ColumnDef, CellContext } from "@tanstack/react-table";
-import React, { useContext, useState } from "react";
-import { useMediaQuery } from "react-responsive";
+import React from "react";
 
 import styles from "./so-inventory-admin-table.module.scss";
-import { ModalContext } from "../ModalContextProvider/ModalContextProvider";
 import SOInventoryDeleteButton from "../SOInventoryDeleteButton/SOInventoryDeleteButton";
 import SOInventoryEditButton from "../SOInventoryEditButton/SOInventoryEditButton";
+import { useRouter } from "next/navigation";
+import { useMediaQuery } from "react-responsive";
 
 export interface InventoryItem {
-	base_price?: string;
-	company_price?: string;
-	description?: string;
-	name?: string;
-	quantity?: number;
 	uuid?: string;
+	name?: string;
+	description?: string;
+	quantity?: number;
+	base_price?: string;
+	suggested_price?: string;
+	created_at?: string;
+	updated_at?: string;
 }
 
 const SOInventoryAdminTable = () => {
 	const isMobile = useMediaQuery({ maxWidth: 767 });
 
-	const [page, setPage] = useState(1);
-	const [limit] = useState(10);
-	const [sort, setSort] = useState("id");
-	const [order, setOrder] = useState("asc");
+	const { data, isLoading } = useInventory();
 
-	const { data: inventory, isLoading } = useInventory(page, limit, sort, order);
-	const { modalIsOpen, setModalIsOpen, setSelectedInventoryItem } = useContext(ModalContext);
+	const router = useRouter();
 
 	const toggleInventoryModal = (props: CellContext<Record<string, string>, string>) => {
-		setSelectedInventoryItem(props.row?.original);
-		setModalIsOpen(!modalIsOpen);
-	};
-
-	const testFunction = () => {
-		setPage(1);
-		setSort("id");
-		setOrder("asc");
+		const { uuid } = props.row.original;
+		router.push(`/dashboard/inventory/${uuid}`, { scroll: false });
 	};
 
 	const columns: ColumnDef<InventoryItem, any>[] = [
@@ -56,18 +48,18 @@ const SOInventoryAdminTable = () => {
 				);
 			},
 		},
-		...(!isMobile
-			? [
-					{
-						accessorKey: "description",
-						header: "Description",
-						size: 250,
-						cell: (props: CellContext<InventoryItem, string>) => {
-							return <p>{props.getValue()}</p>;
-						},
-					},
-			  ]
-			: []),
+		// ...(!isMobile
+		// 	? [
+		// 			{
+		// 				accessorKey: "description",
+		// 				header: "Description",
+		// 				size: 250,
+		// 				cell: (props: CellContext<InventoryItem, string>) => {
+		// 					return <p>{props.getValue()}</p>;
+		// 				},
+		// 			},
+		// 	  ]
+		// 	: []),
 		{
 			accessorKey: "quantity",
 			header: "Quantity",
@@ -76,17 +68,53 @@ const SOInventoryAdminTable = () => {
 				return <p>{props.getValue()}</p>;
 			},
 		},
+		...(!isMobile
+			? [
+					{
+						accessorKey: "base_price",
+						header: "Base Price",
+						size: 75,
+						cell: (props: CellContext<InventoryItem, number>) => {
+							return <p>{props.getValue()}</p>;
+						},
+					},
+			  ]
+			: []),
 		{
-			accessorKey: "company_price",
-			header: "Price",
+			accessorKey: "suggested_price",
+			header: "Retail Price",
 			size: 75,
 			cell: (props: CellContext<InventoryItem, number>) => {
 				return <p>{props.getValue()}</p>;
 			},
 		},
+		...(!isMobile
+			? [
+					{
+						accessorKey: "created_at",
+						header: "Created",
+						size: 75,
+						cell: (props: CellContext<InventoryItem, number>) => {
+							const date = new Date(props.getValue());
+							const formattedDate = new Intl.DateTimeFormat("en-US").format(date);
+							return <p>{formattedDate}</p>;
+						},
+					},
+			  ]
+			: []),
+		{
+			accessorKey: "updated_at",
+			header: "Updated",
+			size: 75,
+			cell: (props: CellContext<InventoryItem, number>) => {
+				const date = new Date(props.getValue());
+				const formattedDate = new Intl.DateTimeFormat("en-US").format(date);
+				return <p>{formattedDate}</p>;
+			},
+		},
 		{
 			accessorKey: "uuid",
-			header: "Edit/Remove",
+			header: "Edit/Delete",
 			size: 100,
 			cell: (props: CellContext<InventoryItem, string>) => {
 				return (
@@ -100,7 +128,7 @@ const SOInventoryAdminTable = () => {
 	];
 
 	const table = useReactTable({
-		data: inventory?.data,
+		data: data?.inventory || [],
 		columns,
 		getCoreRowModel: getCoreRowModel(),
 		columnResizeMode: "onChange",
@@ -112,8 +140,6 @@ const SOInventoryAdminTable = () => {
 
 	return (
 		<>
-			{/* TODO: implement pagination */}
-			<div style={{ display: "none" }} onClick={testFunction}></div>
 			<h1>{`The Company's Inventory - Admin`}</h1>
 			<table className={styles["so-inventory-table"]} style={{ minWidth: `${table.getTotalSize()}px` }}>
 				<thead>
