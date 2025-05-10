@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import pool from "@/lib/config/database";
 import { authenticateRequest } from "@/lib/auth/auth";
 import { AddInventoryFormData } from "@/components/EditInventory/actions";
@@ -15,7 +15,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ uuid: s
 	}
 }
 
-export async function PATCH(req: Request, { params }: { params: AddInventoryFormData }) {
+export async function PATCH(req: NextRequest, { params }: { params: Promise<{ uuid: string }> }) {
 	try {
 		const user = await authenticateRequest(req);
 
