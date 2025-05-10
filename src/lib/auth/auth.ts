@@ -1,13 +1,14 @@
 import jwt from "jsonwebtoken";
 import pool from "@/lib/config/database";
+import { NextResponse } from "next/server";
 
 const SECRET_KEY = process.env.DB_JWT_SECRET || "your_secret_key";
 
 export async function authenticateRequest(req: Request) {
-	const authHeader = req.headers.get("authorization");
+	const authHeader = req.headers.get("Authorization");
 
 	if (!authHeader || !authHeader.startsWith("Bearer ")) {
-		throw new Error("Unauthorized");
+		return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
 	}
 
 	const token = authHeader.split(" ")[1];
@@ -24,6 +25,6 @@ export async function authenticateRequest(req: Request) {
 		return rows[0]; // this is your `user`
 	} catch (err) {
 		console.error("Auth error:", err);
-		throw new Error("Forbidden");
+		return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
 	}
 }

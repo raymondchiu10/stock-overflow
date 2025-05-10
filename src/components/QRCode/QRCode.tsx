@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import dynamic from "next/dynamic";
 import styles from "./qr-code.module.scss";
 import SOModalLayout from "@/components/SOModalLayout/SOModalLayout";

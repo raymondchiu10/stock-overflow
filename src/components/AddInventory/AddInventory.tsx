@@ -109,7 +109,7 @@ const AddInventory = () => {
 								placeholder="Description"
 								rows={4}
 								{...register("description", {
-									valueAsNumber: true,
+									required: false,
 								})}
 							/>
 
@@ -119,7 +119,9 @@ const AddInventory = () => {
 				</div>
 
 				<div className={styles["add-inventory__cta"]}>
-					<button onClick={onClose}>CLOSE</button>
+					<button type="button" onClick={onClose}>
+						CLOSE
+					</button>
 					<button type="submit">ADD ITEM</button>
 				</div>
 			</form>

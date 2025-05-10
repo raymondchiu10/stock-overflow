@@ -19,6 +19,7 @@ const Login = () => {
 		handleSubmit,
 		formState: { errors },
 	} = useForm<LoginFormInputs>();
+
 	const [submitError, setSubmitError] = useState<string | undefined>();
 
 	const router = useRouter();
@@ -64,12 +65,7 @@ const Login = () => {
 			<div className={styles["log-in__spacing"]}>
 				<div className={styles["log-in__container"]}>
 					<h2>Log In</h2>
-					<form
-						className={styles["log-in__form"]}
-						onSubmit={handleSubmit((data) => {
-							handleLogin(data);
-						})}
-					>
+					<form className={styles["log-in__form"]} onSubmit={handleSubmit(handleLogin)}>
 						<span style={{ color: "red" }}>{submitError}</span>
 						<div className={styles["log-in__form-field"]}>
 							<label htmlFor="email">Email</label>

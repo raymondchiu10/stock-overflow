@@ -11,13 +11,17 @@ export default function useAuth({ redirect = true }: UseAuthOptions = {}) {
 	const router = useRouter();
 	const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 	const [token, setToken] = useState<string | null>(null);
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		const storedToken = localStorage.getItem("authToken");
 		setToken(storedToken);
+		setLoading(false);
 	}, [setToken]);
 
 	useEffect(() => {
+		if (loading) return;
+
 		if (!token) {
 			setIsAuthenticated(false);
 
@@ -27,7 +31,7 @@ export default function useAuth({ redirect = true }: UseAuthOptions = {}) {
 		} else {
 			setIsAuthenticated(true);
 		}
-	}, [token, redirect, router, setIsAuthenticated, isAuthenticated]);
+	}, [token, redirect, router, setIsAuthenticated, isAuthenticated, loading]);
 
-	return { isAuthenticated, token, setIsAuthenticated, setToken };
+	return { isAuthenticated, token, setIsAuthenticated, setToken, loading };
 }

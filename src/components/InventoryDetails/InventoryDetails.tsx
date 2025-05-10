@@ -1,8 +1,9 @@
 import { useRouter } from "next/navigation";
 import styles from "./inventory-details.module.scss";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback } from "react";
 import { InventoryItem } from "../SOInventoryAdminTable/SOInventoryAdminTable";
 import { useQrCode } from "@/lib/useQrCode";
+import Image from "next/image";
 
 interface Props {
 	data: InventoryItem;
@@ -48,7 +49,7 @@ const InventoryDetails = ({ data }: Props) => {
 			<div className={styles["inventory-details__body-qr-code-container"]}>
 				{qrcode && (
 					<div className={styles["inventory-details__body-qr-code"]}>
-						<img src={qrcode} alt={`${data?.name || ""} qr code`} />
+						<Image src={qrcode} alt={`${data?.name || ""} qr code`} unoptimized width={200} height={200} />
 					</div>
 				)}
 			</div>

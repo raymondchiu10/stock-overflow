@@ -2,12 +2,12 @@
 import { useInventory } from "@/lib/useInventory";
 import { useReactTable, getCoreRowModel, flexRender, ColumnDef, CellContext } from "@tanstack/react-table";
 import React from "react";
-import { useMediaQuery } from "react-responsive";
 
 import styles from "./so-inventory-admin-table.module.scss";
 import SOInventoryDeleteButton from "../SOInventoryDeleteButton/SOInventoryDeleteButton";
 import SOInventoryEditButton from "../SOInventoryEditButton/SOInventoryEditButton";
 import { useRouter } from "next/navigation";
+import { useMediaQuery } from "react-responsive";
 
 export interface InventoryItem {
 	uuid?: string;
@@ -21,7 +21,7 @@ export interface InventoryItem {
 }
 
 const SOInventoryAdminTable = () => {
-	// const isMobile = useMediaQuery({ maxWidth: 767 });
+	const isMobile = useMediaQuery({ maxWidth: 767 });
 
 	const { data, isLoading } = useInventory();
 
@@ -68,14 +68,18 @@ const SOInventoryAdminTable = () => {
 				return <p>{props.getValue()}</p>;
 			},
 		},
-		{
-			accessorKey: "base_price",
-			header: "Base Price",
-			size: 75,
-			cell: (props: CellContext<InventoryItem, number>) => {
-				return <p>{props.getValue()}</p>;
-			},
-		},
+		...(!isMobile
+			? [
+					{
+						accessorKey: "base_price",
+						header: "Base Price",
+						size: 75,
+						cell: (props: CellContext<InventoryItem, number>) => {
+							return <p>{props.getValue()}</p>;
+						},
+					},
+			  ]
+			: []),
 		{
 			accessorKey: "suggested_price",
 			header: "Retail Price",
@@ -84,16 +88,20 @@ const SOInventoryAdminTable = () => {
 				return <p>{props.getValue()}</p>;
 			},
 		},
-		{
-			accessorKey: "created_at",
-			header: "Created",
-			size: 75,
-			cell: (props: CellContext<InventoryItem, number>) => {
-				const date = new Date(props.getValue());
-				const formattedDate = new Intl.DateTimeFormat("en-US").format(date);
-				return <p>{formattedDate}</p>;
-			},
-		},
+		...(!isMobile
+			? [
+					{
+						accessorKey: "created_at",
+						header: "Created",
+						size: 75,
+						cell: (props: CellContext<InventoryItem, number>) => {
+							const date = new Date(props.getValue());
+							const formattedDate = new Intl.DateTimeFormat("en-US").format(date);
+							return <p>{formattedDate}</p>;
+						},
+					},
+			  ]
+			: []),
 		{
 			accessorKey: "updated_at",
 			header: "Updated",
