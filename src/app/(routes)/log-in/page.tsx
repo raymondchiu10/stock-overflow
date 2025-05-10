@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./log-in.module.scss";
 
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/lib/useUser";
