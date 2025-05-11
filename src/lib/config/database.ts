@@ -1,17 +1,9 @@
-import { Pool } from "pg";
+import pg from "pg";
 import "dotenv/config";
 
-declare global {
-	let pgPool: Pool | undefined;
-}
-
-const pool =
-	global.pgPool ||
-	new Pool({
-		connectionString: process.env.DB_CONNECTION_STRING,
-		ssl: false,
-	});
-
-if (process.env.NODE_ENV !== "production") global.pgPool = pool;
+const pool = new pg.Pool({
+	connectionString: process.env.DB_CONNECTION_STRING,
+	ssl: false,
+});
 
 export default pool;
