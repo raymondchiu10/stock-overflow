@@ -25,9 +25,11 @@ const Login = () => {
 	const router = useRouter();
 	const { refetch } = useUser();
 
-	if (localStorage.getItem("authToken")) {
-		router.push("/dashboard");
-	}
+	useEffect(() => {
+		if (localStorage.getItem("authToken")) {
+			router.push("/dashboard");
+		}
+	}, [router]);
 
 	useEffect(() => {
 		setTimeout(() => {

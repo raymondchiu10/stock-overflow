@@ -1,7 +1,7 @@
 import SOModalLayout from "@/components/SOModalLayout/SOModalLayout";
 import InventoryDetailsClient from "@/components/InventoryDetailsClient/InventoryDetailsClient";
 
-const InventoryPage = async ({ params }: { params: { uuid: string } }) => {
+const InventoryPage = async ({ params }: { params: Promise<{ uuid: string }> }) => {
 	const { uuid } = await params;
 	return (
 		<SOModalLayout>

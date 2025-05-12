@@ -1,9 +1,9 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import pool from "@/lib/config/database";
 import { authenticateRequest } from "@/lib/auth/auth";
 import { AddInventoryFormData } from "@/components/EditInventory/actions";
 
-export async function GET(_req: Request, { params }: { params: { uuid: string } }) {
+export async function GET(_req: Request, { params }: { params: Promise<{ uuid: string }> }) {
 	const { uuid } = await params;
 
 	try {
@@ -15,7 +15,7 @@ export async function GET(_req: Request, { params }: { params: { uuid: string } 
 	}
 }
 
-export async function PATCH(req: Request, { params }: { params: AddInventoryFormData }) {
+export async function PATCH(req: NextRequest, { params }: { params: Promise<{ uuid: string }> }) {
 	try {
 		const user = await authenticateRequest(req);
 
@@ -25,7 +25,7 @@ export async function PATCH(req: Request, { params }: { params: AddInventoryForm
 		const { uuid } = await params;
 		const { name, quantity, base_price, suggested_price, description } = await req.json();
 
-		const fields: Record<string, string | number> = {
+		const fields: AddInventoryFormData = {
 			name,
 			quantity,
 			base_price,
@@ -72,8 +72,8 @@ export async function PATCH(req: Request, { params }: { params: AddInventoryForm
 	}
 }
 
-export async function DELETE(req: Request, { params }: { params: { uuid: string } }) {
-	const { uuid } = params;
+export async function DELETE(req: Request, { params }: { params: Promise<{ uuid: string }> }) {
+	const { uuid } = await params;
 
 	const user = await authenticateRequest(req);
 

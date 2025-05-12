@@ -1,7 +1,7 @@
 import QRCode from "qrcode";
 import { NextResponse } from "next/server";
 
-export async function GET(_req: Request, { params }: { params: { uuid: string } }) {
+export async function GET(_req: Request, { params }: { params: Promise<{ uuid: string }> }) {
 	const { uuid } = await params;
 
 	try {
