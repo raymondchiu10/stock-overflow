@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
 
+export const config = {
+	runtime: "nodejs",
+};
+
 export async function GET(req: Request, { params }: { params: Promise<{ uuid: string }> }) {
 	try {
 		const { authenticateRequest } = await import("@/lib/auth/auth");

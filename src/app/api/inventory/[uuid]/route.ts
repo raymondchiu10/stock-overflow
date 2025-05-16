@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { authenticateRequest } from "@/lib/auth/auth";
 import { AddInventoryFormData } from "@/lib/types/inventory";
 
+export const config = {
+	runtime: "nodejs",
+};
+
 export async function GET(_req: Request, { params }: { params: Promise<{ uuid: string }> }) {
 	const { uuid } = await params;
 

@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
 
+export const config = {
+	runtime: "nodejs",
+};
+
 export async function GET(_req: Request, { params }: { params: Promise<{ uuid: string }> }) {
 	const { uuid } = await params;
 

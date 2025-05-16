@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 
+export const config = {
+	runtime: "nodejs",
+};
+
 const SECRET_KEY = process.env.DB_JWT_SECRET || "your_secret_key";
 
 export async function POST(req: NextRequest) {

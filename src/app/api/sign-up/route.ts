@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 
+export const config = {
+	runtime: "nodejs",
+};
+
 export async function POST(req: NextRequest) {
 	try {
 		const { email, password } = await req.json();
