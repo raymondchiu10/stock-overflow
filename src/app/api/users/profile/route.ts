@@ -1,7 +1,9 @@
 // app/api/users/profile/route.ts
 import { NextRequest, NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
-import pool from "@/lib/config/database";
+
+export const config = {
+	runtime: "nodejs",
+};
 
 const SECRET_KEY = process.env.DB_JWT_SECRET || "your_secret_key";
 
@@ -15,6 +17,9 @@ export async function GET(req: NextRequest) {
 	const token = authHeader.split(" ")[1];
 
 	try {
+		const jwt = await import("jsonwebtoken");
+		const { default: pool } = await import("@/lib/config/database");
+
 		const decoded = jwt.verify(token, SECRET_KEY) as { uuid: string };
 		const { rows } = await pool.query("SELECT * FROM users WHERE uuid = $1", [decoded.uuid]);
 

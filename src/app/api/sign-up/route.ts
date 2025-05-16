@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import bcrypt from "bcryptjs";
-import pool from "@/lib/config/database";
+
+export const config = {
+	runtime: "nodejs",
+};
 
 export async function POST(req: NextRequest) {
 	try {
@@ -9,6 +11,8 @@ export async function POST(req: NextRequest) {
 		if (!email || !password) {
 			return NextResponse.json({ error: "All fields are required" }, { status: 400 });
 		}
+		const bcrypt = await import("bcryptjs");
+		const { default: pool } = await import("@/lib/config/database");
 
 		const postgres = `INSERT INTO users (email, password, role)
 			VALUES ($1, $2, $3)

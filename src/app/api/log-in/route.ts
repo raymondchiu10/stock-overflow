@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import bcrypt from "bcryptjs";
-import pool from "@/lib/config/database";
-import jwt from "jsonwebtoken";
+
+export const config = {
+	runtime: "nodejs",
+};
 
 const SECRET_KEY = process.env.DB_JWT_SECRET || "your_secret_key";
 
@@ -12,6 +13,10 @@ export async function POST(req: NextRequest) {
 		if (!email || !password) {
 			return NextResponse.json({ error: "All fields are required" }, { status: 400 });
 		}
+
+		const bcrypt = await import("bcryptjs");
+		const jwt = await import("jsonwebtoken");
+		const { default: pool } = await import("@/lib/config/database");
 
 		const postgres = `SELECT * FROM users WHERE email = $1`;
 		const { rowCount, rows } = await pool.query(postgres, [email]);
