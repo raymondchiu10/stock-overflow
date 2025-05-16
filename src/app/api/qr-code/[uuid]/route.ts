@@ -1,10 +1,11 @@
-import QRCode from "qrcode";
 import { NextResponse } from "next/server";
 
 export async function GET(_req: Request, { params }: { params: Promise<{ uuid: string }> }) {
 	const { uuid } = await params;
 
 	try {
+		const QRCode = await import("qrcode");
+
 		const qrCodeImage = await QRCode.toDataURL(uuid);
 		return NextResponse.json(qrCodeImage);
 	} catch (err) {

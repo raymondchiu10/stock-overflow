@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
-import pool from "@/lib/config/database";
 
 export async function GET() {
 	try {
+		const { default: pool } = await import("@/lib/config/database");
+
 		const result = await pool.query("SELECT * FROM users");
 		return NextResponse.json({ users: result.rows });
 	} catch (err) {
