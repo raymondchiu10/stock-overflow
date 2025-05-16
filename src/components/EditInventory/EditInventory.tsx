@@ -3,10 +3,10 @@
 import { useRouter } from "next/navigation";
 import styles from "./edit-inventory.module.scss";
 import { useCallback, useEffect, useState } from "react";
-import { AddInventoryFormData } from "./actions";
 import { useInventoryItem } from "@/lib/useInventory";
 import { useForm } from "react-hook-form";
 import useAuth from "@/lib/useAuth";
+import { AddInventoryFormData } from "@/lib/types/inventory";
 
 interface Props {
 	uuid: string;

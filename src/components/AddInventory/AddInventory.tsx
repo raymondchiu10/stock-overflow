@@ -4,13 +4,7 @@ import styles from "./add-inventory.module.scss";
 import { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import useAuth from "@/lib/useAuth";
-export interface AddInventoryFormData {
-	name: string;
-	description: string;
-	quantity: number;
-	base_price: string;
-	suggested_price: number;
-}
+import { AddInventoryFormData } from "@/lib/types/inventory";
 
 const AddInventory = () => {
 	const { token } = useAuth({ redirect: false });
