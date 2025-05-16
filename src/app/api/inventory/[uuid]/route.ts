@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import pool from "@/lib/config/database";
 import { authenticateRequest } from "@/lib/auth/auth";
-import { AddInventoryFormData } from "@/components/EditInventory/actions";
+import { AddInventoryFormData } from "@/lib/types/inventory";
 
 export async function GET(_req: Request, { params }: { params: Promise<{ uuid: string }> }) {
 	const { uuid } = await params;
 
 	try {
+		const { default: pool } = await import("@/lib/config/database");
 		const { rows } = await pool.query(`SELECT * FROM inventory WHERE uuid = $1`, [uuid]);
 		return NextResponse.json(rows);
 	} catch (err) {
@@ -17,6 +17,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ uuid: s
 
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ uuid: string }> }) {
 	try {
+		const { default: pool } = await import("@/lib/config/database");
 		const user = await authenticateRequest(req);
 
 		if (user.role !== "admin") {
@@ -73,6 +74,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ uu
 }
 
 export async function DELETE(req: Request, { params }: { params: Promise<{ uuid: string }> }) {
+	const { default: pool } = await import("@/lib/config/database");
 	const { uuid } = await params;
 
 	const user = await authenticateRequest(req);

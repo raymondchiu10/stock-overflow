@@ -1,4 +1,3 @@
-"use server";
 export interface AddInventoryFormData {
 	name: string;
 	description: string;
