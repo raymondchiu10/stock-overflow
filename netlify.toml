@@ -1,9 +1,18 @@
 [build]
   command = "npm run build"
   publish = ".next"
+  functions = ".netlify/functions"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
 
 [functions]
   included_files = ["**/*.js", "**/*.ts", "**/*.json"]
+  node_bundler = "esbuild"
+  external_node_modules = ["pg", "bcryptjs", "jsonwebtoken"]
+
+[build.environment]
+  NETLIFY_NEXT_PLUGIN_SKIP = "true"
 
 [[headers]]
   for = "/api/*"
@@ -14,3 +23,8 @@
 
 [dev]
   command = "next dev"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
