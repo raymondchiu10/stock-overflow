@@ -17,7 +17,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ uuid: st
 		const { default: pool } = await import("@/lib/config/database");
 
 		const { uuid } = await params;
-		const { rows } = await pool.query("SELECT * FROM users WHERE uuid = $1", [uuid]);
+		const { rows } = await pool.query(`SELECT * FROM "user" WHERE uuid = $1`, [uuid]);
 
 		if (!rows.length) {
 			return NextResponse.json({ message: "User not found" }, { status: 404 });
