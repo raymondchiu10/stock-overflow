@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
@@ -15,16 +9,16 @@ datasource db {
 }
 
 model User {
+  uuid      String   @id @default(uuid()) @db.Uuid
+  email     String   @unique @db.VarChar(100)
+  password  String   @db.VarChar(255)
+  role      String   @db.VarChar(100)
+  createdAt DateTime @default(now()) @map("created_at")
+
   @@map("user")
-  uuid        String    @id               @default(uuid())    @db.Uuid
-  email       String    @unique           @db.VarChar(100)
-  password    String    @db.VarChar(255)
-  role        String    @db.VarChar(100)
-  createdAt   DateTime  @default(now())   @map("created_at")
 }
 
 model Inventory {
-  @@map("inventory")
   uuid           String   @id @default(uuid()) @db.Uuid
   name           String   @unique @db.VarChar(100)
   description    String?  @db.VarChar(255)
@@ -34,4 +28,5 @@ model Inventory {
   createdAt      DateTime @default(now()) @map("created_at")
   updatedAt      DateTime @default(now()) @map("updated_at")
 
+  @@map("inventory")
 }
