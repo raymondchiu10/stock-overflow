@@ -15,8 +15,8 @@ const SOLogoutButton = ({ redirect }: SOLogoutButtonProps) => {
 
 	const handleLogout = () => {
 		localStorage.removeItem("authToken");
-		querypool.setQueryData(["user"], null);
-		querypool.invalidateQueries({ queryKey: ["user"] });
+		queryClient.setQueryData(["user"], null);
+		queryClient.invalidateQueries({ queryKey: ["user"] });
 
 		setIsAuthenticated(false);
 		setToken(null);
