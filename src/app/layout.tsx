@@ -1,13 +1,19 @@
 import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
+import clsx from "clsx";
+import { Roboto, Rokkitt } from "next/font/google";
 import "@/styles/globals.scss";
 import { ReactQueryClientProvider } from "@/components/ReactQueryClientProvider/ReactQueryClientProvider";
 
 const roboto = Roboto({
-	weight: ["300", "400", "500", "700"],
 	subsets: ["latin"],
 	display: "swap",
 	variable: "--font-roboto",
+});
+
+const rokkitt = Rokkitt({
+	subsets: ["latin"],
+	display: "swap",
+	variable: "--font-rokkitt",
 });
 
 export const metadata: Metadata = {
@@ -17,7 +23,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
 	return (
-		<html lang="en" className={roboto.className}>
+		<html lang="en" className={clsx(roboto.className, rokkitt.className)}>
 			<head>
 				<meta name="apple-mobile-web-app-title" content="Stock Overflow" />
 			</head>
