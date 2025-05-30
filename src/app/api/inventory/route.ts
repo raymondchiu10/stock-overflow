@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import pool from "@/lib/config/database";
+import client from "@/lib/config/database";
 import { authenticateRequest } from "@/lib/auth/auth";
 
 export async function GET() {
 	try {
-		const result = await pool.query("SELECT * FROM inventory");
+		const result = await client.query("SELECT * FROM inventory");
 		return NextResponse.json({ inventory: result.rows });
 	} catch (err) {
 		console.error("DB Error:", err);
@@ -27,11 +27,13 @@ export async function POST(req: NextRequest) {
 			return NextResponse.json({ message: "Missing required fields" }, { status: 400 });
 		}
 
-		const result = await pool.query(
-			`INSERT INTO inventory (name, description, quantity, base_price, suggested_price, uuid)
-             VALUES ($1, $2, $3, $4, $5, gen_random_uuid())
+		const now = new Date();
+
+		const result = await client.query(
+			`INSERT INTO inventory (name, description, quantity, base_price, suggested_price, uuid, created_at, updated_at)
+             VALUES ($1, $2, $3, $4, $5, gen_random_uuid(), $6, $7)
              RETURNING *`,
-			[name, description, quantity, base_price, suggested_price]
+			[name, description, quantity, base_price, suggested_price, now, now]
 		);
 
 		return NextResponse.json(result.rows[0], { status: 201 });

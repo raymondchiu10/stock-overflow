@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
 		const { default: pool } = await import("@/lib/config/database");
 
 		const decoded = jwt.verify(token, SECRET_KEY) as { uuid: string };
-		const { rows } = await pool.query("SELECT * FROM users WHERE uuid = $1", [decoded.uuid]);
+		const { rows } = await pool.query(`SELECT * FROM "user" WHERE uuid = $1`, [decoded.uuid]);
 
 		if (rows.length === 0) {
 			return NextResponse.json({ message: "User not found" }, { status: 404 });

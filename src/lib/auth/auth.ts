@@ -16,7 +16,7 @@ export async function authenticateRequest(req: Request) {
 	try {
 		const decoded = jwt.verify(token, SECRET_KEY) as { uuid: string };
 
-		const { rows } = await pool.query("SELECT * FROM users WHERE uuid = $1", [decoded.uuid]);
+		const { rows } = await pool.query(`SELECT * FROM "user" WHERE uuid = $1`, [decoded.uuid]);
 
 		if (!rows.length) {
 			throw new Error("Invalid token");
