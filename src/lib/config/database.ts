@@ -1,9 +1,18 @@
+import path from "path";
+import fs from "fs";
 import pg from "pg";
 import "dotenv/config";
 
+const certPath = path.resolve(process.cwd(), "src/lib/certs/ca.pem");
+
+console.log("certPath", certPath);
+
 const pool = new pg.Pool({
 	connectionString: process.env.DB_CONNECTION_STRING,
-	ssl: false,
+	ssl: {
+		rejectUnauthorized: false,
+		ca: fs.readFileSync(certPath).toString(),
+	},
 });
 
 export default pool;

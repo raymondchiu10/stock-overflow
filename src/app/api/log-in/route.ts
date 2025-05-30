@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
 		const jwt = await import("jsonwebtoken");
 		const { default: pool } = await import("@/lib/config/database");
 
-		const postgres = `SELECT * FROM users WHERE email = $1`;
+		const postgres = `SELECT * FROM "user" WHERE email = $1`;
 		const { rowCount, rows } = await pool.query(postgres, [email]);
 
 		if (rowCount === 0) {
