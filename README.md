@@ -132,7 +132,6 @@ List any external sources of data that will be used in your app.
 -   Implement basic user registration
 -   Create login/authentication system
 -   Basic user role differentiation (admin vs. user)
-    > > > > > > > main
 
 ##### Days 3-4: Inventory Core Features
 
