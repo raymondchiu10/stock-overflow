@@ -122,8 +122,6 @@ List any external sources of data that will be used in your app.
 
 ##### Days 1-2: Project Setup & Authentication
 
-<<<<<<< HEAD
-
 -   Initialize NextJS project with TypeScript
 -   Set up Supabase database connection
 -   Implement basic user registration
