@@ -28,8 +28,6 @@ As a user, I want to be able to look at some kind of marker (upc, qr code, or po
 
 ### Tech Stack
 
-List technologies that will be used in your app, including any libraries to save time or provide more functionality. Be sure to research any potential limitations.
-
 -   Typescript
 -   SCSS
 -   Node js
