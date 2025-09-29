@@ -17,44 +17,24 @@ const AddInventory = () => {
 		handleSubmit,
 		formState: { errors },
 	} = useForm<AddInventoryFormData>();
+
 	const router = useRouter();
 
+	const fileToBase64 = (file: File) =>
+		new Promise<string>((resolve, reject) => {
+			const reader = new FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = () => resolve(reader.result as string);
+			reader.onerror = (err) => reject(err);
+		});
+
 	const submitInventoryItem = async (data: AddInventoryFormData) => {
+		console.log("data", data);
 		try {
-			let imageUrl = null;
-			let publicId = null;
+			let imageBase64: string | undefined;
 
 			if (selectedFile) {
-				// 1️⃣ Request signature
-				const sigRes = await fetch("/api/sign-cloudinary-params", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${token ?? ""}`,
-					},
-				});
-
-				const { signature, timestamp, folder } = await sigRes.json();
-
-				// 2️⃣ Upload file to Cloudinary
-				const formData = new FormData();
-				formData.append("file", selectedFile);
-				formData.append("api_key", process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY!);
-				formData.append("timestamp", timestamp);
-				formData.append("folder", folder);
-				formData.append("signature", signature);
-
-				const uploadRes = await fetch(
-					`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/auto/upload`,
-					{
-						method: "POST",
-						body: formData,
-					}
-				);
-
-				const uploadData = await uploadRes.json();
-				imageUrl = uploadData.secure_url;
-				publicId = uploadData.public_id;
+				imageBase64 = await fileToBase64(selectedFile);
 			}
 
 			const response = await fetch("/api/inventory", {
@@ -63,7 +43,7 @@ const AddInventory = () => {
 					"Content-Type": "application/json",
 					Authorization: `Bearer ${token ?? ""}`,
 				},
-				body: JSON.stringify({ ...data, image_url: imageUrl, image_public_id: publicId }),
+				body: JSON.stringify({ ...data, imageBase64 }),
 			});
 
 			if (!response.ok) {
