@@ -1,0 +1,9 @@
+.upload-with-preview {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+
+	&__image {
+		object-fit: contain;
+	}
+}

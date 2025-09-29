@@ -1,13 +1,16 @@
 "use client";
 import { useRouter } from "next/navigation";
 import styles from "./add-inventory.module.scss";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import useAuth from "@/lib/useAuth";
 import { AddInventoryFormData } from "@/lib/types/inventory";
 
+import { UploadWithPreview } from "../UploadWith Preview/UploadWithPreview";
+
 const AddInventory = () => {
 	const { token } = useAuth({ redirect: false });
+	const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
 	const {
 		register,
@@ -18,13 +21,49 @@ const AddInventory = () => {
 
 	const submitInventoryItem = async (data: AddInventoryFormData) => {
 		try {
+			let imageUrl = null;
+			let publicId = null;
+
+			if (selectedFile) {
+				// 1️⃣ Request signature
+				const sigRes = await fetch("/api/sign-cloudinary-params", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${token ?? ""}`,
+					},
+				});
+
+				const { signature, timestamp, folder } = await sigRes.json();
+
+				// 2️⃣ Upload file to Cloudinary
+				const formData = new FormData();
+				formData.append("file", selectedFile);
+				formData.append("api_key", process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY!);
+				formData.append("timestamp", timestamp);
+				formData.append("folder", folder);
+				formData.append("signature", signature);
+
+				const uploadRes = await fetch(
+					`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/auto/upload`,
+					{
+						method: "POST",
+						body: formData,
+					}
+				);
+
+				const uploadData = await uploadRes.json();
+				imageUrl = uploadData.secure_url;
+				publicId = uploadData.public_id;
+			}
+
 			const response = await fetch("/api/inventory", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 					Authorization: `Bearer ${token ?? ""}`,
 				},
-				body: JSON.stringify(data),
+				body: JSON.stringify({ ...data, image_url: imageUrl, image_public_id: publicId }),
 			});
 
 			if (!response.ok) {
@@ -96,6 +135,10 @@ const AddInventory = () => {
 					</div>
 
 					<div className={styles["add-inventory__image-container"]}>
+						<div>
+							<UploadWithPreview label="Image" onFileSelect={(file) => setSelectedFile(file)} />
+						</div>
+
 						<div className={styles["add-inventory__form-field"]}>
 							<label htmlFor="description">Description:</label>
 							<textarea

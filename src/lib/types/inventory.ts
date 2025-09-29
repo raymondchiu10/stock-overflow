@@ -5,4 +5,7 @@ export interface AddInventoryFormData {
 	quantity: number;
 	suggested_price: number;
 	uuid?: string;
+	image_description?: string;
+	image_url?: string; // add this
+	image_public_id?: string; // optional
 }

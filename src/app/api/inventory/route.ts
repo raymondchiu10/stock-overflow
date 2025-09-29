@@ -27,6 +27,12 @@ export async function POST(req: NextRequest) {
 			return NextResponse.json({ message: "Missing required fields" }, { status: 400 });
 		}
 
+		const existing = await client.query("SELECT * FROM inventory WHERE name = $1", [name]);
+
+		if (existing.rows.length > 0) {
+			return NextResponse.json({ message: "Inventory item with this name already exists" }, { status: 409 });
+		}
+
 		const now = new Date();
 
 		const result = await client.query(
