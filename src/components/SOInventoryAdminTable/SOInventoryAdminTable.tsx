@@ -16,6 +16,8 @@ export interface InventoryItem {
 	quantity?: number;
 	base_price?: string;
 	suggested_price?: string;
+	image_public_id?: string;
+	image_url?: string;
 	created_at?: string;
 	updated_at?: string;
 }

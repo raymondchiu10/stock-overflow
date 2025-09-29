@@ -5,6 +5,8 @@ import { InventoryItem } from "../SOInventoryAdminTable/SOInventoryAdminTable";
 import { useQrCode } from "@/lib/useQrCode";
 import Image from "next/image";
 
+import { CldImage } from "next-cloudinary";
+
 interface Props {
 	data: InventoryItem;
 }
@@ -24,34 +26,55 @@ const InventoryDetails = ({ data }: Props) => {
 			<div className={styles["inventory-details__body"]}>
 				<div className={styles["inventory-details__body-details"]}>
 					<div>
-						<h3>Product Name:</h3>
-						<p>{data.name}</p>
+						<div>
+							<h3>Product Name:</h3>
+							<p>{data.name}</p>
+						</div>
+						<div>
+							<h3>Quantity:</h3>
+							<p>{data.quantity}</p>
+						</div>
+						<div>
+							<h3>Retail Price:</h3>
+							<p>{data.suggested_price || data.base_price}</p>
+						</div>
 					</div>
-					<div>
-						<h3>Quantity:</h3>
-						<p>{data.quantity}</p>
-					</div>
-					<div>
-						<h3>Retail Price:</h3>
-						<p>{data.suggested_price || data.base_price}</p>
+
+					<div className={styles["inventory-details__body-qr-code-container"]}>
+						{qrcode && (
+							<div className={styles["inventory-details__body-qr-code"]}>
+								<Image
+									src={qrcode}
+									alt={`${data?.name || ""} qr code`}
+									unoptimized
+									width={200}
+									height={200}
+								/>
+							</div>
+						)}
 					</div>
 				</div>
 
-				<div className={styles["inventory-details__body-image"]}>
-					<div>No image available</div>
-
+				<div className={styles["inventory-details__body-image-container"]}>
+					<div className={styles["inventory-details__body-image"]}>
+						{data.image_public_id || data.image_url ? (
+							<CldImage
+								width="320"
+								height="320"
+								src={`${data.image_public_id}`}
+								sizes="(max-width: 768px) 100vw,
+						(max-width: 1200px) 50vw,
+						33vw"
+								alt={`${data.name}`}
+							/>
+						) : (
+							<div>No image available</div>
+						)}
+					</div>
 					<div>
 						<p>{data.description}</p>
 					</div>
 				</div>
-			</div>
-
-			<div className={styles["inventory-details__body-qr-code-container"]}>
-				{qrcode && (
-					<div className={styles["inventory-details__body-qr-code"]}>
-						<Image src={qrcode} alt={`${data?.name || ""} qr code`} unoptimized width={200} height={200} />
-					</div>
-				)}
 			</div>
 
 			<div className={styles["inventory-details__cta"]}>
