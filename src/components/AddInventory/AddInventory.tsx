@@ -29,7 +29,6 @@ const AddInventory = () => {
 		});
 
 	const submitInventoryItem = async (data: AddInventoryFormData) => {
-		console.log("data", data);
 		try {
 			let imageBase64: string | undefined;
 

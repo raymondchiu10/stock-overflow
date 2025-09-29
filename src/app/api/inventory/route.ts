@@ -27,7 +27,6 @@ export async function POST(req: NextRequest) {
 			return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
 		}
 		const body = await req.json();
-		console.log("body", body);
 
 		const { name, description, quantity, base_price, suggested_price, imageBase64 } = body;
 
@@ -52,7 +51,6 @@ export async function POST(req: NextRequest) {
 			});
 			image_public_id = uploadResult.public_id;
 			image_url = uploadResult.secure_url;
-			console.log("uploadResult", uploadResult);
 		}
 
 		const now = new Date();
@@ -63,9 +61,6 @@ export async function POST(req: NextRequest) {
              RETURNING *`,
 			[name, description, quantity, base_price, suggested_price, image_public_id, image_url, now, now]
 		);
-
-		console.log("\nimage_public_id", image_public_id);
-		console.log("\nimage_url", image_url);
 
 		return NextResponse.json(result.rows[0], { status: 201 });
 	} catch (err) {
