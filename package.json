@@ -28,7 +28,7 @@
 		"dotenv": "^16.5.0",
 		"html5-qrcode": "^2.3.8",
 		"jsonwebtoken": "^9.0.2",
-		"next": "15.2.4",
+		"next": "^15.5.4",
 		"next-cloudinary": "^6.16.0",
 		"pg": "^8.15.6",
 		"qrcode": "^1.5.4",

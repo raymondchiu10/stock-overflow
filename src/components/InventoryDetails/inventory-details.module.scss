@@ -56,8 +56,6 @@
 
 		gap: 1rem;
 
-		border: 1px solid red;
-
 		@include media-breakpoint-up($md) {
 			align-items: flex-start;
 		}
