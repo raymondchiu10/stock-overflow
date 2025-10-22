@@ -13,7 +13,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ uuid: st
 	try {
 		const QRCode = await import("qrcode");
 
-		const qrCodeImage = await QRCode.toDataURL(`${path}${uuid}`);
+		const qrCodeImage = await QRCode.toDataURL(`${path}/${uuid}`);
 		return NextResponse.json(qrCodeImage);
 	} catch (err) {
 		console.error("Error generating QR code:", err);
