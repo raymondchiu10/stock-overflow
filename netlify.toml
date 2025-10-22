@@ -1,5 +1,5 @@
 [build]
-  command = "npm run build"
+  command = "npx prisma generate && next build"
   publish = ".next"
   functions = ".netlify/functions"
 
@@ -7,12 +7,16 @@
   package = "@netlify/plugin-nextjs"
 
 [functions]
-  included_files = ["**/*.js", "**/*.ts", "**/*.json"]
+  included_files = ["src/app/api/**", "prisma/schema.prisma"]
   node_bundler = "esbuild"
-  external_node_modules = ["pg", "bcryptjs", "jsonwebtoken"]
-
-[build.environment]
-  NETLIFY_NEXT_PLUGIN_SKIP = "true"
+  external_node_modules = [
+    "@prisma/client",
+    "prisma",
+    "pg",
+    "bcryptjs",
+    "jsonwebtoken",
+    "cloudinary"
+  ]
 
 [[headers]]
   for = "/api/*"
