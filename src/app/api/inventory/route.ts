@@ -1,13 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import client from "@/lib/config/database";
 import { authenticateRequest } from "@/lib/auth/auth";
-import { v2 as cloudinary } from "cloudinary";
-
-cloudinary.config({
-	cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
-	api_key: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY,
-	api_secret: process.env.NEXT_PUBLIC_CLOUDINARY_API_SECRET,
-});
 
 export async function GET() {
 	try {
@@ -42,6 +35,14 @@ export async function POST(req: NextRequest) {
 
 		let image_public_id: string | null = null;
 		let image_url: string | null = null;
+
+		const { v2: cloudinary } = await import("cloudinary");
+
+		cloudinary.config({
+			cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+			api_key: process.env.CLOUDINARY_API_KEY,
+			api_secret: process.env.CLOUDINARY_API_SECRET,
+		});
 
 		// Optional image upload
 		if (imageBase64) {
