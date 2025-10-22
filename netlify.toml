@@ -7,7 +7,7 @@
   package = "@netlify/plugin-nextjs"
 
 [functions]
-  included_files = ["**/*.js", "**/*.ts", "**/*.json", "prisma/schema.prisma"]
+  included_files = ["src/app/api/**", "prisma/schema.prisma"]
   node_bundler = "esbuild"
   external_node_modules = [
     "@prisma/client",
