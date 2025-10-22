@@ -11,9 +11,6 @@
   node_bundler = "esbuild"
   external_node_modules = ["pg", "bcryptjs", "jsonwebtoken"]
 
-[build.environment]
-  NETLIFY_NEXT_PLUGIN_SKIP = "true"
-
 [[headers]]
   for = "/api/*"
   [headers.values]
