@@ -20,15 +20,13 @@ As an admin, I want to be able to have a database that I can add, edit, and remo
 
 As an admin, I want to be able to look at items in my inventory database, and change prices of stock so that users can see updated prices on the go.
 
-As a user, I want to me able to look up a specific item to see whether or not it is in stock and a description of that item so that I can am able to make an informed decision on whether or not it is the right item I am looking for.
+As a user, I want to be able to look up a specific item to see whether or not it is in stock and a description of that item so that I can am able to make an informed decision on whether or not it is the right item I am looking for.
 
 As a user, I want to be able to look at some kind of marker (upc, qr code, or potential image) so that I can compare one item to another to make sure I am correctly looking at the item that I want.
 
 ## Implementation
 
 ### Tech Stack
-
-List technologies that will be used in your app, including any libraries to save time or provide more functionality. Be sure to research any potential limitations.
 
 -   Typescript
 -   SCSS
@@ -111,7 +109,9 @@ List any external sources of data that will be used in your app.
 
 ##### Days 1-2: Project Setup & Authentication
 
--   # Basic user role differentiation (admin vs. user)
+-   Initialize NextJS project with TypeScript
+-   Set up Aiven database connection
+-   Create login/authentication system
 -   Initialize NextJS project with TypeScript
 -   Set up Render database connection
 -   Implement basic user registration
