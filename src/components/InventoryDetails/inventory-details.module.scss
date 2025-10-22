@@ -31,27 +31,44 @@
 
 	&__body {
 		display: flex;
+		flex-direction: column-reverse;
 		justify-content: space-between;
 		align-items: flex-start;
 		gap: 3rem;
+
+		@include media-breakpoint-up($md) {
+			flex-direction: row;
+		}
 	}
 
 	&__body-details {
 		flex: 1;
+		width: 100%;
+	}
+
+	&__body-image-container {
+		display: flex;
+		flex: 1;
+		width: 100%;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: center;
+
+		gap: 1rem;
+
+		@include media-breakpoint-up($md) {
+			align-items: flex-start;
+		}
 	}
 
 	&__body-image {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		flex: 1;
-
-		gap: 1rem;
 	}
+
 	&__body-qr-code-container {
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		width: 100%;
 	}
 
 	&__body-qr-code {

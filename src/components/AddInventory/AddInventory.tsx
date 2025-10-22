@@ -1,30 +1,48 @@
 "use client";
 import { useRouter } from "next/navigation";
 import styles from "./add-inventory.module.scss";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import useAuth from "@/lib/useAuth";
 import { AddInventoryFormData } from "@/lib/types/inventory";
 
+import { UploadWithPreview } from "../UploadWith Preview/UploadWithPreview";
+
 const AddInventory = () => {
 	const { token } = useAuth({ redirect: false });
+	const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm<AddInventoryFormData>();
+
 	const router = useRouter();
+
+	const fileToBase64 = (file: File) =>
+		new Promise<string>((resolve, reject) => {
+			const reader = new FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = () => resolve(reader.result as string);
+			reader.onerror = (err) => reject(err);
+		});
 
 	const submitInventoryItem = async (data: AddInventoryFormData) => {
 		try {
+			let imageBase64: string | undefined;
+
+			if (selectedFile) {
+				imageBase64 = await fileToBase64(selectedFile);
+			}
+
 			const response = await fetch("/api/inventory", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 					Authorization: `Bearer ${token ?? ""}`,
 				},
-				body: JSON.stringify(data),
+				body: JSON.stringify({ ...data, imageBase64 }),
 			});
 
 			if (!response.ok) {
@@ -96,6 +114,10 @@ const AddInventory = () => {
 					</div>
 
 					<div className={styles["add-inventory__image-container"]}>
+						<div>
+							<UploadWithPreview label="Image" onFileSelect={(file) => setSelectedFile(file)} />
+						</div>
+
 						<div className={styles["add-inventory__form-field"]}>
 							<label htmlFor="description">Description:</label>
 							<textarea

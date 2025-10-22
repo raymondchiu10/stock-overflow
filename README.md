@@ -35,6 +35,11 @@ As a user, I want to be able to look at some kind of marker (upc, qr code, or po
 -   Postgresql
 -   Nextjs
 
+#### Hosting
+
+-   Netlify -- frontend
+-   Aiven -- backend
+
 QR code scanner:
 
 -   [html5-qrcode](https://www.npmjs.com/package/html5-qrcode) (deprecated; development migrated to scanapp)
@@ -52,7 +57,7 @@ List any external sources of data that will be used in your app.
 
 ### Data
 
--   ![Screenshot 2025-03-24 at 8 00 49 PM](https://github.com/user-attachments/assets/86cc0ac6-306c-486a-92e4-4590412d685b)
+-   ![Screenshot 2025-03-24 at 8 00 49 PM](https://drawsql.app/teams/raymond-6/diagrams/stock-overflow)
 
 ### Endpoints
 
@@ -63,28 +68,13 @@ List any external sources of data that will be used in your app.
 | `POST` | `/api/users/register` | Register a new user                                    |
 | `POST` | `/api/users/login`    | Login and get JWT token or another auth solution (TBD) |
 
-#### **Companies**
-
-| Method | Endpoint         | Description          |
-| ------ | ---------------- | -------------------- |
-| `GET`  | `/api/companies` | Get all companies    |
-| `POST` | `/api/companies` | Create a new company |
-
 #### **Inventory**
 
-| Method  | Endpoint                                 | Description                           |
-| ------- | ---------------------------------------- | ------------------------------------- |
-| `GET`   | `/api/inventory`                         | Get all inventory items               |
-| `GET`   | `/api/companies/:companyId/inventory`    | Get inventory for a specific company  |
-| `POST`  | `/api/inventory`                         | Create a new inventory item           |
-| `PATCH` | `/api/companies/:companyId/:inventoryId` | Update a company's inventory quantity |
-
-#### **Images**
-
-| Method | Endpoint                             | Description                           |
-| ------ | ------------------------------------ | ------------------------------------- |
-| `GET`  | `/api/inventory/:inventoryId/images` | Get images for an inventory item      |
-| `POST` | `/api/inventory/:inventoryId/images` | Upload an image for an inventory item |
+| Method  | Endpoint                      | Description                 |
+| ------- | ----------------------------- | --------------------------- |
+| `GET`   | `/api/inventory`              | Get all inventory items     |
+| `POST`  | `/api/inventory`              | Create a new inventory item |
+| `PATCH` | `/api/inventory/:inventoryId` | Update an inventory item    |
 
 ---
 
@@ -100,8 +90,7 @@ List any external sources of data that will be used in your app.
 {
 	"name": "John Doe",
 	"email": "johndoe@example.com",
-	"password": "securepassword",
-	"isAdmin": true
+	"password": "securepassword"
 }
 ```
 
@@ -121,8 +110,7 @@ List any external sources of data that will be used in your app.
 ##### Days 1-2: Project Setup & Authentication
 
 -   Initialize NextJS project with TypeScript
--   Set up Supabase database connection
--   Implement basic user registration
+-   Set up Aiven database connection
 -   Create login/authentication system
 -   Initialize NextJS project with TypeScript
 -   Set up Render database connection
@@ -175,13 +163,11 @@ List any external sources of data that will be used in your app.
 
 ## Future Implementations
 
-Your project will be marked based on what you committed to in the above document. Here, you can list any additional features you may complete after the MVP of your application is built, or if you have extra time before the Capstone due date.
-
 -   As an admin, I want to know when items go under a certain threshold so that I can be notified on whether or not I need to order more of the item that is low in stock.
 
 -   As an admin, I want to be able to add and remove users and admins that are allowed to interact with my database and app so that authorized users and admins are the only ones allowed to update the inventory.
 
--   [list of floral UPCs:](https://www.freshproduce.com/resources/floral/floral-universal-product-codes/)
+-   Implement Cloudinary to store and view inventory item images
 
 look into photo-based identification libraries like:
 
