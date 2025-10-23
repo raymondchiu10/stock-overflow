@@ -15,7 +15,7 @@ const QRCode = () => {
 
 	const handleScanSuccess = async (decodedText: string, decodedResult: Html5QrcodeResult) => {
 		console.log(`Code scanned: ${decodedText}`, decodedResult);
-		router.replace(`/dashboard/inventory/${decodedText}`);
+		router.replace(`${decodedText}`);
 	};
 
 	return (
