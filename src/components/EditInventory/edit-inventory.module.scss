@@ -11,7 +11,7 @@
 	background-color: white;
 	padding: 1rem;
 
-	height: 100vh;
+	height: 100dvh;
 
 	@include media-breakpoint-up($md) {
 		justify-content: center;
