@@ -15,8 +15,6 @@ const InventoryDetails = ({ data }: Props) => {
 	const router = useRouter();
 	const { data: qrcode } = useQrCode(data?.uuid || "", `${window.location.origin}/dashboard/inventory`);
 
-	console.log();
-
 	const onClose = useCallback(() => router.back(), [router]);
 
 	return (
