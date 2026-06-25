@@ -53,11 +53,11 @@ List any external sources of data that will be used in your app.
 
 ### Sitemap/Mockups
 
--   [excalidraw link](https://excalidraw.com/#json=njKaQcoXxYZEnbHJMkbXV,t2OX5kfzaQf-Q5N97x-KKQ)
+-   [Excalidraw link](https://excalidraw.com/#json=njKaQcoXxYZEnbHJMkbXV,t2OX5kfzaQf-Q5N97x-KKQ)
 
 ### Data
 
--   ![Screenshot 2025-03-24 at 8 00 49 PM](https://drawsql.app/teams/raymond-6/diagrams/stock-overflow)
+-   [drawSQL link](https://drawsql.app/teams/raymond-6/diagrams/stock-overflow)
 
 ### Endpoints
 
