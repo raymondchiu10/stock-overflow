@@ -169,11 +169,11 @@ List any external sources of data that will be used in your app.
 
 -   Implement Cloudinary to store and view inventory item images
 
+-	As a developer, I want to implement a URL shortener to allow QR codes to be easier to work with, as well as open up analytics options
+
 look into photo-based identification libraries like:
 
 [Google Cloud Vision API](https://cloud.google.com/vision)
-
-[Microsoft Azure Computer Vision](https://azure.microsoft.com/en-us/products/ai-services/ai-vision)
 
 [Clarifai Clear Vision](https://www.clarifai.com/computer-vision)
 
