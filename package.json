@@ -12,9 +12,6 @@
 		"netlify:build": "netlify build",
 		"netlify:deploy": "netlify deploy"
 	},
-	"prisma": {
-		"seed": "tsx prisma/seed.ts"
-	},
 	"dependencies": {
 		"@prisma/client": "^6.8.2",
 		"@prisma/extension-accelerate": "^2.0.0",
