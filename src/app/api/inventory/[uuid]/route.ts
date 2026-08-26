@@ -2,9 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { authenticateRequest } from "@/lib/auth/auth";
 import { AddInventoryFormData } from "@/lib/types/inventory";
 
-export const config = {
-	runtime: "nodejs",
-};
+export const runtime = "nodejs";
 
 export async function GET(_req: Request, { params }: { params: Promise<{ uuid: string }> }) {
 	const { uuid } = await params;
@@ -98,7 +96,7 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ uuid:
 
 		return NextResponse.json(
 			{ message: `Inventory item ${result.rows[0].name} deleted successfully` },
-			{ status: 200 }
+			{ status: 200 },
 		);
 	} catch (err) {
 		console.error("DB Error:", err);

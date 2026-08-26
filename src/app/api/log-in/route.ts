@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export const config = {
-	runtime: "nodejs",
-};
+export const runtime = "nodejs";
 
 const SECRET_KEY = process.env.DB_JWT_SECRET || "your_secret_key";
 

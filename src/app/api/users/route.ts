@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
 
-export const config = {
-	runtime: "nodejs",
-};
+export const runtime = "nodejs";
 
 export async function GET() {
 	try {
