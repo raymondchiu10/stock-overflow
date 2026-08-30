@@ -24,9 +24,9 @@ export async function POST(req: NextRequest) {
 
 		const body = await req.json();
 
-		const { name, description, quantity, base_price, suggested_price, imageBase64 } = body;
+		const { name, description, quantity, basePrice, suggestedPrice, imageBase64 } = body;
 
-		if (!name || quantity == null || base_price == null || suggested_price == null) {
+		if (!name || quantity == null || basePrice == null || suggestedPrice == null) {
 			return NextResponse.json({ message: "Missing required fields" }, { status: 400 });
 		}
 
@@ -66,8 +66,8 @@ export async function POST(req: NextRequest) {
 				name,
 				description,
 				quantity,
-				basePrice: base_price,
-				suggestedPrice: suggested_price,
+				basePrice,
+				suggestedPrice,
 				image_public_id,
 				image_url,
 			},

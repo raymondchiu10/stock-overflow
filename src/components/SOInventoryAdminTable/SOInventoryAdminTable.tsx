@@ -79,7 +79,8 @@ const SOInventoryAdminTable = () => {
 						header: "Base Price",
 						size: 75,
 						cell: (props: CellContext<InventoryItem, number>) => {
-							return <p>{props.getValue()}</p>;
+							const value = props.getValue();
+							return <p>{value ? Number(value).toFixed(2) : "-"}</p>;
 						},
 					},
 				]
@@ -91,7 +92,7 @@ const SOInventoryAdminTable = () => {
 			cell: ({ getValue }) => {
 				const value = getValue();
 
-				return <p>{value || `-`}</p>;
+				return <p>{value ? Number(value).toFixed(2) : "-"}</p>;
 			},
 		},
 		...(!isMobile

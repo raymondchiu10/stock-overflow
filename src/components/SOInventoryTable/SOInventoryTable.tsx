@@ -61,7 +61,7 @@ const SOInventoryTable = () => {
 			size: 100,
 			cell: ({ getValue }) => {
 				const value = getValue();
-				return <p>{value || "-"}</p>;
+				return <p>{value ? Number(value).toFixed(2) : "-"}</p>;
 			},
 		},
 	];

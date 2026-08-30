@@ -49,6 +49,7 @@ const Login = () => {
 
 			const resData = await res.json();
 
+			console.log("resData", resData);
 			if (!res.ok) throw new Error(resData.error || "Log in failed");
 
 			localStorage.setItem("authToken", resData.token);
