@@ -1,14 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
-import client from "@/lib/config/database";
+import prisma from "@/lib/config/prisma";
 import { authenticateRequest } from "@/lib/auth/auth";
 
 export async function GET() {
 	try {
-		const result = await client.query("SELECT * FROM inventory");
-		return NextResponse.json({ inventory: result.rows });
+		const inventory = await prisma.inventory.findMany();
+
+		return NextResponse.json({ inventory });
 	} catch (err) {
 		console.error("DB Error:", err);
-		return NextResponse.json({ error: "Failed to fetch users" }, { status: 500 });
+
+		return NextResponse.json({ error: "Failed to fetch inventory" }, { status: 500 });
 	}
 }
 
@@ -19,6 +21,7 @@ export async function POST(req: NextRequest) {
 		if (user.role !== "admin") {
 			return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
 		}
+
 		const body = await req.json();
 
 		const { name, description, quantity, base_price, suggested_price, imageBase64 } = body;
@@ -27,45 +30,53 @@ export async function POST(req: NextRequest) {
 			return NextResponse.json({ message: "Missing required fields" }, { status: 400 });
 		}
 
-		const existing = await client.query("SELECT * FROM inventory WHERE name = $1", [name]);
+		const existing = await prisma.inventory.findUnique({
+			where: {
+				name,
+			},
+		});
 
-		if (existing.rows.length > 0) {
+		if (existing) {
 			return NextResponse.json({ message: "Inventory item with this name already exists" }, { status: 409 });
 		}
 
 		let image_public_id: string | null = null;
 		let image_url: string | null = null;
 
-		const { v2: cloudinary } = await import("cloudinary");
-
-		cloudinary.config({
-			cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
-			api_key: process.env.CLOUDINARY_API_KEY,
-			api_secret: process.env.CLOUDINARY_API_SECRET,
-		});
-
-		// Optional image upload
 		if (imageBase64) {
+			const { v2: cloudinary } = await import("cloudinary");
+
+			cloudinary.config({
+				cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+				api_key: process.env.CLOUDINARY_API_KEY,
+				api_secret: process.env.CLOUDINARY_API_SECRET,
+			});
+
 			const uploadResult = await cloudinary.uploader.upload(imageBase64, {
 				folder: "stock-overflow",
 				overwrite: false,
 			});
+
 			image_public_id = uploadResult.public_id;
 			image_url = uploadResult.secure_url;
 		}
 
-		const now = new Date();
+		const inventory = await prisma.inventory.create({
+			data: {
+				name,
+				description,
+				quantity,
+				basePrice: base_price,
+				suggestedPrice: suggested_price,
+				image_public_id,
+				image_url,
+			},
+		});
 
-		const result = await client.query(
-			`INSERT INTO inventory (name, description, quantity, base_price, suggested_price, image_public_id, image_url, uuid, created_at, updated_at)
-             VALUES ($1, $2, $3, $4, $5, $6, $7, gen_random_uuid(), $8, $9)
-             RETURNING *`,
-			[name, description, quantity, base_price, suggested_price, image_public_id, image_url, now, now]
-		);
-
-		return NextResponse.json(result.rows[0], { status: 201 });
+		return NextResponse.json(inventory, { status: 201 });
 	} catch (err) {
 		console.error("Error creating inventory item:", err);
+
 		return NextResponse.json({ message: "Failed to create inventory item" }, { status: 500 });
 	}
 }

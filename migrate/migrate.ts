@@ -8,9 +8,9 @@ interface Table {
 
 const tables: Table[] = [
 	{
-		name: "users",
+		name: "user",
 		schema: `
-      CREATE TABLE IF NOT EXISTS users (
+      CREATE TABLE IF NOT EXISTS user (
         uuid UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         email VARCHAR(100) UNIQUE NOT NULL,
         password VARCHAR(255) NOT NULL,
@@ -18,7 +18,7 @@ const tables: Table[] = [
         created_at TIMESTAMPTZ DEFAULT NOW()
       );`,
 		seed: `
-      INSERT INTO users (uuid, email, password, role) VALUES
+      INSERT INTO user (uuid, email, password, role) VALUES
         ('550e8400-e29b-41d4-a716-446655440000', 'admin@test.test', '$2b$10$0hkUO0Whbejoetr/gYsV0urTCxTdQG9fEe0r.tN8cwE1sKHRW1MIy', 'admin'),
         ('550e8400-e29b-41d4-a716-446655440001', 'client@test.test', '$2b$10$0hkUO0Whbejoetr/gYsV0urTCxTdQG9fEe0r.tN8cwE1sKHRW1MIy', 'client')
       ON CONFLICT (uuid) DO NOTHING;`,
