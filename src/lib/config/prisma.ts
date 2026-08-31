@@ -11,10 +11,15 @@ if (!connectionString) {
 	throw new Error("DB_CONNECTION_STRING is not configured");
 }
 
+console.log("Prisma SSL config:", {
+	hasConnectionString: Boolean(connectionString),
+	rejectUnauthorized: false,
+});
+
 const adapter = new PrismaPg({
 	connectionString,
 	ssl: {
-		ca: process.env.DB_CA_PEM_BASE64,
+		rejectUnauthorized: false,
 	},
 });
 
