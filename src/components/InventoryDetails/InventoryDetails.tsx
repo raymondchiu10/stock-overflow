@@ -36,7 +36,11 @@ const InventoryDetails = ({ data }: Props) => {
 						</div>
 						<div>
 							<h3>Retail Price:</h3>
-							<p>{data.suggested_price || data.base_price}</p>
+							<p>
+								{data.suggestedPrice
+									? Number(data.suggestedPrice).toFixed(2)
+									: Number(data.basePrice).toFixed(2)}
+							</p>
 						</div>
 					</div>
 

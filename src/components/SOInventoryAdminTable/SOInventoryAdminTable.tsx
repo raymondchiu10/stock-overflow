@@ -14,12 +14,12 @@ export interface InventoryItem {
 	name?: string;
 	description?: string;
 	quantity?: number;
-	base_price?: string;
-	suggested_price?: string;
+	basePrice?: string;
+	suggestedPrice?: string;
 	image_public_id?: string;
 	image_url?: string;
-	created_at?: string;
-	updated_at?: string;
+	createdAt?: string;
+	updatedAt?: string;
 }
 
 const SOInventoryAdminTable = () => {
@@ -66,34 +66,39 @@ const SOInventoryAdminTable = () => {
 			accessorKey: "quantity",
 			header: "Quantity",
 			size: 75,
-			cell: (props: CellContext<InventoryItem, number>) => {
-				return <p>{props.getValue()}</p>;
+			cell: ({ getValue }) => {
+				const value = getValue();
+
+				return <p>{value || "-"}</p>;
 			},
 		},
 		...(!isMobile
 			? [
 					{
-						accessorKey: "base_price",
+						accessorKey: "basePrice",
 						header: "Base Price",
 						size: 75,
 						cell: (props: CellContext<InventoryItem, number>) => {
-							return <p>{props.getValue()}</p>;
+							const value = props.getValue();
+							return <p>{value ? Number(value).toFixed(2) : "-"}</p>;
 						},
 					},
-			  ]
+				]
 			: []),
 		{
-			accessorKey: "suggested_price",
+			accessorKey: "suggestedPrice",
 			header: "Retail Price",
 			size: 75,
-			cell: (props: CellContext<InventoryItem, number>) => {
-				return <p>{props.getValue()}</p>;
+			cell: ({ getValue }) => {
+				const value = getValue();
+
+				return <p>{value ? Number(value).toFixed(2) : "-"}</p>;
 			},
 		},
 		...(!isMobile
 			? [
 					{
-						accessorKey: "created_at",
+						accessorKey: "createdAt",
 						header: "Created",
 						size: 75,
 						cell: (props: CellContext<InventoryItem, number>) => {
@@ -102,10 +107,10 @@ const SOInventoryAdminTable = () => {
 							return <p>{formattedDate}</p>;
 						},
 					},
-			  ]
+				]
 			: []),
 		{
-			accessorKey: "updated_at",
+			accessorKey: "updatedAt",
 			header: "Updated",
 			size: 75,
 			cell: (props: CellContext<InventoryItem, number>) => {

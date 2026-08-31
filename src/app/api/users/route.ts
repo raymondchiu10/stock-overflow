@@ -1,17 +1,21 @@
 import { NextResponse } from "next/server";
+import prisma from "@/lib/config/prisma";
 
-export const config = {
-	runtime: "nodejs",
-};
+export const runtime = "nodejs";
 
 export async function GET() {
 	try {
-		const { default: pool } = await import("@/lib/config/database");
+		const users = await prisma.user.findMany({
+			select: {
+				uuid: true,
+				role: true,
+			},
+		});
 
-		const result = await pool.query(`SELECT * FROM "user"`);
-		return NextResponse.json({ user: result.rows });
+		return NextResponse.json({ user: users });
 	} catch (err) {
 		console.error("DB Error:", err);
+
 		return NextResponse.json({ error: "Failed to fetch user" }, { status: 500 });
 	}
 }

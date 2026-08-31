@@ -1,30 +1,43 @@
 import { NextResponse } from "next/server";
+import { authenticateRequest } from "@/lib/auth/auth";
+import prisma from "@/lib/config/prisma";
 
-export const config = {
-	runtime: "nodejs",
-};
+export const runtime = "nodejs";
 
 export async function GET(req: Request, { params }: { params: Promise<{ uuid: string }> }) {
 	try {
-		const { authenticateRequest } = await import("@/lib/auth/auth");
-
 		const user = await authenticateRequest(req);
 
-		if (user.role !== "admin") {
-			return NextResponse.json({ message: "User not authenticated for this route." }, { status: 401 });
+		if (!user) {
+			return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
 		}
 
-		const { default: pool } = await import("@/lib/config/database");
+		if (user.role !== "admin") {
+			return NextResponse.json({ message: "Forbidden" }, { status: 403 });
+		}
 
 		const { uuid } = await params;
-		const { rows } = await pool.query(`SELECT * FROM "user" WHERE uuid = $1`, [uuid]);
 
-		if (!rows.length) {
+		const targetUser = await prisma.user.findUnique({
+			where: {
+				uuid,
+			},
+			select: {
+				uuid: true,
+				email: true,
+				role: true,
+				createdAt: true,
+			},
+		});
+
+		if (!targetUser) {
 			return NextResponse.json({ message: "User not found" }, { status: 404 });
 		}
 
-		return NextResponse.json({ user: rows[0] });
+		return NextResponse.json({ user: targetUser });
 	} catch (err) {
-		return NextResponse.json({ message: (err as Error).message }, { status: 401 });
+		console.error("User lookup error:", err);
+
+		return NextResponse.json({ message: (err as Error).message }, { status: 500 });
 	}
 }

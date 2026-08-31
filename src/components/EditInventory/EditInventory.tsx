@@ -19,9 +19,10 @@ const EditInventory = ({ uuid }: Props) => {
 	const {
 		register,
 		handleSubmit,
+		setValue,
 		formState: { errors },
 		reset,
-	} = useForm<AddInventoryFormData>();
+	} = useForm<AddInventoryFormData>({});
 
 	const [submitError, setSubmitError] = useState<string | undefined>();
 
@@ -29,7 +30,12 @@ const EditInventory = ({ uuid }: Props) => {
 
 	useEffect(() => {
 		if (data) {
-			reset(data[0]);
+			console.log("data[0]", data[0]);
+			reset({
+				...data[0],
+				basePrice: Number(data[0].basePrice).toFixed(2),
+				suggestedPrice: Number(data[0].suggestedPrice).toFixed(2),
+			});
 		}
 	}, [data, reset]);
 
@@ -101,26 +107,32 @@ const EditInventory = ({ uuid }: Props) => {
 						</div>
 
 						<div className={styles["edit-inventory__form-field"]}>
-							<label htmlFor="base_price">Base Price:</label>
+							<label htmlFor="basePrice">Base Price:</label>
 							<input
-								id="base_price"
+								id="basePrice"
 								type="text"
 								placeholder="Base price"
-								{...register("base_price", { required: "Base Price is required." })}
+								{...register("basePrice", {
+									required: "Base Price is required.",
+									valueAsNumber: true,
+								})}
 							/>
-							{errors.base_price && <span style={{ color: "red" }}>{errors.base_price.message}</span>}
+							{errors.basePrice && <span style={{ color: "red" }}>{errors.basePrice.message}</span>}
 						</div>
 
 						<div className={styles["edit-inventory__form-field"]}>
-							<label htmlFor="suggested_price">Suggested Price:</label>
+							<label htmlFor="suggestedPrice">Suggested Price:</label>
 							<input
-								id="suggested_price"
+								id="suggestedPrice"
 								type="text"
 								placeholder="Suggested Price"
-								{...register("suggested_price", { required: "Suggested Price is required." })}
+								{...register("suggestedPrice", {
+									required: "Suggested Price is required.",
+									valueAsNumber: true,
+								})}
 							/>
-							{errors.suggested_price && (
-								<span style={{ color: "red" }}>{errors.suggested_price.message}</span>
+							{errors.suggestedPrice && (
+								<span style={{ color: "red" }}>{errors.suggestedPrice.message}</span>
 							)}
 						</div>
 					</div>
