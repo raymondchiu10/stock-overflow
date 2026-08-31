@@ -16,6 +16,12 @@ export async function GET() {
 	} catch (err) {
 		console.error("DB Error:", err);
 
-		return NextResponse.json({ error: "Failed to fetch user" }, { status: 500 });
+		return NextResponse.json(
+			{
+				error: "Failed to fetch user",
+				type: err instanceof Error ? err.name : typeof err,
+			},
+			{ status: 500 },
+		);
 	}
 }
