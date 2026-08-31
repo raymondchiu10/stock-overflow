@@ -1,12 +1,6 @@
 import jwt from "jsonwebtoken";
 import prisma from "@/lib/config/prisma";
 
-const SECRET_KEY = process.env.DB_JWT_SECRET;
-
-if (!SECRET_KEY) {
-	throw new Error("DB_JWT_SECRET is not configured");
-}
-
 export async function authenticateRequest(req: Request) {
 	const authHeader = req.headers.get("Authorization");
 
@@ -16,8 +10,14 @@ export async function authenticateRequest(req: Request) {
 
 	const token = authHeader.split(" ")[1];
 
+	const SECRET_KEY = process.env.DB_JWT_SECRET;
+
+	if (!SECRET_KEY) {
+		throw new Error("DB_JWT_SECRET is not configured");
+	}
+
 	try {
-		const decoded = jwt.verify(token, SECRET_KEY!) as {
+		const decoded = jwt.verify(token, SECRET_KEY) as {
 			uuid: string;
 		};
 

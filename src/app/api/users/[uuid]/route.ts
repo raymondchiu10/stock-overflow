@@ -38,6 +38,6 @@ export async function GET(req: Request, { params }: { params: Promise<{ uuid: st
 	} catch (err) {
 		console.error("User lookup error:", err);
 
-		return NextResponse.json({ message: (err as Error).message }, { status: 401 });
+		return NextResponse.json({ message: (err as Error).message }, { status: 500 });
 	}
 }

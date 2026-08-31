@@ -5,10 +5,16 @@ const globalForPrisma = global as unknown as {
 	prisma: PrismaClient;
 };
 
+const connectionString = process.env.DB_CONNECTION_STRING;
+
+if (!connectionString) {
+	throw new Error("DB_CONNECTION_STRING is not configured");
+}
+
 const adapter = new PrismaPg({
-	connectionString: process.env.DB_CONNECTION_STRING!,
+	connectionString,
 	ssl: {
-		rejectUnauthorized: false,
+		ca: process.env.DB_CA_PEM_BASE64,
 	},
 });
 
