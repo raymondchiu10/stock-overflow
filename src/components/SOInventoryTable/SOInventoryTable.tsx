@@ -44,22 +44,24 @@ const SOInventoryTable = () => {
 							return <p>{props.getValue()}</p>;
 						},
 					},
-			  ]
+				]
 			: []),
 		{
 			accessorKey: "quantity",
 			header: "Quantity",
 			size: 75,
-			cell: (props: CellContext<InventoryItem, number>) => {
-				return <p>{props.getValue()}</p>;
+			cell: ({ getValue }) => {
+				const value = getValue();
+				return <p>{value || "-"}</p>;
 			},
 		},
 		{
-			accessorKey: "suggested_price",
+			accessorKey: "suggestedPrice",
 			header: "Price",
 			size: 100,
-			cell: (props: CellContext<InventoryItem, number>) => {
-				return <p>{props.getValue()}</p>;
+			cell: ({ getValue }) => {
+				const value = getValue();
+				return <p>{value ? Number(value).toFixed(2) : "-"}</p>;
 			},
 		},
 	];

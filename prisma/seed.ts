@@ -1,7 +1,16 @@
-import { PrismaClient, Prisma } from "../src/generated/prisma";
+import "dotenv/config";
+
+import { PrismaClient, Prisma } from "../src/generated/prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
 import { v4 as uuidv4 } from "uuid";
 
-const prisma = new PrismaClient();
+const adapter = new PrismaPg({
+	connectionString: process.env.DB_CONNECTION_STRING!,
+});
+
+const prisma = new PrismaClient({
+	adapter,
+});
 
 const userData: Prisma.UserCreateInput[] = [
 	{
