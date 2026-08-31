@@ -7,7 +7,6 @@
 		"build": "npx prisma generate && next build",
 		"start": "next start",
 		"lint": "next lint",
-		"migrate": "tsx migrate/migrate.ts",
 		"seed": "tsx prisma/seed.ts",
 		"netlify:build": "netlify build",
 		"netlify:deploy": "netlify deploy"

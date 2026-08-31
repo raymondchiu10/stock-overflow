@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { authenticateRequest } from "@/lib/auth/auth";
 import prisma from "@/lib/config/prisma";
+import { User } from "@/generated/prisma/client";
 
 export const runtime = "nodejs";
 
@@ -30,8 +31,12 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ uu
 	try {
 		const user = await authenticateRequest(req);
 
+		if (!user) {
+			return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+		}
+
 		if (user.role !== "admin") {
-			return NextResponse.json({ message: "User not authenticated for this route." }, { status: 401 });
+			return NextResponse.json({ message: "Forbidden" }, { status: 403 });
 		}
 
 		const { uuid } = await params;
@@ -94,8 +99,12 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ uuid:
 	try {
 		const user = await authenticateRequest(req);
 
+		if (!user) {
+			return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+		}
+
 		if (user.role !== "admin") {
-			return NextResponse.json({ message: "User not authenticated for this route." }, { status: 401 });
+			return NextResponse.json({ message: "Forbidden" }, { status: 403 });
 		}
 
 		const inventoryItem = await prisma.inventory.findUnique({

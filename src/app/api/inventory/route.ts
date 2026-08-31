@@ -18,8 +18,12 @@ export async function POST(req: NextRequest) {
 	try {
 		const user = await authenticateRequest(req);
 
-		if (user.role !== "admin") {
+		if (!user) {
 			return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+		}
+
+		if (user.role !== "admin") {
+			return NextResponse.json({ message: "Forbidden" }, { status: 403 });
 		}
 
 		const body = await req.json();

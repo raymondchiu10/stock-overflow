@@ -8,8 +8,12 @@ export async function GET(req: Request, { params }: { params: Promise<{ uuid: st
 	try {
 		const user = await authenticateRequest(req);
 
+		if (!user) {
+			return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+		}
+
 		if (user.role !== "admin") {
-			return NextResponse.json({ message: "User not authenticated for this route." }, { status: 401 });
+			return NextResponse.json({ message: "Forbidden" }, { status: 403 });
 		}
 
 		const { uuid } = await params;
