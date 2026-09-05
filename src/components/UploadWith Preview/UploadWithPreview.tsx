@@ -43,6 +43,7 @@ export const UploadWithPreview = ({ label, onFileSelect }: IProps) => {
 						width={200}
 						height={200}
 						className={styles["upload-with-preview__image"]}
+						loading={"eager"}
 					/>
 					<div className="flex gap-2 mt-2">
 						<button type="button" onClick={clearSelection} className="px-3 py-1 bg-gray-300 rounded">
