@@ -53,6 +53,7 @@ const InventoryDetails = ({ data }: Props) => {
 									unoptimized
 									width={200}
 									height={200}
+									loading={"eager"}
 								/>
 							</div>
 						)}
@@ -70,6 +71,7 @@ const InventoryDetails = ({ data }: Props) => {
 						(max-width: 1200px) 50dvw,
 						33dvw"
 								alt={`${data.name}`}
+								loading={"eager"}
 							/>
 						) : (
 							<div>No image available</div>
